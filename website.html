@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sybertnetics - Autonomous Intelligence Ecosystem</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: white;
+        }
+        
+        .logo .blue-text {
+            color: #4d80e4;
+        }
+        
+        .logo .green-text {
+            color: #2ecc71;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4d80e4;
+        }
+        
+        /* Hero Section Styles */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to right, #1a1a2e, #16213e);
+            color: white;
+            margin-top: 60px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #4d80e4;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3a5bb9;
+        }
+        
+        /* About Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #1a1a2e;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #4d80e4;
+            font-weight: 500;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .placeholder-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Solutions Section Styles */
+        .solutions {
+            background-color: #f8f9fa;
+        }
+        
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .solution-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .solution-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+        
+        /* Team Section Styles */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .team-member img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .team-member-info {
+            padding: 20px;
+        }
+        
+        .team-member h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: #1a1a2e;
+        }
+        
+        .team-member p {
+            color: #4d80e4;
+            font-weight: 500;
+        }
+        
+        /* Contact Section Styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #4d80e4;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3a5bb9;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links li {
+            margin: 0 15px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #4d80e4;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-text, .about-image {
+                flex: 100%;
+                padding: 0;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Syber<span class="green-text">t</span><span class="blue-text">netics</span></div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#solutions">Solutions</a></li>
+                    <li><a href="#team">Leadership</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>We Are Not Building an AI.<br>We Are Building the Architect of AI.</h1>
+                <p>Sybertnetics is pioneering a revolutionary autonomous intelligence ecosystem, capable of generating, managing, and optimizing artificial intelligence across multiple domains.</p>
+                <a href="#about" class="btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Vision</h2>
+            <p class="section-subtitle">Transforming technological development through autonomous intelligence</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Sybertnetics aims to create the world's first truly autonomous, self-evolving AI ecosystem capable of generating, managing, and optimizing artificial intelligence across multiple domains.</p>
+                    <br>
+                    <p>Our flagship system, Hermod, is an autonomous AI architect that can design, build, and manage AI systems with minimal human intervention, continuously evolving its own capabilities while solving complex problems across multiple domains.</p>
+                    <br>
+                    <p>We're not just developing another AI tool – we're creating a new paradigm of technological development that will transform how organizations solve problems and drive innovation.</p>
+                </div>
+                <div class="about-image">
+                    <img src="img/logo.png" alt="AI Visualization" class="placeholder-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="section solutions">
+        <div class="container">
+            <h2 class="section-title">Our Solutions</h2>
+            <p class="section-subtitle">A comprehensive 22-AI ecosystem spanning critical domains</p>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3>Hermod - AI Architect</h3>
+                    <p>The foundation of our ecosystem, Hermod autonomously designs, builds, and optimizes other AI systems with minimal human intervention, continuously evolving its own capabilities.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Odin - AI Oversight</h3>
+                    <p>Provides strategic oversight across the entire AI ecosystem, monitoring performance, allocating resources, and ensuring optimal operation of all AI systems.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Nemesis - AI Compliance</h3>
+                    <p>Enforces ethical guidelines and security protocols across all AI operations, detecting bias, ensuring regulatory compliance, and protecting against security threats.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Domain-Specific AI Systems</h3>
+                    <p>Our ecosystem includes specialized AI systems for healthcare, finance, government, defense, research, education, environmental management, and more.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>SyberCraft LLM</h3>
+                    <p>A proprietary large language model that provides holistic intelligence coordination, domain-specific expertise, and advanced reasoning capabilities.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Enterprise AI Solutions</h3>
+                    <p>Customized AI systems designed to transform operations across industries including healthcare, finance, manufacturing, logistics, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section">
+        <div class="container">
+            <h2 class="section-title">Leadership</h2>
+            <p class="section-subtitle">Visionary expertise driving technological innovation</p>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="/img/kaynenpellegrino.jpg" alt="Kaynen Pellegrino">
+                    <div class="team-member-info">
+                        <h3>Kaynen Pellegrino</h3>
+                        <p>Founder & Chairman</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="/img/jarrettvalenti.jpg" alt="Jarrett Valenti">
+                    <div class="team-member-info">
+                        <h3>Jarrett Valenti</h3>
+                        <p>CTO & Project Manager</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="/img/ashlinmullenix.jpg" alt="Ashlin Mullenix">
+                    <div class="team-member-info">
+                        <h3>Ashlin Mullenix</h3>
+                        <p>Marketing Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Ready to transform your organization with autonomous intelligence?</p>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#team">Leadership</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <p>Email: KaynenBPellegrino@Sybertnetics.com | Phone: 248-602-1232</p>
+            <p class="copyright">&copy; 2025 Sybertnetics Artificial Intelligence Solutions, Inc. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
