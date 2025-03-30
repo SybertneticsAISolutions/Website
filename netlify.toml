@@ -1,0 +1,19 @@
+[build]
+  # This will be the directory where your static website files are
+  publish = "./"
+  # This is the build command for your static files (if needed)
+  command = "npm install"
+
+[functions]
+  # Directory where your Netlify functions will be stored
+  directory = "netlify/functions"
+  # Required for Express.js
+  external_node_modules = ["express"]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  # This redirect is important for routing API requests to your function
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true

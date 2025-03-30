@@ -1,20 +1,20 @@
 {
-    "name": "sybertnetics-contact-form",
-    "version": "1.0.0",
-    "description": "Backend email handler for Sybertnetics contact form",
-    "main": "contact-form-handler.js",
-    "scripts": {
-      "start": "node contact-form-handler.js",
-      "dev": "nodemon contact-form-handler.js"
-    },
-    "dependencies": {
-      "body-parser": "^1.20.2",
-      "cors": "^2.8.5",
-      "dotenv": "^16.3.1",
-      "express": "^4.18.2",
-      "nodemailer": "^6.9.7"
-    },
-    "devDependencies": {
-      "nodemon": "^3.0.1"
-    }
+  "name": "sybertnetics-website",
+  "version": "1.0.0",
+  "description": "Sybertnetics company website with contact form",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required for static files'"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7",
+    "serverless-http": "^3.2.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.10.1"
   }
+}
