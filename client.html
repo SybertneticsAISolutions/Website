@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sybertnetics - Client Solutions</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: white;
+        }
+        
+        .logo .blue-text {
+            color: #4d80e4;
+        }
+        
+        .logo .green-text {
+            color: #2ecc71;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4d80e4;
+        }
+        
+        /* Hero Section Styles */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to right, #1a1a2e, #16213e);
+            color: white;
+            margin-top: 60px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #4d80e4;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .btn:hover {
+            background-color: #3a5bb9;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid #4d80e4;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(77, 128, 228, 0.1);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #1a1a2e;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #4d80e4;
+            font-weight: 500;
+        }
+        
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+        
+        /* Pricing Section */
+        .pricing-table {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-tier {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-tier:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .popular {
+            border: 2px solid #4d80e4;
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background-color: #4d80e4;
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tier-name {
+            font-size: 1.5rem;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        
+        .tier-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4d80e4;
+            margin-bottom: 20px;
+        }
+        
+        .tier-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .tier-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .tier-features li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tier-features li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Process Section */
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            counter-reset: step;
+        }
+        
+        .process-step {
+            flex-basis: 22%;
+            min-width: 250px;
+            text-align: center;
+            position: relative;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+        
+        .process-step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: #4d80e4;
+            color: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .process-step h3 {
+            margin-top: 40px;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+            font-size: 1.3rem;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        
+        .faq-answer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            display: none;
+        }
+        
+        .faq-active .faq-answer {
+            display: block;
+        }
+        
+        /* Contact Section Styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #4d80e4;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3a5bb9;
+        }
+        
+        .status-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            background-color: #e2e3e5;
+            color: #383d41;
+            border: 1px solid #d6d8db;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links li {
+            margin: 0 15px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #4d80e4;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .pricing-tier {
+                min-width: 100%;
+            }
+            
+            .process-step {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Syber<span class="green-text">t</span><span class="blue-text">netics</span></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="clients.html">For Clients</a></li>
+                    <li><a href="investors.html">For Investors</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Transform Your Business with Autonomous AI</h1>
+                <p>Our revolutionary AI-powered solutions deliver unprecedented development speed, quality, and innovation to help your organization thrive in the digital age.</p>
+                <a href="#services" class="btn">Our Services</a>
+                <a href="#contact" class="btn btn-secondary">Get a Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Cutting-edge solutions powered by autonomous AI</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Enterprise Web Design</h3>
+                    <p>From basic websites to complex e-commerce platforms, we offer comprehensive web design packages with varying levels of functionality. Our solutions include responsive designs, database integration, authentication systems, and custom features tailored to your specific business needs.</p>
+                    <p>Using our revolutionary AI architecture, we can deliver exceptional websites in just 24-48 hours, a fraction of the time required by traditional development approaches.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Dev in a Drive</h3>
+                    <p>Our groundbreaking development service slashes project timelines, completing in hours what traditionally requires days or weeks. Hermod functions as a team of junior to mid-level developers, handling workloads with unprecedented speed and efficiency while maintaining exceptional quality and attention to detail.</p>
+                    <p>This service is perfect for organizations looking to accelerate development cycles, reduce costs, and gain a competitive edge through faster innovation.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Custom AI Solutions</h3>
+                    <p>We create tailored AI systems designed to address your organization's unique challenges. Our solutions span from specialized data analysis tools to comprehensive autonomous systems that transform how you operate, innovate, and compete in your industry.</p>
+                    <p>Our team will work closely with you to understand your specific needs and develop a custom AI solution that drives real business results and provides measurable ROI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Web Design Pricing -->
+    <section class="section" style="background-color: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title">Web Design Pricing</h2>
+            <p class="section-subtitle">Comprehensive packages for businesses of all sizes</p>
+            
+            <div class="pricing-table">
+                <div class="pricing-tier">
+                    <h3 class="tier-name">Basic</h3>
+                    <div class="tier-price">$1,999<span>/site</span></div>
+                    <ul class="tier-features">
+                        <li>5-10 page responsive website</li>
+                        <li>Modern, professional design</li>
+                        <li>Mobile optimization</li>
+                        <li>Basic SEO setup</li>
+                        <li>Contact form integration</li>
+                        <li>24-48 hour turnaround</li>
+                    </ul>
+                    <a href="#contact" class="btn">Get Started</a>
+                </div>
+                
+                <div class="pricing-tier popular">
+                    <div class="popular-tag">Popular</div>
+                    <h3 class="tier-name">Advanced</h3>
+                    <div class="tier-price">$4,999<span>/site</span></div>
+                    <ul class="tier-features">
+                        <li>10-20 page responsive website</li>
+                        <li>Custom design & branding</li>
+                        <li>User authentication system</li>
+                        <li>Database integration</li>
+                        <li>Advanced SEO optimization</li>
+                        <li>2-4 days turnaround</li>
+                    </ul>
+                    <a href="#contact" class="btn">Get Started</a>
+                </div>
+                
+                <div class="pricing-tier">
+                    <h3 class="tier-name">Enterprise</h3>
+                    <div class="tier-price">Custom<span>/quote</span></div>
+                    <ul class="tier-features">
+                        <li>Unlimited pages</li>
+                        <li>E-commerce functionality</li>
+                        <li>Custom database solutions</li>
+                        <li>Third-party API integrations</li>
+                        <li>Advanced user management</li>
+                        <li>Custom turnaround time</li>
+                    </ul>
+                    <a href="#contact" class="btn">Get Quote</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <h3>Additional Services</h3>
+                <p style="max-width: 800px; margin: 20px auto;">
+                    <strong>Hosting & Maintenance:</strong> $99/month includes domain management, secure hosting, weekly updates, and technical support.<br><br>
+                    <strong>Premium Support:</strong> $249/month includes all standard hosting features plus priority support, weekly content updates, and monthly performance reports.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Our Process</h2>
+            <p class="section-subtitle">Simple, efficient, and transparent</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <h3>Consultation</h3>
+                    <p>We discuss your requirements, goals, and vision to understand exactly what you need.</p>
+                </div>
+                <div class="process-step">
+                    <h3>Proposal</h3>
+                    <p>We provide a detailed proposal with pricing, timeline, and scope of work.</p>
+                </div>
+                <div class="process-step">
+                    <h3>Development</h3>
+                    <p>Our autonomous AI system develops your solution with minimal human intervention.</p>
+                </div>
+                <div class="process-step">
+                    <h3>Delivery</h3>
+                    <p>We deliver your completed project for review, make any adjustments, and deploy.</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <p><strong>What makes us different?</strong> Traditional development can take weeks or months. Our AI-powered approach delivers in hours or days, not weeks or months, without sacrificing quality.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" style="background-color: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Common questions about our services</p>
+            
+            <div class="faq-container">
+                <div class="faq-item faq-active">
+                    <div class="faq-question">
+                        <span>How can you develop websites so quickly?</span>
+                        <span class="faq-toggle">−</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our revolutionary autonomous AI system, Hermod, functions as a team of developers working 24/7 with unprecedented efficiency. By leveraging advanced machine learning and a proprietary blend of large language models, we've created a system that can generate high-quality code, designs, and functionality at speeds impossible for traditional development teams.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What types of projects can you handle?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We can handle almost any software development project regardless of industry or complexity. From simple websites to complex enterprise applications, e-commerce platforms, database solutions, and custom software, our autonomous AI system is equipped to tackle diverse challenges across various domains. If you have a specific project in mind, we'd be happy to discuss how we can help.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you offer ongoing support after launch?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer two hosting and maintenance packages. Our standard package ($99/month) includes domain management, secure hosting, weekly updates, and technical support. Our premium package ($249/month) includes all standard features plus priority support, weekly content updates, and monthly performance reports. We're committed to ensuring your solution continues to perform optimally long after launch.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do you guarantee quality with such fast turnaround times?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Quality is built into our AI architecture. Hermod includes sophisticated verification systems that automatically detect and correct issues before delivery. Additionally, every project undergoes a final review by our technical team to ensure it meets our high standards. Our autonomous system is designed to deliver both speed and quality without compromise.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the typical turnaround time for projects?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard websites typically take 24-48 hours, while more complex projects with advanced functionality may take 2-4 days. Enterprise-level projects and custom software solutions vary based on scope and complexity, but are still completed in a fraction of the time required by traditional development methods. We'll provide you with a specific timeline during our consultation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Get Started</h2>
+            <p class="section-subtitle">Contact us to discuss your project</p>
+            
+            <div class="contact-form">
+                <form id="clientForm">
+                    <div id="formStatus"></div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Interested In</label>
+                        <select id="service" name="service" required>
+                            <option value="">Please select...</option>
+                            <option value="Web Design">Web Design</option>
+                            <option value="Dev in a Drive">Dev in a Drive</option>
+                            <option value="Custom AI Solution">Custom AI Solution</option>
+                            <option value="Other">Other/Not Sure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Project Details</label>
+                        <textarea id="message" name="message" required placeholder="Please describe your project needs, timeline, and any specific requirements."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Request Quote</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="clients.html">For Clients</a></li>
+                <li><a href="investors.html">For Investors</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <p>Email: KaynenBPellegrino@Sybertnetics.com</p>
+            <p class="copyright">&copy; 2025 Sybertnetics Artificial Intelligence Solutions, Inc. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="form-handler.js"></script>
+    <script>
+        // FAQ Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const toggle = item.querySelector('.faq-toggle');
+                
+                question.addEventListener('click', function() {
+                    item.classList.toggle('faq-active');
+                    toggle.textContent = item.classList.contains('faq-active') ? '−' : '+';
+                });
+            });
+            
+            // Modified version of form-handler.js for the client form
+            const clientForm = document.getElementById('clientForm');
+            const formStatus = document.getElementById('formStatus');
+            
+            if (clientForm) {
+                clientForm.addEventListener('submit', async function(e) {
+                  e.preventDefault();
+                  
+                  const baseUrl = window.location.origin;
+                  
+                  formStatus.innerHTML = '<p class="status-message loading">Sending your message...</p>';
+                  
+                  const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    company: document.getElementById('company').value,
+                    service: document.getElementById('service').value,
+                    message: document.getElementById('message').value,
+                    subject: "Client Project Inquiry"
+                  };
+                  
+                  try {
+                    const response = await fetch(`${baseUrl}/api/send-email`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                      formStatus.innerHTML = '<p class="status-message success">Your message has been sent successfully! We will contact you shortly with a quote for your project.</p>';
+                      clientForm.reset();
+                      
+                      await fetch(`${baseUrl}/api/auto-respond`, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                      });
+                      
+                    } else {
+                      formStatus.innerHTML = `<p class="status-message error">${result.message}</p>`;
+                    }
+                  } catch (error) {
+                    console.error('Error:', error);
+                    formStatus.innerHTML = '<p class="status-message error">There was an error sending your message. Please try again later or contact us directly at KaynenBPellegrino@Sybertnetics.com.</p>';
+                  }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+        
+        .logo .blue-text {
+            color: #4d80e4;
+        }
+        
+        .logo .green-text {
+            color: #2ecc71;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
