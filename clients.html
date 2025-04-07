@@ -546,7 +546,7 @@
             <div class="pricing-table">
                 <div class="pricing-tier">
                     <h4 class="tier-name">Personal</h4>
-                    <div class="tier-price">$250<span>/one-time</span></div>
+                    <div class="tier-price">starting at $250<span>/one-time</span></div>
                     <ul class="tier-features">
                         <li>Up to 5 page responsive website</li>
                         <li>Modern design</li>
@@ -559,7 +559,7 @@
                 </div>
                 <div class="pricing-tier">
                     <h4 class="tier-name">Small Business</h4>
-                    <div class="tier-price">$1,999<span>/one-time</span></div>
+                    <div class="tier-price">starting at $1,999<span>/one-time</span></div>
                     <ul class="tier-features">
                         <li>Up to 10 page responsive website</li>
                         <li>Professional design</li>
@@ -572,7 +572,7 @@
                 </div>
                 <div class="pricing-tier popular">
                     <h4 class="tier-name">Advanced</h4>
-                    <div class="tier-price">$4,999<span>/one-time</span></div>
+                    <div class="tier-price">starting at $4,999<span>/one-time</span></div>
                     <ul class="tier-features">
                         <li>Up to 20 page responsive website</li>
                         <li>Custom premium design</li>
@@ -996,9 +996,9 @@
                     return;
                 }
             } else if (currentQuestion === 4) {
-                if (formData.service === 'web-development' && !formData.webLevel) {
-                    alert('Please select a service level');
-                    return;
+               // if (formData.service === 'web-development' && !formData.webLevel) {
+               //     alert('Please select a service level');
+               //     return;
                 }
             } else if (currentQuestion === 5) {
                 if (formData.referral.hasReferral && !document.getElementById('referral-name').value.trim()) {
@@ -1115,43 +1115,59 @@
         };
 
         // Email functionality for the form
-            function submitForm() {
-                // Prepare email data
-                const emailData = {
-                    to: "KaynenBPellegrino@Sybertnetics.com", // Replace with your email
-                    subject: `New Service Request from ${formData.name}`,
-                    body: `
-            Name: ${formData.name}
-            Company: ${formData.company.isCompany ? formData.company.name : 'N/A'}
-            Service: ${formData.service}
-            ${formData.service === 'web-development' ? 'Web Level: ' + formData.webLevel : ''}
-            Referral: ${formData.referral.hasReferral ? formData.referral.name : 'N/A'}
-            Email: ${formData.email}
-            Additional Info: ${formData.additionalInfo}
-            Newsletter: ${formData.newsletter ? 'Yes' : 'No'}
-                    `
-                };
-                
-            fetch('/api/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(emailData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                // Show success message
-                document.getElementById('question-8').classList.remove('active');
-                document.getElementById('form-success').classList.add('active');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('There was an error submitting your request. Please try again.');
-            });
+            function rm() {
+    // Format all collected data
     console.log('Form data:', formData);
+    
+    // Prepare email data
+    const emailData = {
+        to: "KaynenBPellegrino@Sybertnetics.com", // Your email
+        subject: `New Service Request from ${formData.name}`,
+        body: `
+Name: ${formData.name}
+Company: ${formData.company.isCompany ? formData.company.name : 'N/A'}
+Service: ${formData.service}
+${formData.service === 'web-development' ? 'Web Level: ' + (formData.webLevel || 'Not specified') : ''}
+${formData.hosting ? 'Hosting: ' + formData.hosting : ''}
+${formData.addOns && formData.addOns.length > 0 ? 'Add-ons: ' + formData.addOns.join(', ') : ''}
+Referral: ${formData.referral.hasReferral ? formData.referral.name : 'N/A'}
+Email: ${formData.email}
+Additional Info: ${formData.additionalInfo}
+Newsletter: ${formData.newsletter ? 'Yes' : 'No'}
+        `
+    };
+    
     console.log('Email data:', emailData);
+    
+    // Show success message
+    document.getElementById('question-8').classList.remove('active');
+    document.getElementById('form-success').classList.add('active');
+    
+    // In a real implementation, you would send this data to your server
+    // For now, we're just showing the success message
+    
+    // You can uncomment this section once your form-handler.js and API are working
+    /*
+    fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(emailData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // Show success message
+        document.getElementById('question-8').classList.remove('active');
+        document.getElementById('form-success').classList.add('active');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('There was an error submitting your request. Please try again.');
+    });
+    */
+}
     
     // Hide last question
     document.getElementById('question-8').classList.remove('active');
@@ -1206,6 +1222,27 @@
                 originalSubmitForm();
             }
         };
+
+        document.addEventListener('keydown', function(event) {
+    // Check if the key pressed is Enter
+    if (event.key === 'Enter') {
+        // Find the currently active question
+        const activeQuestion = document.querySelector('.form-question.active');
+        if (activeQuestion) {
+            // Get the question number from the ID (e.g., "question-3" -> 3)
+            const questionId = activeQuestion.id;
+            const questionNumber = parseInt(questionId.split('-')[1]);
+            
+            // If it's a text input field and user is pressing Enter
+            const focusedElement = document.activeElement;
+            if (focusedElement.tagName === 'INPUT' || focusedElement.tagName === 'TEXTAREA') {
+                // Trigger the next button
+                nextQuestion(questionNumber);
+                event.preventDefault(); // Prevent default form submission
+                    }
+                }
+            }
+        });
 
 // For the contact form
 document.addEventListener('DOMContentLoaded', function() {
