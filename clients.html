@@ -855,7 +855,7 @@
             </div>
             <div class="form-buttons">
                 <button class="btn btn-outline" onclick="prevQuestion(8)">Back</button>
-                <button class="btn" onclick="submitForm()">Submit</button>
+                <button class="btn" onclick="rm()">Submit</button>
             </div>
         </div>
         
@@ -1074,6 +1074,46 @@
                 formData.newsletter = (value === 'yes');
             }
         }
+
+        
+        function toggleOption(btn, field, value) {
+            // Toggle selected class
+            btn.classList.toggle('selected');
+            
+            // Initialize add-ons array if needed
+            if (!formData.addOns) {
+                formData.addOns = [];
+            }
+            
+            // Add or remove from array
+            if (btn.classList.contains('selected')) {
+                if (!formData.addOns.includes(value)) {
+                    formData.addOns.push(value);
+                }
+            } else {
+                formData.addOns = formData.addOns.filter(item => item !== value);
+            }
+        }
+        const originalSelectOption = window.selectOption || function() {};
+        window.selectOption = function(btn, field, value) {
+            // Call original function
+            if (typeof originalSelectOption === 'function') {
+                originalSelectOption(btn, field, value);
+            }
+            
+            // Show custom options when selecting custom web level
+            if (field === 'web-level' && value === 'custom') {
+                document.getElementById('custom-options').style.display = 'block';
+            } else if (field === 'web-level' && value !== 'custom') {
+                document.getElementById('custom-options').style.display = 'none';
+            }
+            
+            // Save hosting preference
+            if (field === 'hosting') {
+                formData.hosting = value;
+            }
+        };
+
         // Email functionality for the form
             function submitForm() {
                 // Prepare email data
@@ -1144,6 +1184,28 @@
         document.getElementById('referral-name-field').style.display = 'none';
     }, 500);
 }
+
+        const originalSubmitForm = window.submitForm || function() {};
+        window.submitForm = function() {
+            // Format add-ons and hosting information
+            let additionalServices = '';
+            if (formData.addOns && formData.addOns.length > 0) {
+                additionalServices += "Add-on services requested: " + formData.addOns.join(', ') + "\n";
+            }
+            if (formData.hosting) {
+                additionalServices += "Hosting option: " + formData.hosting + "\n";
+            }
+            
+            // Add to additional info
+            if (additionalServices) {
+                formData.additionalInfo = additionalServices + "\n" + (formData.additionalInfo || '');
+            }
+            
+            // Call original function
+            if (typeof originalSubmitForm === 'function') {
+                originalSubmitForm();
+            }
+        };
 
 // For the contact form
 document.addEventListener('DOMContentLoaded', function() {
