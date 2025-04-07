@@ -600,6 +600,43 @@
         </div>
     </section>
 
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Hosting & Maintenance</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Keep your website secure, up-to-date, and performing at its best with our professional hosting and maintenance services.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Basic Hosting</h3>
+                    <p>Professional hosting with domain management and essential maintenance to keep your website secure and functional.</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Reliable cloud hosting</li>
+                        <li>Domain registration & management</li>
+                        <li>SSL certificate</li>
+                        <li>Basic security monitoring</li>
+                        <li>Monthly backups</li>
+                    </ul>
+                    <p><strong>$15/month</strong> or <strong>$150/year</strong></p>
+                    <button class="btn" onclick="startForm('basic-hosting')">Get Started</button>
+                </div>
+                <div class="service-card">
+                    <h3>Premium Maintenance</h3>
+                    <p>Comprehensive website care with regular updates, content changes, and proactive monitoring for optimal performance.</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Everything in Basic Hosting</li>
+                        <li>Weekly content updates</li>
+                        <li>Performance optimization</li>
+                        <li>Weekly backups</li>
+                        <li>Detailed analytics</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <p><strong>$50/month</strong> or <strong>$500/year</strong></p>
+                    <button class="btn" onclick="startForm('premium-maintenance')">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="dev-on-drive" class="section" style="background-color: rgba(0, 0, 0, 0.5);">
         <div class="container">
             <h2 class="section-title">Dev on a Drive</h2>
@@ -643,6 +680,52 @@
                 <div style="text-align: center;">
                     <button class="btn" onclick="startForm('dev-drive')">Request Quote</button>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: rgba(0, 0, 0, 0.5);">
+        <div class="container">
+            <h2 class="section-title">Customization Options</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Enhance your website with additional features tailored to your specific needs. These options can be added to any of our web development packages.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                <div class="card" style="padding: 20px; border: 1px solid var(--primary-color); border-radius: 10px;">
+                    <h3 style="font-size: 1.4rem; color: var(--primary-color); margin-bottom: 10px;">E-Commerce Integration</h3>
+                    <p>Add online store capabilities to any website package.</p>
+                    <p style="margin-top: 10px; font-weight: bold;">Starting at $1,500</p>
+                </div>
+                <div class="card" style="padding: 20px; border: 1px solid var(--primary-color); border-radius: 10px;">
+                    <h3 style="font-size: 1.4rem; color: var(--primary-color); margin-bottom: 10px;">Database Integration</h3>
+                    <p>Connect your website to a custom database for dynamic content.</p>
+                    <p style="margin-top: 10px; font-weight: bold;">Starting at $800</p>
+                </div>
+                <div class="card" style="padding: 20px; border: 1px solid var(--primary-color); border-radius: 10px;">
+                    <h3 style="font-size: 1.4rem; color: var(--primary-color); margin-bottom: 10px;">User Authentication</h3>
+                    <p>Add secure login/registration systems for your users.</p>
+                    <p style="margin-top: 10px; font-weight: bold;">Starting at $600</p>
+                </div>
+                <div class="card" style="padding: 20px; border: 1px solid var(--primary-color); border-radius: 10px;">
+                    <h3 style="font-size: 1.4rem; color: var(--primary-color); margin-bottom: 10px;">Custom Interactive Features</h3>
+                    <p>Add calculators, quizzes, interactive maps, and more.</p>
+                    <p style="margin-top: 10px; font-weight: bold;">Starting at $400</p>
+                </div>
+                <div class="card" style="padding: 20px; border: 1px solid var(--primary-color); border-radius: 10px;">
+                    <h3 style="font-size: 1.4rem; color: var(--primary-color); margin-bottom: 10px;">Subscription Management</h3>
+                    <p>Implement recurring payment systems for membership sites.</p>
+                    <p style="margin-top: 10px; font-weight: bold;">Starting at $900</p>
+                </div>
+                <div class="card" style="padding: 20px; border: 1px solid var(--primary-color); border-radius: 10px;">
+                    <h3 style="font-size: 1.4rem; color: var(--primary-color); margin-bottom: 10px;">Multilingual Support</h3>
+                    <p>Make your website accessible in multiple languages.</p>
+                    <p style="margin-top: 10px; font-weight: bold;">Starting at $700</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; background-color: rgba(0, 0, 0, 0.3); padding: 30px; border-radius: 10px; border: 1px solid var(--primary-color);">
+                <h3 style="margin-bottom: 15px; color: var(--primary-color);">Custom Quote for Your Specific Needs</h3>
+                <p>Need something not listed here? Our AI systems can develop custom functionality tailored to your unique requirements.</p>
+                <button class="btn" style="margin-top: 20px;" onclick="startForm('custom-feature')">Request Custom Feature</button>
             </div>
         </div>
     </section>
@@ -700,6 +783,25 @@
                 <div class="option-btn" onclick="selectOption(this, 'web-level', 'small-business')">Small Business</div>
                 <div class="option-btn" onclick="selectOption(this, 'web-level', 'enterprise')">Enterprise</div>
                 <div class="option-btn" onclick="selectOption(this, 'web-level', 'custom')">Custom</div>
+            </div>
+            <div id="custom-options" style="margin-top: 20px; display: none;">
+                <h4 style="margin-bottom: 10px; color: var(--primary-color);">Additional Options (Select all that apply)</h4>
+                <div class="options-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'e-commerce')">E-Commerce</div>
+                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'database')">Database</div>
+                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'authentication')">User Authentication</div>
+                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'interactive')">Interactive Features</div>
+                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'subscription')">Subscription System</div>
+                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'multilingual')">Multilingual Support</div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <h4 style="margin-bottom: 10px; color: var(--primary-color);">Hosting & Maintenance</h4>
+                <div class="options-grid">
+                    <div class="option-btn" onclick="selectOption(this, 'hosting', 'none')">No Hosting Needed</div>
+                    <div class="option-btn" onclick="selectOption(this, 'hosting', 'basic')">Basic Hosting</div>
+                    <div class="option-btn" onclick="selectOption(this, 'hosting', 'premium')">Premium Maintenance</div>
+                </div>
             </div>
             <div class="form-buttons">
                 <button class="btn btn-outline" onclick="prevQuestion(4)">Back</button>
