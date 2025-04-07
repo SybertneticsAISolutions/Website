@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sybertnetics - Welcome</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+        }
+        
+        .landing-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title {
+            font-size: 5rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 153, 255, 0.8);
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #0099ff;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border: 2px solid #0099ff;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .subtitle:hover {
+            color: #fff;
+            background-color: rgba(0, 153, 255, 0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            transform: scale(1.05);
+        }
+        
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #000;
+            overflow: hidden;
+            background-image: url('blue-tech-background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .digital-effect {
+            position: absolute;
+            background-color: rgba(0, 153, 255, 0.15);
+            animation: moveRandom 15s infinite;
+        }
+        
+        .transition-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s;
+            background-image: url('blue-tech-background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .transition-text {
+            font-size: 2.5rem;
+            color: #0099ff;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 153, 255, 0.8);
+        }
+        
+        .loading-bar {
+            width: 300px;
+            height: 5px;
+            background-color: #111;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background-color: #0099ff;
+            border-radius: 5px;
+            transition: width 3s ease-in-out;
+        }
+        
+        @keyframes moveRandom {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(calc(100vw * var(--rand-x)), calc(100vh * var(--rand-y)));
+            }
+            50% {
+                transform: translate(calc(100vw * var(--rand-x2)), calc(100vh * var(--rand-y2)));
+            }
+            75% {
+                transform: translate(calc(100vw * var(--rand-x3)), calc(100vh * var(--rand-y3)));
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background" id="background"></div>
+    
+    <div class="landing-container">
+        <h1 class="title">Syber<span style="color: #2ecc71;">t</span><span style="color: #4d80e4;">netics</span></h1>
+        <div class="subtitle" id="enter-btn">Welcome to the Future</div>
+    
+    <script>
+        // Generate digital effect elements
+        window.addEventListener('DOMContentLoaded', () => {
+            const background = document.getElementById('background');
+            const numElements = 20; // Reduced number since we have a background image
+            
+            for (let i = 0; i < numElements; i++) {
+                const element = document.createElement('div');
+                element.classList.add('digital-effect');
+                
+                // Random properties
+                const width = Math.random() * 300 + 50;
+                const height = Math.random() * 20 + 5;
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                const opacity = Math.random() * 0.2 + 0.1;
+                const blur = Math.random() * 5 + 2;
+                
+                // Set random animation variables
+                element.style.setProperty('--rand-x', Math.random());
+                element.style.setProperty('--rand-y', Math.random());
+                element.style.setProperty('--rand-x2', Math.random());
+                element.style.setProperty('--rand-y2', Math.random());
+                element.style.setProperty('--rand-x3', Math.random());
+                element.style.setProperty('--rand-y3', Math.random());
+                
+                // Apply styles
+                element.style.width = `${width}px`;
+                element.style.height = `${height}px`;
+                element.style.left = `${x}px`;
+                element.style.top = `${y}px`;
+                element.style.opacity = opacity;
+                element.style.filter = `blur(${blur}px)`;
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                
+                background.appendChild(element);
+            }
+        });
+        
+        // Handle transition to main page
+        document.getElementById('enter-btn').addEventListener('click', () => {
+            const transition = document.getElementById('transition');
+            const loadingBar = document.getElementById('loading-progress');
+            
+            // Show transition screen
+            transition.style.opacity = '1';
+            transition.style.visibility = 'visible';
+            
+            // Animate loading bar
+            setTimeout(() => {
+                loadingBar.style.width = '100%';
+            }, 100);
+            
+            // Navigate to main page after transition
+            setTimeout(() => {
+                window.location.href = 'main.html';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
+    
+    <div class="transition-screen" id="transition">
+        <div class="transition-text">Sybertnetics Artificial Intelligence Solutions</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loading-progress"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Generate digital effect elements
+        window.addEventListener('DOMContentLoaded', () => {
+            const background = document.getElementById('background');
+            const numElements = 50;
+            
+            for (let i = 0; i < numElements; i++) {
+                const element = document.createElement('div');
+                element.classList.add('digital-effect');
+                
+                // Random properties
+                const width = Math.random() * 300 + 50;
+                const height = Math.random() * 20 + 5;
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                const opacity = Math.random() * 0.2 + 0.1;
+                const blur = Math.random() * 5 + 2;
+                
+                // Set random animation variables
+                element.style.setProperty('--rand-x', Math.random());
+                element.style.setProperty('--rand-y', Math.random());
+                element.style.setProperty('--rand-x2', Math.random());
+                element.style.setProperty('--rand-y2', Math.random());
+                element.style.setProperty('--rand-x3', Math.random());
+                element.style.setProperty('--rand-y3', Math.random());
+                
+                // Apply styles
+                element.style.width = `${width}px`;
+                element.style.height = `${height}px`;
+                element.style.left = `${x}px`;
+                element.style.top = `${y}px`;
+                element.style.opacity = opacity;
+                element.style.filter = `blur(${blur}px)`;
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                
+                background.appendChild(element);
+            }
+        });
+        
+        // Handle transition to main page
+        document.getElementById('enter-btn').addEventListener('click', () => {
+            const transition = document.getElementById('transition');
+            const loadingBar = document.getElementById('loading-progress');
+            
+            // Show transition screen
+            transition.style.opacity = '1';
+            transition.style.visibility = 'visible';
+            
+            // Animate loading bar
+            setTimeout(() => {
+                loadingBar.style.width = '100%';
+            }, 100);
+            
+            // Navigate to main page after transition
+            setTimeout(() => {
+                window.location.href = 'main.html';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
