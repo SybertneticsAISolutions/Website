@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sybertnetics - Client Solutions</title>
+    <title>Sybertnetics - Client Services</title>
     <style>
         /* Global Styles */
+        :root {
+            --primary-color: #0099ff;
+            --secondary-color: #003366;
+            --dark-color: #001a33;
+            --light-color: #e6f5ff;
+            --accent-color: #00cc99;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #000;
+            color: #fff;
             line-height: 1.6;
         }
         
         .container {
-            width: 90%;
+            width: 85%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
@@ -28,129 +36,146 @@
         
         /* Header Styles */
         header {
-            background-color: #1a1a2e;
-            color: white;
+            background-color: rgba(0, 0, 0, 0.9);
             padding: 20px 0;
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            border-bottom: 1px solid var(--primary-color);
         }
         
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: white;
-        }
-        
-        .logo .blue-text {
-            color: #4d80e4;
-        }
-        
-        .logo .green-text {
-            color: #2ecc71;
-        }
-        
-        nav {
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
         .nav-links {
             display: flex;
-            list-style: none;
         }
         
         .nav-links li {
+            list-style: none;
             margin-left: 30px;
         }
         
         .nav-links a {
-            color: white;
+            color: #fff;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
         
         .nav-links a:hover {
-            color: #4d80e4;
+            background-color: var(--primary-color);
+            color: #000;
         }
         
         /* Hero Section Styles */
         .hero {
-            min-height: 60vh;
+            height: 60vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(to right, #1a1a2e, #16213e);
-            color: white;
-            margin-top: 60px;
+            background: linear-gradient(135deg, var(--dark-color), #000);
+            padding-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="none" stroke="%230099ff" stroke-width="1" stroke-opacity="0.1"/></svg>');
+            background-size: 20px 20px;
+            opacity: 0.2;
+            z-index: 1;
         }
         
         .hero-content {
-            max-width: 800px;
+            position: relative;
+            z-index: 2;
         }
         
         .hero h1 {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 20px;
             line-height: 1.2;
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 30px;
+            max-width: 600px;
         }
         
         .btn {
             display: inline-block;
-            background-color: #4d80e4;
-            color: white;
+            background-color: var(--primary-color);
+            color: #fff;
             padding: 12px 30px;
-            border-radius: 5px;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             transition: background-color 0.3s;
             margin-right: 15px;
             margin-bottom: 15px;
+            border: none;
+            cursor: pointer;
         }
         
         .btn:hover {
-            background-color: #3a5bb9;
+            background-color: #0077cc;
         }
         
-        .btn-secondary {
+        .btn-outline {
             background-color: transparent;
-            border: 2px solid #4d80e4;
+            border: 2px solid var(--primary-color);
         }
         
-        .btn-secondary:hover {
-            background-color: rgba(77, 128, 228, 0.1);
+        .btn-outline:hover {
+            background-color: var(--primary-color);
         }
         
         /* Section Styles */
         .section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             font-size: 2.5rem;
-            color: #1a1a2e;
+            color: var(--primary-color);
         }
         
-        .section-subtitle {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            color: #4d80e4;
-            font-weight: 500;
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 20px auto 0;
         }
         
-        /* Services Section */
+        /* Service Styles */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -159,22 +184,26 @@
         }
         
         .service-card {
-            background-color: white;
+            background-color: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
+            border: 1px solid var(--primary-color);
         }
         
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 153, 255, 0.3);
         }
         
         .service-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 15px;
-            color: #1a1a2e;
+            color: var(--primary-color);
+        }
+        
+        .service-card p {
+            margin-bottom: 20px;
         }
         
         /* Pricing Section */
@@ -187,259 +216,268 @@
         }
         
         .pricing-tier {
-            background-color: white;
+            background-color: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
             flex: 1;
-            min-width: 280px;
-            max-width: 350px;
+            min-width: 250px;
+            max-width: 300px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid var(--primary-color);
         }
         
         .pricing-tier:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 153, 255, 0.3);
         }
         
         .popular {
-            border: 2px solid #4d80e4;
+            border: 2px solid var(--accent-color);
+            position: relative;
         }
         
-        .popular-tag {
+        .popular::before {
+            content: 'POPULAR';
             position: absolute;
-            top: 15px;
-            right: -30px;
-            background-color: #4d80e4;
-            color: white;
-            padding: 5px 30px;
-            transform: rotate(45deg);
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-color);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
         }
         
         .tier-name {
             font-size: 1.5rem;
-            color: #1a1a2e;
             margin-bottom: 10px;
+            color: var(--primary-color);
         }
         
         .tier-price {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #4d80e4;
+            color: #fff;
             margin-bottom: 20px;
         }
         
         .tier-price span {
             font-size: 1rem;
-            color: #666;
-            font-weight: 400;
+            opacity: 0.7;
         }
         
         .tier-features {
             list-style: none;
             margin-bottom: 30px;
+            text-align: left;
         }
         
         .tier-features li {
             margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .tier-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* Process Section */
-        .process-steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 40px;
-            counter-reset: step;
-        }
-        
-        .process-step {
-            flex-basis: 22%;
-            min-width: 250px;
-            text-align: center;
+            padding-left: 25px;
             position: relative;
-            padding: 30px 20px;
-            margin-bottom: 20px;
         }
         
-        .process-step::before {
-            counter-increment: step;
-            content: counter(step);
+        .tier-features li::before {
+            content: "✓";
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 50px;
-            background-color: #4d80e4;
-            color: white;
-            border-radius: 50%;
-            line-height: 50px;
-            font-weight: 700;
-            font-size: 1.5rem;
+            left: 0;
+            color: var(--accent-color);
         }
         
-        .process-step h3 {
-            margin-top: 40px;
-            margin-bottom: 15px;
-            color: #1a1a2e;
-            font-size: 1.3rem;
-        }
-        
-        /* FAQ Section */
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto 40px;
-        }
-        
-        .faq-item {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        
-        .faq-answer {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-            display: none;
-        }
-        
-        .faq-active .faq-answer {
-            display: block;
-        }
-        
-        /* Contact Section Styles */
-        .contact-form {
+        /* Interactive Form Styles */
+        .interactive-form {
             max-width: 600px;
             margin: 0 auto;
-            background-color: white;
-            padding: 40px;
+            display: none; /* Will be shown when triggered */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
+        }
+        
+        .form-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .form-close:hover {
+            transform: rotate(90deg);
+            color: #fff;
+        }
+        
+        .form-question {
+            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .form-group {
+            padding: 30px;
             margin-bottom: 20px;
+            border: 1px solid var(--primary-color);
+            display: none; /* Each question is hidden initially */
+            transition: all 0.5s;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
-        label {
+        .form-question.active {
             display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
+            opacity: 1;
+            transform: translateY(0);
         }
         
-        input, textarea, select {
+        .form-question h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .form-question input[type="text"],
+        .form-question input[type="email"],
+        .form-question textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            color: #fff;
             font-size: 1rem;
+            margin-bottom: 15px;
         }
         
-        textarea {
-            height: 150px;
+        .form-question textarea {
+            height: 120px;
             resize: vertical;
         }
         
-        .submit-btn {
-            background-color: #4d80e4;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .option-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-color);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .submit-btn:hover {
-            background-color: #3a5bb9;
-        }
-        
-        .status-message {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            transition: all 0.3s;
             text-align: center;
         }
         
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        .option-btn:hover {
+            background-color: rgba(0, 153, 255, 0.3);
         }
         
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        .option-btn.selected {
+            background-color: var(--primary-color);
+            color: #000;
         }
         
-        .loading {
-            background-color: #e2e3e5;
-            color: #383d41;
-            border: 1px solid #d6d8db;
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .form-success {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .form-success h3 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Digital Effects */
+        .digital-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="rgba(0,0,0,0.9)"/></svg>');
+        }
+        
+        .digital-line {
+            position: absolute;
+            height: 2px;
+            background-color: var(--primary-color);
+            opacity: 0.3;
+            animation: moveLine 15s infinite linear;
+        }
+        
+        @keyframes moveLine {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateX(200%);
+                opacity: 0;
+            }
         }
         
         /* Footer Styles */
         footer {
-            background-color: #1a1a2e;
-            color: white;
-            padding: 40px 0;
+            background-color: var(--dark-color);
+            padding: 60px 0 20px;
             text-align: center;
+            border-top: 1px solid var(--primary-color);
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            list-style: none;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         
         .footer-links li {
+            list-style: none;
             margin: 0 15px;
         }
         
         .footer-links a {
-            color: white;
+            color: #fff;
             text-decoration: none;
             transition: color 0.3s;
         }
         
         .footer-links a:hover {
-            color: #4d80e4;
+            color: var(--primary-color);
         }
         
         .copyright {
+            color: #999;
             font-size: 0.9rem;
-            color: #aaa;
+            margin-top: 20px;
         }
         
-        /* Responsive Styles */
+        /* Media Queries */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -451,368 +489,291 @@
             
             .pricing-tier {
                 min-width: 100%;
+                max-width: 100%;
             }
             
-            .process-step {
-                flex-basis: 100%;
+            .options-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <div class="digital-background" id="digital-background"></div>
+    
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Syber<span class="green-text">t</span><span class="blue-text">netics</span></div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="index.html#about">About</a></li>
-                    <li><a href="clients.html">For Clients</a></li>
-                    <li><a href="investors.html">For Investors</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Syber<span style="color: #2ecc71;">t</span><span>netics</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="investors.html">Investors</a></li>
+                <li><a href="clients.html">Clients</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Transform Your Business with Autonomous AI</h1>
-                <p>Our revolutionary AI-powered solutions deliver unprecedented development speed, quality, and innovation to help your organization thrive in the digital age.</p>
-                <a href="#services" class="btn">Our Services</a>
-                <a href="#contact" class="btn btn-secondary">Get a Quote</a>
-            </div>
+        <div class="container hero-content">
+            <h1>Our Services</h1>
+            <p>Transformative solutions powered by autonomous AI, delivering unprecedented speed and quality.</p>
+            <a href="#web-development" class="btn">Web Development</a>
+            <a href="#dev-on-drive" class="btn btn-outline">Dev on a Drive</a>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="section">
+    <section id="web-development" class="section">
         <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">Cutting-edge solutions powered by autonomous AI</p>
+            <h2 class="section-title">Web Development</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Our autonomous AI system delivers exceptional websites in a fraction of the time required by traditional developers, with uncompromising quality and attention to detail.</p>
             
             <div class="services-grid">
                 <div class="service-card">
-                    <h3>Enterprise Web Design</h3>
-                    <p>From basic websites to complex e-commerce platforms, we offer comprehensive web design packages with varying levels of functionality. Our solutions include responsive designs, database integration, authentication systems, and custom features tailored to your specific business needs.</p>
-                    <p>Using our revolutionary AI architecture, we can deliver exceptional websites in just 24-48 hours, a fraction of the time required by traditional development approaches.</p>
+                    <h3>Personal Websites</h3>
+                    <p>Perfect for individuals, creatives, and professionals who need a standout online presence. Our personal websites include responsive design, essential features, and rapid delivery.</p>
+                    <p>Starting at just $250, transform your digital identity with a professionally designed website built by our advanced AI system.</p>
+                    <button class="btn" onclick="startForm('personal')">Get Started</button>
                 </div>
                 <div class="service-card">
-                    <h3>Personal Website Design</h3>
-                    <p>Need a professional portfolio, blog, or personal site? Our affordable personal website packages give you a modern, responsive site with all essential features. Perfect for individuals, creative professionals, and small projects.</p>
-                    <p>Starting at just $250, our personal websites include mobile-friendly design, contact forms, and rapid delivery, all powered by our cutting-edge AI technology.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Dev on a Drive</h3>
-                    <p>Our groundbreaking development service slashes project timelines, completing in hours what traditionally requires days or weeks. Hermod functions as a team of junior to mid-level developers, handling workloads with unprecedented speed and efficiency while maintaining exceptional quality and attention to detail.</p>
-                    <p>This service is perfect for organizations looking to accelerate development cycles, reduce costs, and gain a competitive edge through faster innovation.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Custom AI Solutions</h3>
-                    <p>We create tailored AI systems designed to address your organization's unique challenges. Our solutions span from specialized data analysis tools to comprehensive autonomous systems that transform how you operate, innovate, and compete in your industry.</p>
-                    <p>Our team will work closely with you to understand your specific needs and develop a custom AI solution that drives real business results and provides measurable ROI.</p>
+                    <h3>Business Websites</h3>
+                    <p>Comprehensive web solutions for businesses of all sizes. From simple company sites to complex business platforms with advanced functionality and integrations.</p>
+                    <p>Establish a powerful online presence with features tailored to your specific business needs, delivered in just 24-48 hours.</p>
+                    <button class="btn" onclick="startForm('business')">Get Started</button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Web Design Pricing -->
-    <section class="section" style="background-color: #f8f9fa;">
-        <div class="container">
-            <h2 class="section-title">Web Design Pricing</h2>
-            <p class="section-subtitle">Comprehensive packages for businesses and individuals</p>
+            
+            <h3 style="text-align: center; margin: 60px 0 30px; color: var(--primary-color);">Web Development Packages</h3>
             
             <div class="pricing-table">
                 <div class="pricing-tier">
-                    <h3 class="tier-name">Personal</h3>
-                    <div class="tier-price">Starting at $250</div>
+                    <h4 class="tier-name">Personal</h4>
+                    <div class="tier-price">$250<span>/one-time</span></div>
                     <ul class="tier-features">
-                        <li>3-5 page responsive website</li>
-                        <li>Modern, professional design</li>
+                        <li>Up to 5 page responsive website</li>
+                        <li>Modern design</li>
                         <li>Mobile optimization</li>
-                        <li>Contact form integration</li>
+                        <li>Contact form</li>
                         <li>Basic SEO setup</li>
-                        <li>24-48 hour turnaround</li>
+                        <li>24-48 hour delivery</li>
                     </ul>
-                    <a href="#contact" class="btn">Get Started</a>
+                    <button class="btn" onclick="startForm('personal')">Order Now</button>
                 </div>
-                
                 <div class="pricing-tier">
-                    <h3 class="tier-name">Business</h3>
-                    <div class="tier-price">Starting at $1,999</div>
+                    <h4 class="tier-name">Small Business</h4>
+                    <div class="tier-price">$1,999<span>/one-time</span></div>
                     <ul class="tier-features">
-                        <li>5-10 page responsive website</li>
-                        <li>Modern, professional design</li>
+                        <li>Up to 10 page responsive website</li>
+                        <li>Professional design</li>
                         <li>Mobile optimization</li>
-                        <li>Basic SEO setup</li>
-                        <li>Contact form integration</li>
-                        <li>24-48 hour turnaround</li>
+                        <li>Contact form & forms</li>
+                        <li>SEO optimization</li>
+                        <li>24-48 hour delivery</li>
                     </ul>
-                    <a href="#contact" class="btn">Get Started</a>
+                    <button class="btn" onclick="startForm('small-business')">Order Now</button>
                 </div>
-                
                 <div class="pricing-tier popular">
-                    <div class="popular-tag">Popular</div>
-                    <h3 class="tier-name">Advanced</h3>
-                    <div class="tier-price">Starting at $4,999</div>
+                    <h4 class="tier-name">Advanced</h4>
+                    <div class="tier-price">$4,999<span>/one-time</span></div>
                     <ul class="tier-features">
-                        <li>10-20 page responsive website</li>
-                        <li>Custom design & branding</li>
-                        <li>User authentication system</li>
+                        <li>Up to 20 page responsive website</li>
+                        <li>Custom premium design</li>
+                        <li>Advanced functionality</li>
                         <li>Database integration</li>
-                        <li>Advanced SEO optimization</li>
-                        <li>2-4 days turnaround</li>
+                        <li>User authentication</li>
+                        <li>2-4 day delivery</li>
                     </ul>
-                    <a href="#contact" class="btn">Get Started</a>
+                    <button class="btn" onclick="startForm('enterprise')">Order Now</button>
                 </div>
-                
                 <div class="pricing-tier">
-                    <h3 class="tier-name">Enterprise</h3>
-                    <div class="tier-price">Custom Quote</div>
+                    <h4 class="tier-name">Enterprise</h4>
+                    <div class="tier-price">Custom<span>/quote</span></div>
                     <ul class="tier-features">
                         <li>Unlimited pages</li>
-                        <li>E-commerce functionality</li>
-                        <li>Custom database solutions</li>
-                        <li>Third-party API integrations</li>
-                        <li>Advanced user management</li>
-                        <li>Custom turnaround time</li>
+                        <li>E-commerce capabilities</li>
+                        <li>Custom functionality</li>
+                        <li>API integrations</li>
+                        <li>Advanced user systems</li>
+                        <li>Custom timeline</li>
                     </ul>
-                    <a href="#contact" class="btn">Get Quote</a>
+                    <button class="btn" onclick="startForm('custom')">Get Quote</button>
                 </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <h3>Additional Services</h3>
-                <p style="max-width: 800px; margin: 20px auto;">
-                    <strong>Hosting & Maintenance:</strong> $99/month includes domain management, secure hosting, weekly updates, and technical support.<br><br>
-                    <strong>Premium Support:</strong> $249/month includes all standard hosting features plus priority support, weekly content updates, and monthly performance reports.
-                </p>
             </div>
         </div>
     </section>
-    <section class="section">
-    <div class="container">
-        <h2 class="section-title">Dev on a Drive - Custom Software Development</h2>
-        <p class="section-subtitle">Revolutionary development services powered by autonomous AI</p>
-        
-        <div style="background-color: white; border-radius: 10px; padding: 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 40px;">
-            <h3 style="color: #1a1a2e; font-size: 1.8rem; margin-bottom: 20px;">Replace Your Development Team with Hermod</h3>
+
+    <section id="dev-on-drive" class="section" style="background-color: rgba(0, 0, 0, 0.5);">
+        <div class="container">
+            <h2 class="section-title">Dev on a Drive</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Our revolutionary development service replaces traditional junior to mid-level developers, completing projects in hours that normally require days or weeks.</p>
             
-            <p style="margin-bottom: 20px;">Our groundbreaking "Dev on a Drive" service leverages Hermod's autonomous capabilities to replace traditional development teams with a faster, more efficient alternative. Hermod functions as an entire team of junior to mid-level developers, working 24/7 with unprecedented speed and quality.</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0;">
-                <div style="text-align: center;">
-                    <div style="font-size: 2.5rem; font-weight: 700; color: #4d80e4; margin-bottom: 10px;">10x</div>
-                    <p><strong>Faster Development</strong><br>Complete projects in hours or days instead of weeks or months</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Custom Software Development</h3>
+                    <p>From web applications to specialized software tools, our AI system can develop custom solutions for your specific business needs with unprecedented speed and efficiency.</p>
+                    <p>Experience the power of AI-driven development that delivers production-ready code in a fraction of the time, with exceptional quality and attention to detail.</p>
+                    <button class="btn" onclick="startForm('software')">Get Started</button>
                 </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 2.5rem; font-weight: 700; color: #4d80e4; margin-bottom: 10px;">24/7</div>
-                    <p><strong>Continuous Progress</strong><br>Development continues around the clock without interruption</p>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 2.5rem; font-weight: 700; color: #4d80e4; margin-bottom: 10px;">70%</div>
-                    <p><strong>Cost Reduction</strong><br>Significantly lower costs compared to traditional development teams</p>
+                <div class="service-card">
+                    <h3>API Development & Integration</h3>
+                    <p>Connect your systems and third-party services with custom APIs developed by our autonomous AI. Create seamless integrations that power your business processes and enhance your capabilities.</p>
+                    <p>Our AI system delivers robust, secure, and efficient API solutions tailored to your exact requirements.</p>
+                    <button class="btn" onclick="startForm('api')">Get Started</button>
                 </div>
             </div>
             
-            <h4 style="color: #1a1a2e; font-size: 1.4rem; margin-bottom: 15px; margin-top: 30px;">Service Includes:</h4>
-            <ul style="list-style-type: none; margin-left: 0; margin-bottom: 30px;">
-                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
-                    <span style="position: absolute; left: 0; color: #2ecc71; font-weight: bold;">✓</span>
-                    <strong>Custom Software Development</strong> - Web applications, mobile apps, enterprise solutions
-                </li>
-                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
-                    <span style="position: absolute; left: 0; color: #2ecc71; font-weight: bold;">✓</span>
-                    <strong>API Development & Integration</strong> - Connect your systems and third-party services
-                </li>
-                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
-                    <span style="position: absolute; left: 0; color: #2ecc71; font-weight: bold;">✓</span>
-                    <strong>Database Design & Implementation</strong> - Optimize your data storage and retrieval
-                </li>
-                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
-                    <span style="position: absolute; left: 0; color: #2ecc71; font-weight: bold;">✓</span>
-                    <strong>UI/UX Development</strong> - Create intuitive and engaging user experiences
-                </li>
-                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
-                    <span style="position: absolute; left: 0; color: #2ecc71; font-weight: bold;">✓</span>
-                    <strong>Testing & Quality Assurance</strong> - Comprehensive testing to ensure reliability
-                </li>
-                <li style="padding-left: 30px; position: relative;">
-                    <span style="position: absolute; left: 0; color: #2ecc71; font-weight: bold;">✓</span>
-                    <strong>Project Documentation</strong> - Detailed documentation for your development project
-                </li>
-            </ul>
-            
-            <p style="margin-bottom: 20px;"><strong>Custom Pricing:</strong> Our Dev on a Drive service is tailored to each project's specific requirements. Contact us today for a custom quote based on your project scope, complexity, and timeline.</p>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="#contact" class="btn">Get a Custom Quote</a>
+            <div style="background-color: rgba(0, 0, 0, 0.5); padding: 40px; border-radius: 10px; margin-top: 60px; border: 1px solid var(--primary-color);">
+                <h3 style="text-align: center; margin-bottom: 30px; color: var(--primary-color);">Why Choose Dev on a Drive?</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 15px; color: var(--primary-color);">10x</div>
+                        <p>Faster development compared to traditional teams</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 15px; color: var(--primary-color);">24/7</div>
+                        <p>Continuous development without interruptions</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 15px; color: var(--primary-color);">70%</div>
+                        <p>Cost reduction compared to traditional development</p>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin: 30px 0;">Custom pricing based on project scope, complexity, and timeline. Contact us for a personalized quote.</p>
+                
+                <div style="text-align: center;">
+                    <button class="btn" onclick="startForm('dev-drive')">Request Quote</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Form -->
+    <div class="interactive-form" id="interactive-form">
+        <div class="form-close" onclick="closeForm()">×</div>
+        
+        <!-- Question 1: Name -->
+        <div class="form-question" id="question-1">
+            <h3>Hello, thank you for choosing Sybertnetics!</h3>
+            <p>What is your name?</p>
+            <input type="text" id="client-name" placeholder="Your name">
+            <div class="form-buttons">
+                <div></div> <!-- Empty div for flex spacing -->
+                <button class="btn" onclick="nextQuestion(1)">Next</button>
             </div>
         </div>
         
-        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 30px; margin-bottom: 20px;">
-            <h3 style="color: #1a1a2e; font-size: 1.5rem; margin-bottom: 15px;">Ideal For:</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div>
-                    <h4 style="color: #4d80e4; margin-bottom: 10px;">Startups & Small Businesses</h4>
-                    <p>Get enterprise-level development capabilities without the cost of hiring a full team</p>
-                </div>
-                <div>
-                    <h4 style="color: #4d80e4; margin-bottom: 10px;">Established Companies</h4>
-                    <p>Accelerate development cycles and reduce costs on new initiatives and projects</p>
-                </div>
-                <div>
-                    <h4 style="color: #4d80e4; margin-bottom: 10px;">Agencies</h4>
-                    <p>Scale your development capabilities on-demand to handle more client projects</p>
-                </div>
+        <!-- Question 2: Company -->
+        <div class="form-question" id="question-2">
+            <h3>Are you representing a company?</h3>
+            <div class="options-grid">
+                <div class="option-btn" onclick="selectOption(this, 'company', 'yes')">Yes</div>
+                <div class="option-btn" onclick="selectOption(this, 'company', 'no')">No</div>
             </div>
+            <div id="company-name-field" style="display: none;">
+                <p>What is the name of your company?</p>
+                <input type="text" id="company-name" placeholder="Company name">
+            </div>
+            <div class="form-buttons">
+                <button class="btn btn-outline" onclick="prevQuestion(2)">Back</button>
+                <button class="btn" onclick="nextQuestion(2)">Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 3: Services -->
+        <div class="form-question" id="question-3">
+            <h3>What services are you interested in?</h3>
+            <div class="options-grid">
+                <div class="option-btn" onclick="selectOption(this, 'service', 'web-development')">Web Development</div>
+                <div class="option-btn" onclick="selectOption(this, 'service', 'dev-on-drive')">Dev on a Drive</div>
+            </div>
+            <div class="form-buttons">
+                <button class="btn btn-outline" onclick="prevQuestion(3)">Back</button>
+                <button class="btn" onclick="nextQuestion(3)">Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 4: Web Development Level -->
+        <div class="form-question" id="question-4-web">
+            <h3>What level of web development services are you interested in?</h3>
+            <div class="options-grid">
+                <div class="option-btn" onclick="selectOption(this, 'web-level', 'personal')">Personal</div>
+                <div class="option-btn" onclick="selectOption(this, 'web-level', 'small-business')">Small Business</div>
+                <div class="option-btn" onclick="selectOption(this, 'web-level', 'enterprise')">Enterprise</div>
+                <div class="option-btn" onclick="selectOption(this, 'web-level', 'custom')">Custom</div>
+            </div>
+            <div class="form-buttons">
+                <button class="btn btn-outline" onclick="prevQuestion(4)">Back</button>
+                <button class="btn" onclick="nextQuestion(4)">Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 5: Referral -->
+        <div class="form-question" id="question-5">
+            <h3>Did anyone refer you to us?</h3>
+            <div class="options-grid">
+                <div class="option-btn" onclick="selectOption(this, 'referral', 'yes')">Yes</div>
+                <div class="option-btn" onclick="selectOption(this, 'referral', 'no')">No</div>
+            </div>
+            <div id="referral-name-field" style="display: none;">
+                <p>Who referred you?</p>
+                <input type="text" id="referral-name" placeholder="Referrer's name">
+            </div>
+            <div class="form-buttons">
+                <button class="btn btn-outline" onclick="prevQuestion(5)">Back</button>
+                <button class="btn" onclick="nextQuestion(5)">Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 6: Email -->
+        <div class="form-question" id="question-6">
+            <h3>What is a good email to reach you at?</h3>
+            <input type="email" id="client-email" placeholder="Your email">
+            <div class="form-buttons">
+                <button class="btn btn-outline" onclick="prevQuestion(6)">Back</button>
+                <button class="btn" onclick="nextQuestion(6)">Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 7: Additional Info -->
+        <div class="form-question" id="question-7">
+            <h3>Is there anything else you'd like us to know?</h3>
+            <textarea id="additional-info" placeholder="Tell us about your project needs, timeline, or any specific requirements"></textarea>
+            <div class="form-buttons">
+                <button class="btn btn-outline" onclick="prevQuestion(7)">Back</button>
+                <button class="btn" onclick="nextQuestion(7)">Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 8: Newsletter -->
+        <div class="form-question" id="question-8">
+            <h3>Would you be interested in joining our newsletter?</h3>
+            <div class="options-grid">
+                <div class="option-btn" onclick="selectOption(this, 'newsletter', 'yes')">Yes</div>
+                <div class="option-btn" onclick="selectOption(this, 'newsletter', 'no')">No</div>
+            </div>
+            <div class="form-buttons">
+                <button class="btn btn-outline" onclick="prevQuestion(8)">Back</button>
+                <button class="btn" onclick="submitForm()">Submit</button>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div class="form-question form-success" id="form-success">
+            <h3>Thank You!</h3>
+            <p>Your information has been submitted successfully. We'll be in touch with you shortly to discuss your project.</p>
+            <p>A confirmation email has been sent to your inbox.</p>
+            <button class="btn" onclick="closeForm()">Close</button>
         </div>
     </div>
-</section>
 
-    <!-- Process Section -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Our Process</h2>
-            <p class="section-subtitle">Simple, efficient, and transparent</p>
-            
-            <div class="process-steps">
-                <div class="process-step">
-                    <h3>Consultation</h3>
-                    <p>We discuss your requirements, goals, and vision to understand exactly what you need.</p>
-                </div>
-                <div class="process-step">
-                    <h3>Proposal</h3>
-                    <p>We provide a detailed proposal with pricing, timeline, and scope of work.</p>
-                </div>
-                <div class="process-step">
-                    <h3>Development</h3>
-                    <p>Our autonomous AI system develops your solution with minimal human intervention.</p>
-                </div>
-                <div class="process-step">
-                    <h3>Delivery</h3>
-                    <p>We deliver your completed project for review, make any adjustments, and deploy.</p>
-                </div>
-            </div>
-            
-            <div style="text-align: center;">
-                <p><strong>What makes us different?</strong> Traditional development can take weeks or months. Our AI-powered approach delivers in hours or days, not weeks or months, without sacrificing quality.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="section" style="background-color: #f8f9fa;">
-        <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <p class="section-subtitle">Common questions about our services</p>
-            
-            <div class="faq-container">
-                <div class="faq-item faq-active">
-                    <div class="faq-question">
-                        <span>How can you develop websites so quickly?</span>
-                        <span class="faq-toggle">−</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Our revolutionary autonomous AI system, Hermod, functions as a team of developers working 24/7 with unprecedented efficiency. By leveraging advanced machine learning and a proprietary blend of large language models, we've created a system that can generate high-quality code, designs, and functionality at speeds impossible for traditional development teams.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What types of projects can you handle?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We can handle almost any software development project regardless of industry or complexity. From simple websites to complex enterprise applications, e-commerce platforms, database solutions, and custom software, our autonomous AI system is equipped to tackle diverse challenges across various domains. If you have a specific project in mind, we'd be happy to discuss how we can help.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you offer ongoing support after launch?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, we offer two hosting and maintenance packages. Our standard package ($99/month) includes domain management, secure hosting, weekly updates, and technical support. Our premium package ($249/month) includes all standard features plus priority support, weekly content updates, and monthly performance reports. We're committed to ensuring your solution continues to perform optimally long after launch.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How do you guarantee quality with such fast turnaround times?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Quality is built into our AI architecture. Hermod includes sophisticated verification systems that automatically detect and correct issues before delivery. Additionally, every project undergoes a final review by our technical team to ensure it meets our high standards. Our autonomous system is designed to deliver both speed and quality without compromise.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What is the typical turnaround time for projects?</span>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Standard websites typically take 24-48 hours, while more complex projects with advanced functionality may take 2-4 days. Enterprise-level projects and custom software solutions vary based on scope and complexity, but are still completed in a fraction of the time required by traditional development methods. We'll provide you with a specific timeline during our consultation.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Get Started</h2>
-            <p class="section-subtitle">Contact us to discuss your project</p>
-            
-            <div class="contact-form">
-                <form id="clientForm">
-                    <div id="formStatus"></div>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Company (optional)</label>
-                        <input type="text" id="company" name="company">
-                    </div>
-                    <div class="form-group">
-                        <label for="service">Service Interested In</label>
-                        <select id="service" name="service" required>
-                            <option value="">Please select...</option>
-                            <option value="Web Design">Web Design</option>
-                            <option value="Dev on a Drive">Dev on a Drive</option>
-                            <option value="Custom AI Solution">Custom AI Solution</option>
-                            <option value="Other">Other/Not Sure</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Project Details</label>
-                        <textarea id="message" name="message" required placeholder="Please describe your project needs, timeline, and any specific requirements."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Request Quote</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <div class="container">
             <ul class="footer-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#about">About</a></li>
-                <li><a href="clients.html">For Clients</a></li>
-                <li><a href="investors.html">For Investors</a></li>
+                <li><a href="investors.html">Investors</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <p>Email: KaynenBPellegrino@Sybertnetics.com</p>
@@ -820,77 +781,218 @@
         </div>
     </footer>
     
-    <!-- Scripts -->
-    <script src="form-handler.js"></script>
     <script>
-        // FAQ Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const faqItems = document.querySelectorAll('.faq-item');
+        // Generate digital effect elements
+        window.addEventListener('DOMContentLoaded', () => {
+            const background = document.getElementById('digital-background');
+            const numLines = 30;
             
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const toggle = item.querySelector('.faq-toggle');
+            for (let i = 0; i < numLines; i++) {
+                const line = document.createElement('div');
+                line.classList.add('digital-line');
                 
-                question.addEventListener('click', function() {
-                    item.classList.toggle('faq-active');
-                    toggle.textContent = item.classList.contains('faq-active') ? '−' : '+';
-                });
-            });
-            
-            // Modified version of form-handler.js for the client form
-            const clientForm = document.getElementById('clientForm');
-            const formStatus = document.getElementById('formStatus');
-            
-            if (clientForm) {
-                clientForm.addEventListener('submit', async function(e) {
-                  e.preventDefault();
-                  
-                  const baseUrl = window.location.origin;
-                  
-                  formStatus.innerHTML = '<p class="status-message loading">Sending your message...</p>';
-                  
-                  const formData = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    company: document.getElementById('company').value,
-                    service: document.getElementById('service').value,
-                    message: document.getElementById('message').value,
-                    subject: "Client Project Inquiry"
-                  };
-                  
-                  try {
-                    const response = await fetch(`${baseUrl}/api/send-email`, {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify(formData)
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                      formStatus.innerHTML = '<p class="status-message success">Your message has been sent successfully! We will contact you shortly with a quote for your project.</p>';
-                      clientForm.reset();
-                      
-                      await fetch(`${baseUrl}/api/auto-respond`, {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                      });
-                      
-                    } else {
-                      formStatus.innerHTML = `<p class="status-message error">${result.message}</p>`;
-                    }
-                  } catch (error) {
-                    console.error('Error:', error);
-                    formStatus.innerHTML = '<p class="status-message error">There was an error sending your message. Please try again later or contact us directly at KaynenBPellegrino@Sybertnetics.com.</p>';
-                  }
-                });
+                // Random properties
+                const width = Math.random() * 200 + 100;
+                const y = Math.random() * window.innerHeight;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 15;
+                
+                // Apply styles
+                line.style.width = `${width}px`;
+                line.style.top = `${y}px`;
+                line.style.animationDuration = `${duration}s`;
+                line.style.animationDelay = `${delay}s`;
+                
+                background.appendChild(line);
             }
         });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Interactive Form Functionality
+        const formData = {
+            name: '',
+            company: { isCompany: false, name: '' },
+            service: '',
+            webLevel: '',
+            referral: { hasReferral: false, name: '' },
+            email: '',
+            additionalInfo: '',
+            newsletter: false
+        };
+        
+        function startForm(service) {
+            document.getElementById('interactive-form').style.display = 'block';
+            document.getElementById('question-1').classList.add('active');
+            
+            // Pre-select service if passed
+            if (service) {
+                if (service === 'personal' || service === 'small-business' || service === 'enterprise' || service === 'custom') {
+                    formData.service = 'web-development';
+                    formData.webLevel = service;
+                } else {
+                    formData.service = service;
+                }
+            }
+            
+            // Prevent scrolling on body
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeForm() {
+            document.getElementById('interactive-form').style.display = 'none';
+            
+            // Reset form
+            document.querySelectorAll('.form-question').forEach(question => {
+                question.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Reset form data
+            formData.name = '';
+            formData.company = { isCompany: false, name: '' };
+            formData.service = '';
+            formData.webLevel = '';
+            formData.referral = { hasReferral: false, name: '' };
+            formData.email = '';
+            formData.additionalInfo = '';
+            formData.newsletter = false;
+            
+            // Allow scrolling on body again
+            document.body.style.overflow = 'auto';
+        }
+        
+        function nextQuestion(currentQuestion) {
+            // Validate and save current question data
+            if (currentQuestion === 1) {
+                const nameInput = document.getElementById('client-name');
+                if (!nameInput.value.trim()) {
+                    alert('Please enter your name');
+                    return;
+                }
+                formData.name = nameInput.value.trim();
+            } else if (currentQuestion === 2) {
+                if (formData.company.isCompany && !document.getElementById('company-name').value.trim()) {
+                    alert('Please enter your company name');
+                    return;
+                }
+                if (formData.company.isCompany) {
+                    formData.company.name = document.getElementById('company-name').value.trim();
+                }
+            } else if (currentQuestion === 3) {
+                if (!formData.service) {
+                    alert('Please select a service');
+                    return;
+                }
+            } else if (currentQuestion === 4) {
+                if (formData.service === 'web-development' && !formData.webLevel) {
+                    alert('Please select a service level');
+                    return;
+                }
+            } else if (currentQuestion === 5) {
+                if (formData.referral.hasReferral && !document.getElementById('referral-name').value.trim()) {
+                    alert('Please enter the name of the person who referred you');
+                    return;
+                }
+                if (formData.referral.hasReferral) {
+                    formData.referral.name = document.getElementById('referral-name').value.trim();
+                }
+            } else if (currentQuestion === 6) {
+                const emailInput = document.getElementById('client-email');
+                if (!emailInput.value.trim() || !isValidEmail(emailInput.value.trim())) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+                formData.email = emailInput.value.trim();
+            } else if (currentQuestion === 7) {
+                formData.additionalInfo = document.getElementById('additional-info').value.trim();
+            }
+            
+            // Hide current question
+            document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+            
+            // Show next question based on logic
+            if (currentQuestion === 3 && formData.service === 'web-development') {
+                document.getElementById('question-4-web').classList.add('active');
+            } else if (currentQuestion === 3 && formData.service !== 'web-development') {
+                document.getElementById('question-5').classList.add('active');
+            } else if (currentQuestion === 4) {
+                document.getElementById('question-5').classList.add('active');
+            } else {
+                document.getElementById(`question-${currentQuestion + 1}`).classList.add('active');
+            }
+        }
+        
+        function prevQuestion(currentQuestion) {
+            // Hide current question
+            document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+            
+            // Show previous question based on logic
+            if (currentQuestion === 5 && formData.service === 'web-development') {
+                document.getElementById('question-4-web').classList.add('active');
+            } else if (currentQuestion === 5 && formData.service !== 'web-development') {
+                document.getElementById('question-3').classList.add('active');
+            } else if (currentQuestion === 4) {
+                document.getElementById('question-3').classList.add('active');
+            } else {
+                document.getElementById(`question-${currentQuestion - 1}`).classList.add('active');
+            }
+        }
+        
+        function selectOption(btn, field, value) {
+            // Remove selected class from all buttons in the same group
+            btn.parentNode.querySelectorAll('.option-btn').forEach(button => {
+                button.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked button
+            btn.classList.add('selected');
+            
+            // Save data based on field
+            if (field === 'company') {
+                formData.company.isCompany = (value === 'yes');
+                document.getElementById('company-name-field').style.display = formData.company.isCompany ? 'block' : 'none';
+            } else if (field === 'service') {
+                formData.service = value;
+            } else if (field === 'web-level') {
+                formData.webLevel = value;
+            } else if (field === 'referral') {
+                formData.referral.hasReferral = (value === 'yes');
+                document.getElementById('referral-name-field').style.display = formData.referral.hasReferral ? 'block' : 'none';
+            } else if (field === 'newsletter') {
+                formData.newsletter = (value === 'yes');
+            }
+        }
+        
+        function submitForm() {
+            // In a real implementation, this would send data to a server
+            console.log('Form data:', formData);
+            
+            // Hide last question
+            document.getElementById('question-8').classList.remove('active');
+            
+            // Show success message
+            document.getElementById('form-success').classList.add('active');
+            
+            // Here you would typically make an AJAX call to submit the data
+            // For demonstration, we're just showing the success message
+        }
+        
+        function isValidEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
     </script>
 </body>
 </html>
