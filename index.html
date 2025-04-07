@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sybertnetics - Autonomous Intelligence Ecosystem</title>
+    <title>Sybertnetics - Artificial Intelligence Solutions</title>
     <style>
         /* Global Styles */
+        :root {
+            --primary-color: #0099ff;
+            --secondary-color: #003366;
+            --dark-color: #001a33;
+            --light-color: #e6f5ff;
+            --accent-color: #00cc99;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #000;
+            color: #fff;
             line-height: 1.6;
         }
         
         .container {
-            width: 90%;
+            width: 85%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
@@ -28,55 +36,53 @@
         
         /* Header Styles */
         header {
-            background-color: #1a1a2e;
-            color: white;
+            background-color: rgba(0, 0, 0, 0.9);
             padding: 20px 0;
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            border-bottom: 1px solid var(--primary-color);
         }
         
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: white;
-        }
-        
-        .logo .blue-text {
-            color: #4d80e4;
-        }
-        
-        .logo .green-text {
-            color: #2ecc71;
-        }
-        
-        nav {
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
         .nav-links {
             display: flex;
-            list-style: none;
         }
         
         .nav-links li {
+            list-style: none;
             margin-left: 30px;
         }
         
         .nav-links a {
-            color: white;
+            color: #fff;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
         
         .nav-links a:hover {
-            color: #4d80e4;
+            background-color: var(--primary-color);
+            color: #000;
         }
         
         /* Hero Section Styles */
@@ -84,72 +90,106 @@
             height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(to right, #1a1a2e, #16213e);
-            color: white;
-            margin-top: 60px;
+            background: linear-gradient(135deg, var(--dark-color), #000);
+            padding-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="none" stroke="%230099ff" stroke-width="1" stroke-opacity="0.1"/></svg>');
+            background-size: 20px 20px;
+            opacity: 0.2;
+            z-index: 1;
         }
         
         .hero-content {
-            max-width: 800px;
+            position: relative;
+            z-index: 2;
         }
         
         .hero h1 {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 20px;
             line-height: 1.2;
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 30px;
+            max-width: 600px;
         }
         
         .btn {
             display: inline-block;
-            background-color: #4d80e4;
-            color: white;
+            background-color: var(--primary-color);
+            color: #fff;
             padding: 12px 30px;
-            border-radius: 5px;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             transition: background-color 0.3s;
+            margin-right: 15px;
+            border: none;
+            cursor: pointer;
         }
         
         .btn:hover {
-            background-color: #3a5bb9;
+            background-color: #0077cc;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
         }
         
         /* About Section Styles */
         .section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             font-size: 2.5rem;
-            color: #1a1a2e;
+            color: var(--primary-color);
         }
         
-        .section-subtitle {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            color: #4d80e4;
-            font-weight: 500;
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 20px auto 0;
         }
         
         .about-content {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
             flex-wrap: wrap;
+            align-items: center;
         }
         
         .about-text {
             flex: 1;
             min-width: 300px;
-            padding-right: 30px;
+            padding-right: 40px;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
         }
         
         .about-image {
@@ -158,218 +198,155 @@
             text-align: center;
         }
         
-        .placeholder-img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
+        .about-image img {
+            max-width: 100%;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .main-title {
-            display: block;
-            margin-bottom: 5px;
-        }   
-
-        .subtitle {
-            display: block;
-            font-size: 0.9em;
-        }
-                
-        /* Solutions Section Styles */
-        .solutions {
-            background-color: #f8f9fa;
+            box-shadow: 0 5px 15px rgba(0, 153, 255, 0.2);
         }
         
-        .solutions-grid {
+        /* Products Section Styles */
+        .products {
+            background-color: var(--dark-color);
+        }
+        
+        .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
         
-        .solution-card {
-            background-color: white;
+        .product-card {
+            background-color: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
+            border: 1px solid var(--primary-color);
         }
         
-        .solution-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 153, 255, 0.3);
         }
         
-        .solution-card h3 {
-            font-size: 1.5rem;
+        .product-card h3 {
+            font-size: 1.8rem;
             margin-bottom: 15px;
-            color: #1a1a2e;
+            color: var(--primary-color);
         }
         
-        /* Team Section Styles */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .team-member {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        
-        .team-member img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        .team-member-info {
-            padding: 20px;
-        }
-        
-        .team-member h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-            color: #1a1a2e;
-        }
-        
-        .team-member p {
-            color: #4d80e4;
-            font-weight: 500;
+        .product-card p {
+            margin-bottom: 20px;
         }
         
         /* Contact Section Styles */
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
-            background-color: white;
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--primary-color);
         }
         
         .form-group {
             margin-bottom: 20px;
         }
         
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
+            color: var(--primary-color);
         }
         
-        input, textarea {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
             font-size: 1rem;
         }
         
-        textarea {
+        .form-group textarea {
             height: 150px;
             resize: vertical;
         }
         
-        .submit-btn {
-            background-color: #4d80e4;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .submit-btn:hover {
-            background-color: #3a5bb9;
-        }
-        
-        .contact-options {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .contact-option {
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            padding: 20px;
-            text-align: center;
-            flex-basis: 48%;
-        }
-        
-        .contact-option h3 {
-            color: #1a1a2e;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-        
-        .status-message {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .loading {
-            background-color: #e2e3e5;
-            color: #383d41;
-            border: 1px solid #d6d8db;
-        }
-        
         /* Footer Styles */
         footer {
-            background-color: #1a1a2e;
-            color: white;
-            padding: 40px 0;
+            background-color: var(--dark-color);
+            padding: 60px 0 20px;
             text-align: center;
+            border-top: 1px solid var(--primary-color);
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            list-style: none;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         
         .footer-links li {
+            list-style: none;
             margin: 0 15px;
         }
         
         .footer-links a {
-            color: white;
+            color: #fff;
             text-decoration: none;
             transition: color 0.3s;
         }
         
         .footer-links a:hover {
-            color: #4d80e4;
+            color: var(--primary-color);
         }
         
         .copyright {
+            color: #999;
             font-size: 0.9rem;
-            color: #aaa;
+            margin-top: 20px;
         }
         
-        /* Responsive Styles */
+        /* Digital Effects */
+        .digital-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .digital-line {
+            position: absolute;
+            background-color: rgba(0, 153, 255, 0.15);
+            height: 2px;
+            width: 100px;
+            animation: slideEffect 15s infinite linear;
+        }
+        
+        @keyframes slideEffect {
+            0% {
+                transform: translateX(-100%) translateY(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(0);
+                opacity: 0;
+            }
+        }
+        
+        /* Media Queries */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -384,156 +361,154 @@
                 padding: 0;
                 margin-bottom: 30px;
             }
-            
-            .contact-options {
-                flex-direction: column;
-            }
-            
-            .contact-option {
-                margin-bottom: 20px;
-                flex-basis: 100%;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <div class="digital-background" id="digital-background"></div>
+    
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Syber<span class="green-text">t</span><span class="blue-text">netics</span></div>
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#solutions">Solutions</a></li>
-                    <li><a href="clients.html">For Clients</a></li>
-                    <li><a href="investors.html">For Investors</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Syber<span style="color: #2ecc71;">t</span><span>netics</span></a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="investors.html">Investors</a></li>
+                <li><a href="clients.html">Clients</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>We Are Not Building an AI.<br>We Are Building the Architect of AI.</h1>
-                <p>Sybertnetics is pioneering a revolutionary autonomous intelligence ecosystem, capable of generating, managing, and optimizing artificial intelligence across multiple domains.</p>
-                <a href="#about" class="btn">Learn More</a>
-            </div>
+        <div class="container hero-content">
+            <h1>Revolutionizing AI <br>Development</h1>
+            <p>Sybertnetics is pioneering autonomous artificial intelligence systems that transform how businesses operate and innovate.</p>
+            <a href="#about" class="btn">Learn More</a>
+            <a href="clients.html" class="btn btn-outline">Our Services</a>
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="section">
         <div class="container">
-            <h2 class="section-title">Our Vision</h2>
-            <p class="section-subtitle">Transforming technological development through autonomous intelligence</p>
+            <h2 class="section-title">About Sybertnetics</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Sybertnetics aims to create the world's first truly autonomous, self-evolving AI ecosystem capable of generating, managing, and optimizing artificial intelligence across multiple domains.</p>
-                    <br>
-                    <p>Our flagship system, Hermod, is an autonomous AI architect that can design, build, and manage AI systems with minimal human intervention, continuously evolving its own capabilities while solving complex problems across multiple domains.</p>
-                    <br>
-                    <p>We're not just developing another AI tool – we're creating a new paradigm of technological development that will transform how organizations solve problems and drive innovation.</p>
+                    <h3>The Future of AI Development</h3>
+                    <p>At Sybertnetics, we're not just building AI—we're building the architect of AI itself. Our revolutionary autonomous intelligence ecosystem is capable of generating, managing, and optimizing artificial intelligence across multiple domains.</p>
+                    <p>Our flagship system, Hermod, functions as an autonomous AI architect that can design, build, and manage AI solutions with minimal human intervention, continuously evolving its capabilities while solving complex problems.</p>
+                    <p>We're focused on creating transformative technologies that provide unprecedented efficiency and innovation for businesses of all sizes.</p>
                 </div>
                 <div class="about-image">
-                    <img src="img/logo.png" alt="AI Visualization" class="placeholder-img">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 300' width='500' height='300'><rect width='500' height='300' fill='%23000'/><circle cx='250' cy='150' r='100' fill='none' stroke='%230099ff' stroke-width='2'/><circle cx='250' cy='150' r='50' fill='none' stroke='%230099ff' stroke-width='2'/><line x1='150' y1='150' x2='350' y2='150' stroke='%230099ff' stroke-width='2'/><line x1='250' y1='50' x2='250' y2='250' stroke='%230099ff' stroke-width='2'/><text x='250' y='150' font-family='Arial' font-size='24' fill='%230099ff' text-anchor='middle'>SYBERTNETICS</text></svg>" alt="Sybertnetics AI Visualization">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Solutions Section -->
-    <section id="solutions" class="section solutions">
+    <section id="products" class="section products">
         <div class="container">
             <h2 class="section-title">Our Solutions</h2>
-            <p class="section-subtitle">Leveraging autonomous intelligence to transform your business</p>
-            <div class="solutions-grid">
-                <div class="solution-card">
-                    <h3>Website Development</h3>
-                    <p>From personal blogs to complex e-commerce platforms, we offer comprehensive web design packages with varying levels of functionality. Our solutions include responsive designs, database integration, authentication systems, and custom features tailored to your specific needs.</p>
-                    <p>Personal Websites: Starting at $250<br>
-                       Business Websites: Starting at $1,999<br>
-                       Business E-commerce: Starting at $4,999</p>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Web Development</h3>
+                    <p>Advanced web solutions developed at unprecedented speeds with our autonomous AI systems. From personal websites to enterprise platforms, we deliver exceptional quality in a fraction of the time.</p>
+                    <p>Our AI-powered development process ensures responsive, secure, and scalable websites tailored to your specific needs.</p>
+                    <a href="clients.html" class="btn btn-outline">Learn More</a>
                 </div>
-                <div class="solution-card">
+                <div class="product-card">
                     <h3>Dev on a Drive</h3>
-                    <p>Our groundbreaking development service slashes project timelines, completing in hours what traditionally requires days or weeks. Hermod functions as a team of junior to mid-level developers, handling workloads with unprecedented speed and efficiency while maintaining exceptional quality.</p>
-                    <p>Custom quotes based on project scope and requirements. Contact us for a personalized estimate.</p>
+                    <p>Revolutionary development service that functions as a complete junior to mid-level development team. Our AI system completes projects in hours that traditionally require days or weeks.</p>
+                    <p>Experience seamless software development with minimal human intervention, maximum efficiency, and exceptional quality.</p>
+                    <a href="clients.html" class="btn btn-outline">Learn More</a>
                 </div>
-                <div class="solution-card">
-                    <h3>Custom AI Solutions</h3>
-                    <p>We create tailored AI systems designed to address your organization's unique challenges. Our solutions span from specialized data analysis tools to comprehensive autonomous systems that transform how you operate, innovate, and compete in your industry.</p>
-                    <p>Custom quotes based on specific requirements and scope. Contact us to discuss your AI needs.</p>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="clients.html" class="btn">View All Services</a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">Contact Us</h2>
-            <p class="section-subtitle">Connect with us to explore our revolutionary technology</p>
-            
-            <div class="contact-options">
-                <div class="contact-option">
-                    <h3>Strategic Investors</h3>
-                    <p>Looking to invest in the future of autonomous AI? Join us in building the next generation of intelligent technology.</p>
-                    <a href="investors.html" class="btn" style="margin-top: 20px;">Investor Information</a>
-                </div>
-                <div class="contact-option">
-                    <h3>Clients & Partnerships</h3>
-                    <p>Ready to transform your organization with our solutions? Let's discuss how we can address your specific needs.</p>
-                    <a href="clients.html" class="btn" style="margin-top: 20px;">View Our Services</a>
-                </div>
-            </div>
-            
             <div class="contact-form">
-                <form id="contactForm">
-                    <div id="formStatus"></div>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Company (optional)</label>
-                        <input type="text" id="company" name="company">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <ul class="footer-links">
                 <li><a href="#about">About</a></li>
-                <li><a href="#solutions">Solutions</a></li>
-                <li><a href="clients.html">For Clients</a></li>
-                <li><a href="investors.html">For Investors</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="investors.html">Investors</a></li>
+                <li><a href="clients.html">Clients</a></li>
             </ul>
             <p>Email: KaynenBPellegrino@Sybertnetics.com</p>
             <p class="copyright">&copy; 2025 Sybertnetics Artificial Intelligence Solutions, Inc. All rights reserved.</p>
         </div>
     </footer>
-    
-    <!-- Scripts -->
-    <script src="form-handler.js"></script>
+
+    <script>
+        // Generate digital effect elements
+        window.addEventListener('DOMContentLoaded', () => {
+            const background = document.getElementById('digital-background');
+            const numLines = 30;
+            
+            for (let i = 0; i < numLines; i++) {
+                const line = document.createElement('div');
+                line.classList.add('digital-line');
+                
+                // Random properties
+                const width = Math.random() * 200 + 50;
+                const y = Math.random() * window.innerHeight;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 15;
+                
+                // Apply styles
+                line.style.width = `${width}px`;
+                line.style.top = `${y}px`;
+                line.style.animationDuration = `${duration}s`;
+                line.style.animationDelay = `${delay}s`;
+                
+                background.appendChild(line);
+            }
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Form submission
+        const form = document.querySelector('.contact-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you soon.');
+                form.reset();
+            });
+        }
+    </script>
 </body>
 </html>
