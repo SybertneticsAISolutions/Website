@@ -1060,28 +1060,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 investorType: contactForm.querySelector('#investor-type') ? contactForm.querySelector('#investor-type').value : 'N/A'
             };
             
-            // Here you would send the email using your preferred method
-            // Example:
-            /*
-            fetch('/api/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    to: "KaynenBPellegrino@Sybertnetics.com",
-                    subject: formData.subject,
-                    body: `
-Name: ${formData.name}
-Email: ${formData.email}
-${formData.company !== 'N/A' ? 'Company: ' + formData.company : ''}
-${formData.investorType !== 'N/A' ? 'Investor Type: ' + formData.investorType : ''}
-Message: ${formData.message}
-                    `
-                })
-            });
-            */
-            
             // Show success message
             alert('Thank you for your message! We will get back to you shortly.');
             
