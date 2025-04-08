@@ -1114,40 +1114,41 @@
             }
         };
 
-        // Email functionality for the form
-            function rm() {
+// Replace the broken rm() function with this fixed version
+function submitForm() {
     // Format all collected data
     console.log('Form data:', formData);
     
+    // Show loading message
+    const formStatus = document.createElement('div');
+    formStatus.className = 'status-message loading';
+    formStatus.innerText = 'Sending your message...';
+    document.getElementById('question-8').appendChild(formStatus);
+    
+    // Format add-ons and hosting information
+    let additionalServices = '';
+    if (formData.addOns && formData.addOns.length > 0) {
+        additionalServices += "Add-on services requested: " + formData.addOns.join(', ') + "\n";
+    }
+    if (formData.hosting) {
+        additionalServices += "Hosting option: " + formData.hosting + "\n";
+    }
+    
+    // Add to additional info
+    if (additionalServices) {
+        formData.additionalInfo = additionalServices + "\n" + (formData.additionalInfo || '');
+    }
+    
     // Prepare email data
     const emailData = {
-        to: "KaynenBPellegrino@Sybertnetics.com", // Your email
-        subject: `New Service Request from ${formData.name}`,
-        body: `
-Name: ${formData.name}
-Company: ${formData.company.isCompany ? formData.company.name : 'N/A'}
-Service: ${formData.service}
-${formData.service === 'web-development' ? 'Web Level: ' + (formData.webLevel || 'Not specified') : ''}
-${formData.hosting ? 'Hosting: ' + formData.hosting : ''}
-${formData.addOns && formData.addOns.length > 0 ? 'Add-ons: ' + formData.addOns.join(', ') : ''}
-Referral: ${formData.referral.hasReferral ? formData.referral.name : 'N/A'}
-Email: ${formData.email}
-Additional Info: ${formData.additionalInfo}
-Newsletter: ${formData.newsletter ? 'Yes' : 'No'}
-        `
+        name: formData.name,
+        email: formData.email,
+        company: formData.company?.name || '',
+        message: formData.additionalInfo,
+        subject: `New Service Request: ${formData.service}`
     };
     
-    console.log('Email data:', emailData);
-    
-    // Show success message
-    document.getElementById('question-8').classList.remove('active');
-    document.getElementById('form-success').classList.add('active');
-    
-    // In a real implementation, you would send this data to your server
-    // For now, we're just showing the success message
-    
-    // You can uncomment this section once your form-handler.js and API are working
-    /*
+    // Send the data to our server endpoint
     fetch('/api/send-email', {
         method: 'POST',
         headers: {
@@ -1158,15 +1159,44 @@ Newsletter: ${formData.newsletter ? 'Yes' : 'No'}
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
+        // Remove loading message
+        formStatus.remove();
+        
         // Show success message
         document.getElementById('question-8').classList.remove('active');
         document.getElementById('form-success').classList.add('active');
     })
     .catch((error) => {
         console.error('Error:', error);
-        alert('There was an error submitting your request. Please try again.');
+        // Remove loading message
+        formStatus.remove();
+        
+        // Show error message but still continue
+        alert('There was an error submitting your request. Please try again or contact us directly.');
+        
+        // Show success message anyway to avoid blocking the user
+        document.getElementById('question-8').classList.remove('active');
+        document.getElementById('form-success').classList.add('active');
     });
-    */
+    
+    // Clear form data for next submission
+    setTimeout(() => {
+        window.formData = {
+            name: '',
+            company: { isCompany: false, name: '' },
+            service: '',
+            webLevel: '',
+            referral: { hasReferral: false, name: '' },
+            email: '',
+            additionalInfo: '',
+            newsletter: false
+        };
+    }, 500);
+}
+
+// Fix the original rm() function by replacing it with a call to submitForm
+function rm() {
+    submitForm();
 }
     
     // Hide last question
