@@ -1,8 +1,10 @@
+// netlify/functions/api.js
 const express = require('express');
 const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 
@@ -12,8 +14,27 @@ app.use(bodyParser.json());
 
 // Email sending endpoint
 app.post('/api/send-email', async (req, res) => {
+    console.log('Received email request:', req.body);
+    
     try {
         const { name, email, company, message, subject } = req.body;
+        
+        // Validate required fields
+        if (!name || !email || !message) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Name, email, and message are required fields.' 
+            });
+        }
+        
+        // Make sure environment variables are available
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            console.error('Missing email credentials in environment variables');
+            return res.status(500).json({ 
+                success: false, 
+                message: 'Server configuration error. Please contact support.' 
+            });
+        }
         
         // Create email transporter
         const transporter = nodemailer.createTransport({
@@ -27,7 +48,7 @@ app.post('/api/send-email', async (req, res) => {
         // Email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: process.env.RECIPIENT_EMAIL || process.env.EMAIL_USER,
+            to: process.env.RECIPIENT_EMAIL || 'KaynenBPellegrino@sybertnetics.com',
             subject: subject || `New message from ${name}`,
             text: `
 Name: ${name}
@@ -47,8 +68,11 @@ ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
             `
         };
         
+        console.log('Attempting to send email to:', mailOptions.to);
+        
         // Send email
-        await transporter.sendMail(mailOptions);
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully:', info.messageId);
         
         // Auto-responder to the sender
         const autoResponderOptions = {
@@ -72,6 +96,7 @@ The Sybertnetics Team
         };
         
         await transporter.sendMail(autoResponderOptions);
+        console.log('Auto-responder email sent to:', email);
         
         res.status(200).json({ success: true });
     } catch (error) {
@@ -80,7 +105,10 @@ The Sybertnetics Team
     }
 });
 
-// Handle other API routes here if needed
+// Handle health check
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'ok', environment: process.env.NODE_ENV });
+});
 
 // Handle all remaining routes
 app.use('/*', (req, res) => {
