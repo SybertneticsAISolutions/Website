@@ -12,9 +12,24 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Debug route to check environment variables
+app.get('/api/debug', (req, res) => {
+    // Don't expose actual password
+    const hasEnvVars = !!process.env.EMAIL_USER && !!process.env.EMAIL_PASS;
+    res.status(200).json({ 
+        hasEnvVars,
+        emailUser: process.env.EMAIL_USER ? 'Set' : 'Not set',
+        emailPass: process.env.EMAIL_PASS ? 'Set' : 'Not set',
+        recipient: process.env.RECIPIENT_EMAIL || 'Using default',
+        status: 'OK' 
+    });
+});
+
 // Email sending endpoint
 app.post('/api/send-email', async (req, res) => {
-    console.log('Received email request:', req.body);
+    console.log('Received email request', {
+        fields: Object.keys(req.body)
+    });
     
     try {
         const { name, email, company, message, subject } = req.body;
@@ -27,6 +42,15 @@ app.post('/api/send-email', async (req, res) => {
             });
         }
         
+        // Ensure email environment variables are set
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            console.error('Email credentials missing in environment variables');
+            return res.status(500).json({
+                success: false,
+                message: 'Server configuration error. Email credentials not properly configured.'
+            });
+        }
+        
         // Create email transporter
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -36,10 +60,13 @@ app.post('/api/send-email', async (req, res) => {
             }
         });
         
+        // Define recipient
+        const recipient = process.env.RECIPIENT_EMAIL || 'KaynenBPellegrino@sybertnetics.com';
+        
         // Email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: 'KaynenBPellegrino@sybertnetics.com', // Hardcoded recipient for reliability
+            to: recipient,
             subject: subject || `New message from ${name}`,
             text: `
 Name: ${name}
@@ -59,7 +86,7 @@ ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
             `
         };
         
-        console.log('Attempting to send email to:', mailOptions.to);
+        console.log('Attempting to send email to:', recipient);
         
         // Send email
         const info = await transporter.sendMail(mailOptions);
@@ -94,8 +121,8 @@ The Sybertnetics Team
         console.error('Error sending email:', error);
         res.status(500).json({ 
             success: false, 
-            message: error.message, 
-            details: 'Please check your email configuration and network connectivity.' 
+            message: 'Failed to send email: ' + error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
 });
