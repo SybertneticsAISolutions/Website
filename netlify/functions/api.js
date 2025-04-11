@@ -27,15 +27,6 @@ app.post('/api/send-email', async (req, res) => {
             });
         }
         
-        // Make sure environment variables are available
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-            console.error('Missing email credentials in environment variables');
-            return res.status(500).json({ 
-                success: false, 
-                message: 'Server configuration error. Please contact support.' 
-            });
-        }
-        
         // Create email transporter
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -48,7 +39,7 @@ app.post('/api/send-email', async (req, res) => {
         // Email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: process.env.RECIPIENT_EMAIL || 'KaynenBPellegrino@sybertnetics.com',
+            to: 'KaynenBPellegrino@sybertnetics.com', // Hardcoded recipient for reliability
             subject: subject || `New message from ${name}`,
             text: `
 Name: ${name}
@@ -101,7 +92,11 @@ The Sybertnetics Team
         res.status(200).json({ success: true });
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ 
+            success: false, 
+            message: error.message, 
+            details: 'Please check your email configuration and network connectivity.' 
+        });
     }
 });
 
