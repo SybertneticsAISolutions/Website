@@ -427,30 +427,137 @@
         </div>
     </section>
 
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" required></textarea>
-                </div>
-                <button type="submit" class="btn">Send Message</button>
+<!-- Replace the entire contact form in main.html with this code -->
+
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="section-title">Contact Us</h2>
+        
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" required>
             </div>
-        </div>
-    </section>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" required></textarea>
+            </div>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+        
+        <div id="form-status" style="margin-top: 20px; padding: 15px; border-radius: 5px; display: none;"></div>
+    </div>
+</section>
+
+<!-- Add this script at the bottom of main.html, right before the closing </body> tag -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Direct form handler - completely self-contained
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+    
+    if (contactForm) {
+        console.log('Contact form found on main page');
+        
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            console.log('Form submitted');
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value || 'Contact Form Submission',
+                message: document.getElementById('message').value
+            };
+            
+            // Validate
+            if (!formData.name || !formData.email || !formData.message) {
+                showStatus('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Show loading
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerText = 'Sending...';
+                submitBtn.disabled = true;
+            }
+            
+            showStatus('Sending your message...', 'loading');
+            
+            // Send the request
+            fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.innerText = 'Send Message';
+                    submitBtn.disabled = false;
+                }
+                
+                if (data.success) {
+                    showStatus('Thank you! Your message has been sent successfully.', 'success');
+                    contactForm.reset();
+                } else {
+                    showStatus('Error: ' + (data.message || 'Failed to send message'), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                
+                if (submitBtn) {
+                    submitBtn.innerText = 'Send Message';
+                    submitBtn.disabled = false;
+                }
+                
+                showStatus('There was a problem sending your message. Please try again or contact us directly at KaynenBPellegrino@Sybertnetics.com', 'error');
+            });
+        });
+    } else {
+        console.error('Contact form not found on main page');
+    }
+    
+    // Helper function to show status messages
+    function showStatus(message, type) {
+        if (!formStatus) return;
+        
+        formStatus.style.display = 'block';
+        formStatus.innerText = message;
+        
+        // Reset classes
+        formStatus.className = '';
+        
+        // Add styling based on message type
+        if (type === 'error') {
+            formStatus.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
+            formStatus.style.color = '#ff0000';
+            formStatus.style.border = '1px solid rgba(255, 0, 0, 0.3)';
+        } else if (type === 'success') {
+            formStatus.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
+            formStatus.style.color = '#00aa00';
+            formStatus.style.border = '1px solid rgba(0, 255, 0, 0.3)';
+        } else if (type === 'loading') {
+            formStatus.style.backgroundColor = 'rgba(0, 0, 255, 0.1)';
+            formStatus.style.color = '#0000ff';
+            formStatus.style.border = '1px solid rgba(0, 0, 255, 0.3)';
+        }
+    }
+});
+</script>
 
     <footer>
         <div class="container">
@@ -464,273 +571,5 @@
             <p class="copyright">&copy; 2025 Sybertnetics Artificial Intelligence Solutions, Inc. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        // Generate digital effect elements
-        window.addEventListener('DOMContentLoaded', () => {
-            const background = document.getElementById('digital-background');
-            const numLines = 30;
-            
-            for (let i = 0; i < numLines; i++) {
-                const line = document.createElement('div');
-                line.classList.add('digital-line');
-                
-                // Random properties
-                const width = Math.random() * 200 + 50;
-                const y = Math.random() * window.innerHeight;
-                const duration = Math.random() * 20 + 10;
-                const delay = Math.random() * 15;
-                
-                // Apply styles
-                line.style.width = `${width}px`;
-                line.style.top = `${y}px`;
-                line.style.animationDuration = `${duration}s`;
-                line.style.animationDelay = `${delay}s`;
-                
-                background.appendChild(line);
-            }
-        });
-        
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Form submission
-        const form = document.querySelector('.contact-form');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Thank you for your message! We will get back to you soon.');
-                form.reset();
-            });
-        }
-    </script>
-    <script src="form-handler.js"></script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: this.querySelector('#name').value,
-                email: this.querySelector('#email').value,
-                subject: this.querySelector('#subject') ? this.querySelector('#subject').value : 'Contact Form',
-                message: this.querySelector('#message').value
-            };
-            
-            if (!formData.name || !formData.email || !formData.message) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            const submitBtn = this.querySelector('.btn[type="submit"]') || this.querySelector('.btn');
-            const originalText = submitBtn ? submitBtn.innerText : '';
-            if (submitBtn) submitBtn.innerText = 'Sending...';
-            
-            fetch('/api/send-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (submitBtn) submitBtn.innerText = originalText;
-                if (data.success) {
-                    alert('Thank you! Your message has been sent.');
-                    this.reset();
-                } else {
-                    alert('Error: ' + (data.message || 'Failed to send message'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                if (submitBtn) submitBtn.innerText = originalText;
-                alert('There was a problem sending your message. Please try again.');
-            });
-        });
-    }
-});
-</script>
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Direct form fix script loaded');
-    
-    // Target both specific pages with their contact forms
-    const isMainPage = window.location.href.includes('main.html');
-    const isInvestorPage = window.location.href.includes('investors.html');
-    
-    if (isMainPage) {
-        console.log('Detected main page, looking for contact form');
-        const mainContactForm = document.querySelector('#contact .contact-form');
-        attachFormHandler(mainContactForm, 'Main page form');
-    }
-    
-    if (isInvestorPage) {
-        console.log('Detected investor page, looking for contact form');
-        const investorContactForm = document.querySelector('#contact .contact-form');
-        attachFormHandler(investorContactForm, 'Investor page form');
-    }
-    
-    // Generic form handler for any contact form we find
-    const allForms = document.querySelectorAll('form, .contact-form');
-    allForms.forEach((form, index) => {
-        console.log(`Found form ${index + 1}:`, form);
-        if (!form.classList.contains('handled')) {
-            attachFormHandler(form, `Form ${index + 1}`);
-        }
-    });
-    
-    function attachFormHandler(form, formName) {
-        if (!form) {
-            console.error(`${formName} not found`);
-            return;
-        }
-        
-        console.log(`Attaching handler to ${formName}:`, form);
-        form.classList.add('handled');
-        
-        // Prevent default submit behavior with direct event listener
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log(`${formName} submitted`);
-            
-            // Collect form data
-            const nameField = form.querySelector('#name, [name="name"]');
-            const emailField = form.querySelector('#email, [name="email"]');
-            const messageField = form.querySelector('#message, [name="message"]');
-            const subjectField = form.querySelector('#subject, [name="subject"]');
-            
-            if (!nameField || !emailField || !messageField) {
-                console.error('Required form fields not found:', {
-                    nameField: !!nameField,
-                    emailField: !!emailField,
-                    messageField: !!messageField
-                });
-                alert('Form error: Required fields not found. Please contact support.');
-                return;
-            }
-            
-            const formData = {
-                name: nameField.value,
-                email: emailField.value,
-                message: messageField.value,
-                subject: subjectField ? subjectField.value : 'Website Contact Form'
-            };
-            
-            // Validate
-            if (!formData.name || !formData.email || !formData.message) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Submit button state
-            const submitButton = form.querySelector('button[type="submit"], input[type="submit"], button.btn');
-            if (submitButton) {
-                const originalText = submitButton.innerText;
-                submitButton.innerText = 'Sending...';
-                submitButton.disabled = true;
-                
-                // Restore button after 15 seconds no matter what (failsafe)
-                setTimeout(() => {
-                    if (submitButton.disabled) {
-                        submitButton.innerText = originalText;
-                        submitButton.disabled = false;
-                    }
-                }, 15000);
-            }
-            
-            // Send the data
-            console.log('Sending form data:', formData);
-            
-            fetch('/api/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                console.log('Response status:', response.status);
-                return response.json().catch(err => {
-                    console.error('Error parsing JSON:', err);
-                    return { success: false, message: 'Error processing response' };
-                });
-            })
-            .then(data => {
-                console.log('Response data:', data);
-                
-                if (submitButton) {
-                    submitButton.innerText = submitButton.getAttribute('data-original-text') || 'Submit';
-                    submitButton.disabled = false;
-                }
-                
-                if (data.success) {
-                    alert('Thank you! Your message has been sent successfully.');
-                    form.reset();
-                } else {
-                    alert('There was a problem sending your message: ' + (data.message || 'Unknown error'));
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                
-                if (submitButton) {
-                    submitButton.innerText = submitButton.getAttribute('data-original-text') || 'Submit';
-                    submitButton.disabled = false;
-                }
-                
-                alert('There was a problem sending your message. Please try again later or contact us directly at KaynenBPellegrino@Sybertnetics.com');
-            });
-        });
-        
-        console.log(`Handler attached to ${formName}`);
-    }
-    
-    // Debug tool - add a test button
-    const testButton = document.createElement('button');
-    testButton.innerText = 'Test Form Submit';
-    testButton.style.position = 'fixed';
-    testButton.style.bottom = '10px';
-    testButton.style.right = '10px';
-    testButton.style.zIndex = '9999';
-    testButton.style.padding = '5px 10px';
-    testButton.style.background = 'rgba(0, 153, 255, 0.3)';
-    testButton.style.color = 'white';
-    testButton.style.border = '1px solid rgba(0, 153, 255, 0.5)';
-    testButton.style.borderRadius = '5px';
-    testButton.style.cursor = 'pointer';
-    
-    testButton.addEventListener('click', function() {
-        console.log('Testing form submit');
-        const form = document.querySelector('form, .contact-form');
-        if (form) {
-            // Fill in required fields with test data
-            const nameField = form.querySelector('#name, [name="name"]');
-            const emailField = form.querySelector('#email, [name="email"]');
-            const messageField = form.querySelector('#message, [name="message"]');
-            
-            if (nameField) nameField.value = nameField.value || 'Test Name';
-            if (emailField) emailField.value = emailField.value || 'test@example.com';
-            if (messageField) messageField.value = messageField.value || 'This is a test message from the debug tool.';
-            
-            // Trigger submit event
-            const submitEvent = new Event('submit', { cancelable: true });
-            form.dispatchEvent(submitEvent);
-        } else {
-            console.error('No form found to test');
-            alert('No form found to test');
-        }
-    });
-    
-    // Only add in development, remove this for production
-    // document.body.appendChild(testButton);
-});
 </body>
 </html>
