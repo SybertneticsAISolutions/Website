@@ -12,24 +12,14 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Debug route to check environment variables
-app.get('/api/debug', (req, res) => {
-    // Don't expose actual password
-    const hasEnvVars = !!process.env.EMAIL_USER && !!process.env.EMAIL_PASS;
-    res.status(200).json({ 
-        hasEnvVars,
-        emailUser: process.env.EMAIL_USER ? 'Set' : 'Not set',
-        emailPass: process.env.EMAIL_PASS ? 'Set' : 'Not set',
-        recipient: process.env.RECIPIENT_EMAIL || 'Using default',
-        status: 'OK' 
-    });
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
 });
 
 // Email sending endpoint
 app.post('/api/send-email', async (req, res) => {
-    console.log('Received email request', {
-        fields: Object.keys(req.body)
-    });
+    console.log('Received email request:', req.body);
     
     try {
         const { name, email, company, message, subject } = req.body;
@@ -42,31 +32,32 @@ app.post('/api/send-email', async (req, res) => {
             });
         }
         
-        // Ensure email environment variables are set
+        // Make sure environment variables are available
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-            console.error('Email credentials missing in environment variables');
-            return res.status(500).json({
-                success: false,
-                message: 'Server configuration error. Email credentials not properly configured.'
+            console.error('Missing email credentials in environment variables');
+            return res.status(500).json({ 
+                success: false, 
+                message: 'Server configuration error. Please contact support.' 
             });
         }
         
-        // Create email transporter
+        // Create email transporter with more detailed configuration
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
-            }
+            },
+            tls: {
+                rejectUnauthorized: false // Helps with some email service issues
+            },
+            debug: true // Enable debug for troubleshooting
         });
-        
-        // Define recipient
-        const recipient = process.env.RECIPIENT_EMAIL || 'KaynenBPellegrino@sybertnetics.com';
         
         // Email options
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: recipient,
+            from: `"Sybertnetics Website" <${process.env.EMAIL_USER}>`,
+            to: process.env.RECIPIENT_EMAIL || 'KaynenBPellegrino@sybertnetics.com',
             subject: subject || `New message from ${name}`,
             text: `
 Name: ${name}
@@ -86,50 +77,57 @@ ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
             `
         };
         
-        console.log('Attempting to send email to:', recipient);
+        console.log('Attempting to send email to:', mailOptions.to);
         
-        // Send email
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent successfully:', info.messageId);
-        
-        // Auto-responder to the sender
-        const autoResponderOptions = {
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: 'Thank you for contacting Sybertnetics',
-            text: `
+        // Send email with better error handling
+        try {
+            const info = await transporter.sendMail(mailOptions);
+            console.log('Email sent successfully:', info.messageId);
+            
+            // Auto-responder to the sender
+            try {
+                const autoResponderOptions = {
+                    from: `"Sybertnetics AI" <${process.env.EMAIL_USER}>`,
+                    to: email,
+                    subject: 'Thank you for contacting Sybertnetics',
+                    text: `
 Dear ${name},
 
 Thank you for contacting Sybertnetics. We have received your message and will get back to you shortly.
 
 Best regards,
 The Sybertnetics Team
-            `,
-            html: `
+                    `,
+                    html: `
 <h2>Thank you for contacting Sybertnetics</h2>
 <p>Dear ${name},</p>
 <p>Thank you for contacting Sybertnetics. We have received your message and will get back to you shortly.</p>
 <p>Best regards,<br>The Sybertnetics Team</p>
-            `
-        };
-        
-        await transporter.sendMail(autoResponderOptions);
-        console.log('Auto-responder email sent to:', email);
-        
-        res.status(200).json({ success: true });
+                    `
+                };
+                
+                await transporter.sendMail(autoResponderOptions);
+                console.log('Auto-responder email sent to:', email);
+            } catch (autoResponderError) {
+                console.error('Error sending auto-responder:', autoResponderError);
+                // Don't fail the whole request if auto-responder fails
+            }
+            
+            return res.status(200).json({ success: true });
+        } catch (emailError) {
+            console.error('Error sending email:', emailError);
+            return res.status(500).json({ 
+                success: false, 
+                message: 'Failed to send email. Please try again later.' 
+            });
+        }
     } catch (error) {
-        console.error('Error sending email:', error);
-        res.status(500).json({ 
+        console.error('General error in email endpoint:', error);
+        return res.status(500).json({ 
             success: false, 
-            message: 'Failed to send email: ' + error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            message: 'Server error. Please try again later.' 
         });
     }
-});
-
-// Handle health check
-app.get('/api/health', (req, res) => {
-    res.status(200).json({ status: 'ok', environment: process.env.NODE_ENV });
 });
 
 // Handle all remaining routes
