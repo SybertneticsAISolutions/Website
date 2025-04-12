@@ -914,5 +914,74 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+    <script>
+// Direct form fix for main and investor pages
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Direct form fix script loaded');
+    
+    // Find all contact forms on the page
+    const contactForms = document.querySelectorAll('.contact-form, form');
+    contactForms.forEach((form, index) => {
+        console.log(`Found form ${index + 1}:`, form);
+        
+        // Add submit handler directly
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
+            
+            // Collect form data
+            const formData = {
+                name: form.querySelector('#name, [name="name"]').value,
+                email: form.querySelector('#email, [name="email"]').value,
+                message: form.querySelector('#message, [name="message"]').value,
+                subject: form.querySelector('#subject, [name="subject"]') ? 
+                    form.querySelector('#subject, [name="subject"]').value : 'Website Contact Form'
+            };
+            
+            // Validate
+            if (!formData.name || !formData.email || !formData.message) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"], .btn');
+            if (submitBtn) {
+                submitBtn.innerText = 'Sending...';
+                submitBtn.disabled = true;
+            }
+            
+            // Send request
+            fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.innerText = 'Send Message';
+                    submitBtn.disabled = false;
+                }
+                
+                if (data.success) {
+                    alert('Thank you! Your message has been sent.');
+                    form.reset();
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to send message'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (submitBtn) {
+                    submitBtn.innerText = 'Send Message';
+                    submitBtn.disabled = false;
+                }
+                alert('There was a problem sending your message. Please try again or contact us directly at KaynenBPellegrino@Sybertnetics.com');
+            });
+        });
+    });
+});
+</script>
 </body>
 </html>
