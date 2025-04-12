@@ -352,13 +352,16 @@ window.nextQuestion = function(currentQuestion) {
     let nextQuestionNumber;
     
     if (currentQuestion === '3' && window.formData.service === 'web-development') {
+        // If user selected web development, go to web development level question
         nextQuestionNumber = '4-web';
     } else if (currentQuestion === '3' && window.formData.service !== 'web-development') {
+        // If user selected something else, skip web development specific question
         nextQuestionNumber = '5';
     } else if (currentQuestion === '4-web') {
+        // After web development level, go to question 5
         nextQuestionNumber = '5';
     } else {
-        // Convert to number and add 1, then back to string
+        // Standard increment to next question
         nextQuestionNumber = String(parseInt(currentQuestion) + 1);
     }
     
@@ -370,6 +373,7 @@ window.nextQuestion = function(currentQuestion) {
         nextQuestionElement.classList.add('active');
     } else {
         console.error(`Question element question-${nextQuestionNumber} not found`);
+        alert(`Error navigating to next question. Please try again or contact support.`);
     }
 };
 
