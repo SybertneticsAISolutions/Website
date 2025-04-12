@@ -1307,5 +1307,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     </script>
     <script src="form-handler.js"></script>
+    <script>
+// Quick fix for the web development form flow
+document.addEventListener('DOMContentLoaded', function() {
+    // Fix for web development options
+    const webDevButtons = document.querySelectorAll('#question-3 .option-btn');
+    const next3Button = document.querySelector('#question-3 .btn:not(.btn-outline)');
+    
+    if (webDevButtons.length && next3Button) {
+        // Add direct handlers for service selection buttons
+        webDevButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Mark as selected
+                webDevButtons.forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Set the service
+                window.formData = window.formData || {};
+                window.formData.service = this.textContent.includes('Web') ? 'web-development' : 'dev-on-drive';
+                console.log('Service selected:', window.formData.service);
+            });
+        });
+        
+        // Override next button behavior for question 3
+        next3Button.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('question-3').classList.remove('active');
+            
+            // Go to web development options if web development was selected
+            if (window.formData && window.formData.service === 'web-development') {
+                document.getElementById('question-4-web').classList.add('active');
+            } else {
+                document.getElementById('question-5').classList.add('active');
+            }
+        });
+    }
+    
+    // Fix for web development level question progression
+    const next4WebButton = document.querySelector('#question-4-web .btn:not(.btn-outline)');
+    if (next4WebButton) {
+        next4WebButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('question-4-web').classList.remove('active');
+            document.getElementById('question-5').classList.add('active');
+        });
+    }
+});
+</script>
 </body>
 </html>
