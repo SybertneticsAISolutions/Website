@@ -731,143 +731,143 @@
         </div>
     </section>
 
-    <!-- Interactive Form -->
-    <div class="interactive-form" id="interactive-form">
-        <div class="form-close" onclick="closeForm()">×</div>
-        
-        <!-- Question 1: Name -->
-        <div class="form-question" id="question-1">
-            <h3>Hello, thank you for choosing Sybertnetics!</h3>
-            <p>What is your name?</p>
-            <input type="text" id="client-name" placeholder="Your name">
-            <div class="form-buttons">
-                <div></div> <!-- Empty div for flex spacing -->
-                <button class="btn" onclick="nextQuestion(1)">Next</button>
-            </div>
-        </div>
-        
-        <!-- Question 2: Company -->
-        <div class="form-question" id="question-2">
-            <h3>Are you representing a company?</h3>
-            <div class="options-grid">
-                <div class="option-btn" onclick="selectOption(this, 'company', 'yes')">Yes</div>
-                <div class="option-btn" onclick="selectOption(this, 'company', 'no')">No</div>
-            </div>
-            <div id="company-name-field" style="display: none;">
-                <p>What is the name of your company?</p>
-                <input type="text" id="company-name" placeholder="Company name">
-            </div>
-            <div class="form-buttons">
-                <button class="btn btn-outline" onclick="prevQuestion(2)">Back</button>
-                <button class="btn" onclick="nextQuestion(2)">Next</button>
-            </div>
-        </div>
-        
-        <!-- Question 3: Services -->
-        <div class="form-question" id="question-3">
-            <h3>What services are you interested in?</h3>
-            <div class="options-grid">
-                <div class="option-btn" onclick="selectOption(this, 'service', 'web-development')">Web Development</div>
-                <div class="option-btn" onclick="selectOption(this, 'service', 'dev-on-drive')">Dev on a Drive</div>
-            </div>
-            <div class="form-buttons">
-                <button class="btn btn-outline" onclick="prevQuestion(3)">Back</button>
-                <button class="btn" onclick="nextQuestion(3)">Next</button>
-            </div>
-        </div>
-        
-        <!-- Question 4: Web Development Level -->
-        <div class="form-question" id="question-4-web">
-            <h3>What level of web development services are you interested in?</h3>
-            <div class="options-grid">
-                <div class="option-btn" onclick="selectOption(this, 'web-level', 'personal')">Personal</div>
-                <div class="option-btn" onclick="selectOption(this, 'web-level', 'small-business')">Small Business</div>
-                <div class="option-btn" onclick="selectOption(this, 'web-level', 'enterprise')">Enterprise</div>
-                <div class="option-btn" onclick="selectOption(this, 'web-level', 'custom')">Custom</div>
-            </div>
-            <div id="custom-options" style="margin-top: 20px; display: none;">
-                <h4 style="margin-bottom: 10px; color: var(--primary-color);">Additional Options (Select all that apply)</h4>
-                <div class="options-grid" style="grid-template-columns: repeat(2, 1fr);">
-                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'e-commerce')">E-Commerce</div>
-                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'database')">Database</div>
-                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'authentication')">User Authentication</div>
-                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'interactive')">Interactive Features</div>
-                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'subscription')">Subscription System</div>
-                    <div class="option-btn" onclick="toggleOption(this, 'add-ons', 'multilingual')">Multilingual Support</div>
-                </div>
-            </div>
-            <div style="margin-top: 20px;">
-                <h4 style="margin-bottom: 10px; color: var(--primary-color);">Hosting & Maintenance</h4>
-                <div class="options-grid">
-                    <div class="option-btn" onclick="selectOption(this, 'hosting', 'none')">No Hosting Needed</div>
-                    <div class="option-btn" onclick="selectOption(this, 'hosting', 'basic')">Basic Hosting</div>
-                    <div class="option-btn" onclick="selectOption(this, 'hosting', 'premium')">Premium Maintenance</div>
-                </div>
-            </div>
-            <div class="form-buttons">
-                <button class="btn btn-outline" onclick="prevQuestion(4)">Back</button>
-                <button class="btn" onclick="nextQuestion(4)">Next</button>
-            </div>
-        </div>
-        
-        <!-- Question 5: Referral -->
-        <div class="form-question" id="question-5">
-            <h3>Did anyone refer you to us?</h3>
-            <div class="options-grid">
-                <div class="option-btn" onclick="selectOption(this, 'referral', 'yes')">Yes</div>
-                <div class="option-btn" onclick="selectOption(this, 'referral', 'no')">No</div>
-            </div>
-            <div id="referral-name-field" style="display: none;">
-                <p>Who referred you?</p>
-                <input type="text" id="referral-name" placeholder="Referrer's name">
-            </div>
-            <div class="form-buttons">
-                <button class="btn btn-outline" onclick="prevQuestion(5)">Back</button>
-                <button class="btn" onclick="nextQuestion(5)">Next</button>
-            </div>
-        </div>
-        
-        <!-- Question 6: Email -->
-        <div class="form-question" id="question-6">
-            <h3>What is a good email to reach you at?</h3>
-            <input type="email" id="client-email" placeholder="Your email">
-            <div class="form-buttons">
-                <button class="btn btn-outline" onclick="prevQuestion(6)">Back</button>
-                <button class="btn" onclick="nextQuestion(6)">Next</button>
-            </div>
-        </div>
-        
-        <!-- Question 7: Additional Info -->
-        <div class="form-question" id="question-7">
-            <h3>Is there anything else you'd like us to know?</h3>
-            <textarea id="additional-info" placeholder="Tell us about your project needs, timeline, or any specific requirements"></textarea>
-            <div class="form-buttons">
-                <button class="btn btn-outline" onclick="prevQuestion(7)">Back</button>
-                <button class="btn" onclick="nextQuestion(7)">Next</button>
-            </div>
-        </div>
-        
-        <!-- Question 8: Newsletter -->
-        <div class="form-question" id="question-8">
-            <h3>Would you be interested in joining our newsletter?</h3>
-            <div class="options-grid">
-                <div class="option-btn" onclick="selectOption(this, 'newsletter', 'yes')">Yes</div>
-                <div class="option-btn" onclick="selectOption(this, 'newsletter', 'no')">No</div>
-            </div>
-            <div class="form-buttons">
-                <button class="btn btn-outline" onclick="prevQuestion(8)">Back</button>
-                <button class="btn" onclick="rm()">Submit</button>
-            </div>
-        </div>
-        
-        <!-- Success Message -->
-        <div class="form-question form-success" id="form-success">
-            <h3>Thank You!</h3>
-            <p>Your information has been submitted successfully. We'll be in touch with you shortly to discuss your project.</p>
-            <p>A confirmation email has been sent to your inbox.</p>
-            <button class="btn" onclick="closeForm()">Close</button>
+<!-- Interactive Form -->
+<div class="interactive-form" id="interactive-form">
+    <div class="form-close" id="close-form">×</div>
+    
+    <!-- Question 1: Name -->
+    <div class="form-question" id="question-1">
+        <h3>Hello, thank you for choosing Sybertnetics!</h3>
+        <p>What is your name?</p>
+        <input type="text" id="client-name" placeholder="Your name">
+        <div class="form-buttons">
+            <div></div> <!-- Empty div for flex spacing -->
+            <button class="btn" id="next-1">Next</button>
         </div>
     </div>
+    
+    <!-- Question 2: Company -->
+    <div class="form-question" id="question-2">
+        <h3>Are you representing a company?</h3>
+        <div class="options-grid" data-field="company">
+            <div class="option-btn" data-value="yes">Yes</div>
+            <div class="option-btn" data-value="no">No</div>
+        </div>
+        <div id="company-name-field" style="display: none;">
+            <p>What is the name of your company?</p>
+            <input type="text" id="company-name" placeholder="Company name">
+        </div>
+        <div class="form-buttons">
+            <button class="btn btn-outline" id="prev-2">Back</button>
+            <button class="btn" id="next-2">Next</button>
+        </div>
+    </div>
+    
+    <!-- Question 3: Services -->
+    <div class="form-question" id="question-3">
+        <h3>What services are you interested in?</h3>
+        <div class="options-grid" data-field="service">
+            <div class="option-btn" data-value="web-development">Web Development</div>
+            <div class="option-btn" data-value="dev-on-drive">Dev on a Drive</div>
+        </div>
+        <div class="form-buttons">
+            <button class="btn btn-outline" id="prev-3">Back</button>
+            <button class="btn" id="next-3">Next</button>
+        </div>
+    </div>
+    
+    <!-- Question 4: Web Development Level -->
+    <div class="form-question" id="question-4-web">
+        <h3>What level of web development services are you interested in?</h3>
+        <div class="options-grid" data-field="web-level">
+            <div class="option-btn" data-value="personal">Personal</div>
+            <div class="option-btn" data-value="small-business">Small Business</div>
+            <div class="option-btn" data-value="enterprise">Enterprise</div>
+            <div class="option-btn" data-value="custom">Custom</div>
+        </div>
+        <div id="custom-options" style="margin-top: 20px; display: none;">
+            <h4 style="margin-bottom: 10px; color: var(--primary-color);">Additional Options (Select all that apply)</h4>
+            <div class="options-grid">
+                <div class="option-btn toggle-option" data-toggle-field="add-ons" data-toggle-value="e-commerce">E-Commerce</div>
+                <div class="option-btn toggle-option" data-toggle-field="add-ons" data-toggle-value="database">Database</div>
+                <div class="option-btn toggle-option" data-toggle-field="add-ons" data-toggle-value="authentication">User Authentication</div>
+                <div class="option-btn toggle-option" data-toggle-field="add-ons" data-toggle-value="interactive">Interactive Features</div>
+                <div class="option-btn toggle-option" data-toggle-field="add-ons" data-toggle-value="subscription">Subscription System</div>
+                <div class="option-btn toggle-option" data-toggle-field="add-ons" data-toggle-value="multilingual">Multilingual Support</div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <h4 style="margin-bottom: 10px; color: var(--primary-color);">Hosting & Maintenance</h4>
+            <div class="options-grid" data-field="hosting">
+                <div class="option-btn" data-value="none">No Hosting Needed</div>
+                <div class="option-btn" data-value="basic">Basic Hosting</div>
+                <div class="option-btn" data-value="premium">Premium Maintenance</div>
+            </div>
+        </div>
+        <div class="form-buttons">
+            <button class="btn btn-outline" id="prev-4-web">Back</button>
+            <button class="btn" id="next-4-web">Next</button>
+        </div>
+    </div>
+    
+    <!-- Question 5: Referral -->
+    <div class="form-question" id="question-5">
+        <h3>Did anyone refer you to us?</h3>
+        <div class="options-grid" data-field="referral">
+            <div class="option-btn" data-value="yes">Yes</div>
+            <div class="option-btn" data-value="no">No</div>
+        </div>
+        <div id="referral-name-field" style="display: none;">
+            <p>Who referred you?</p>
+            <input type="text" id="referral-name" placeholder="Referrer's name">
+        </div>
+        <div class="form-buttons">
+            <button class="btn btn-outline" id="prev-5">Back</button>
+            <button class="btn" id="next-5">Next</button>
+        </div>
+    </div>
+    
+    <!-- Question 6: Email -->
+    <div class="form-question" id="question-6">
+        <h3>What is a good email to reach you at?</h3>
+        <input type="email" id="client-email" placeholder="Your email">
+        <div class="form-buttons">
+            <button class="btn btn-outline" id="prev-6">Back</button>
+            <button class="btn" id="next-6">Next</button>
+        </div>
+    </div>
+    
+    <!-- Question 7: Additional Info -->
+    <div class="form-question" id="question-7">
+        <h3>Is there anything else you'd like us to know?</h3>
+        <textarea id="additional-info" placeholder="Tell us about your project needs, timeline, or any specific requirements"></textarea>
+        <div class="form-buttons">
+            <button class="btn btn-outline" id="prev-7">Back</button>
+            <button class="btn" id="next-7">Next</button>
+        </div>
+    </div>
+    
+    <!-- Question 8: Newsletter -->
+    <div class="form-question" id="question-8">
+        <h3>Would you be interested in joining our newsletter?</h3>
+        <div class="options-grid" data-field="newsletter">
+            <div class="option-btn" data-value="yes">Yes</div>
+            <div class="option-btn" data-value="no">No</div>
+        </div>
+        <div class="form-buttons">
+            <button class="btn btn-outline" id="prev-8">Back</button>
+            <button class="btn" id="submit-form">Submit</button>
+        </div>
+    </div>
+    
+    <!-- Success Message -->
+    <div class="form-question form-success" id="form-success">
+        <h3>Thank You!</h3>
+        <p>Your information has been submitted successfully. We'll be in touch with you shortly to discuss your project.</p>
+        <p>A confirmation email has been sent to your inbox.</p>
+        <button class="btn" id="close-success">Close</button>
+    </div>
+</div>
 
     <footer>
         <div class="container">
