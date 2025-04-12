@@ -867,5 +867,52 @@
         }
     </script>
     <script src="form-handler.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: this.querySelector('#name').value,
+                email: this.querySelector('#email').value,
+                subject: this.querySelector('#subject') ? this.querySelector('#subject').value : 'Contact Form',
+                message: this.querySelector('#message').value
+            };
+            
+            if (!formData.name || !formData.email || !formData.message) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const submitBtn = this.querySelector('.btn[type="submit"]') || this.querySelector('.btn');
+            const originalText = submitBtn ? submitBtn.innerText : '';
+            if (submitBtn) submitBtn.innerText = 'Sending...';
+            
+            fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (submitBtn) submitBtn.innerText = originalText;
+                if (data.success) {
+                    alert('Thank you! Your message has been sent.');
+                    this.reset();
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to send message'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (submitBtn) submitBtn.innerText = originalText;
+                alert('There was a problem sending your message. Please try again.');
+            });
+        });
+    }
+});
+</script>
 </body>
 </html>
