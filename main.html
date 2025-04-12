@@ -559,28 +559,69 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-    <script>
-// Direct form fix for main and investor pages
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Direct form fix script loaded');
     
-    // Find all contact forms on the page
-    const contactForms = document.querySelectorAll('.contact-form, form');
-    contactForms.forEach((form, index) => {
+    // Target both specific pages with their contact forms
+    const isMainPage = window.location.href.includes('main.html');
+    const isInvestorPage = window.location.href.includes('investors.html');
+    
+    if (isMainPage) {
+        console.log('Detected main page, looking for contact form');
+        const mainContactForm = document.querySelector('#contact .contact-form');
+        attachFormHandler(mainContactForm, 'Main page form');
+    }
+    
+    if (isInvestorPage) {
+        console.log('Detected investor page, looking for contact form');
+        const investorContactForm = document.querySelector('#contact .contact-form');
+        attachFormHandler(investorContactForm, 'Investor page form');
+    }
+    
+    // Generic form handler for any contact form we find
+    const allForms = document.querySelectorAll('form, .contact-form');
+    allForms.forEach((form, index) => {
         console.log(`Found form ${index + 1}:`, form);
+        if (!form.classList.contains('handled')) {
+            attachFormHandler(form, `Form ${index + 1}`);
+        }
+    });
+    
+    function attachFormHandler(form, formName) {
+        if (!form) {
+            console.error(`${formName} not found`);
+            return;
+        }
         
-        // Add submit handler directly
+        console.log(`Attaching handler to ${formName}:`, form);
+        form.classList.add('handled');
+        
+        // Prevent default submit behavior with direct event listener
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log('Form submitted');
+            console.log(`${formName} submitted`);
             
             // Collect form data
+            const nameField = form.querySelector('#name, [name="name"]');
+            const emailField = form.querySelector('#email, [name="email"]');
+            const messageField = form.querySelector('#message, [name="message"]');
+            const subjectField = form.querySelector('#subject, [name="subject"]');
+            
+            if (!nameField || !emailField || !messageField) {
+                console.error('Required form fields not found:', {
+                    nameField: !!nameField,
+                    emailField: !!emailField,
+                    messageField: !!messageField
+                });
+                alert('Form error: Required fields not found. Please contact support.');
+                return;
+            }
+            
             const formData = {
-                name: form.querySelector('#name, [name="name"]').value,
-                email: form.querySelector('#email, [name="email"]').value,
-                message: form.querySelector('#message, [name="message"]').value,
-                subject: form.querySelector('#subject, [name="subject"]') ? 
-                    form.querySelector('#subject, [name="subject"]').value : 'Website Contact Form'
+                name: nameField.value,
+                email: emailField.value,
+                message: messageField.value,
+                subject: subjectField ? subjectField.value : 'Website Contact Form'
             };
             
             // Validate
@@ -589,44 +630,107 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Show loading state
-            const submitBtn = form.querySelector('button[type="submit"], .btn');
-            if (submitBtn) {
-                submitBtn.innerText = 'Sending...';
-                submitBtn.disabled = true;
+            // Submit button state
+            const submitButton = form.querySelector('button[type="submit"], input[type="submit"], button.btn');
+            if (submitButton) {
+                const originalText = submitButton.innerText;
+                submitButton.innerText = 'Sending...';
+                submitButton.disabled = true;
+                
+                // Restore button after 15 seconds no matter what (failsafe)
+                setTimeout(() => {
+                    if (submitButton.disabled) {
+                        submitButton.innerText = originalText;
+                        submitButton.disabled = false;
+                    }
+                }, 15000);
             }
             
-            // Send request
+            // Send the data
+            console.log('Sending form data:', formData);
+            
             fetch('/api/send-email', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json().catch(err => {
+                    console.error('Error parsing JSON:', err);
+                    return { success: false, message: 'Error processing response' };
+                });
+            })
             .then(data => {
-                if (submitBtn) {
-                    submitBtn.innerText = 'Send Message';
-                    submitBtn.disabled = false;
+                console.log('Response data:', data);
+                
+                if (submitButton) {
+                    submitButton.innerText = submitButton.getAttribute('data-original-text') || 'Submit';
+                    submitButton.disabled = false;
                 }
                 
                 if (data.success) {
-                    alert('Thank you! Your message has been sent.');
+                    alert('Thank you! Your message has been sent successfully.');
                     form.reset();
                 } else {
-                    alert('Error: ' + (data.message || 'Failed to send message'));
+                    alert('There was a problem sending your message: ' + (data.message || 'Unknown error'));
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                if (submitBtn) {
-                    submitBtn.innerText = 'Send Message';
-                    submitBtn.disabled = false;
+                console.error('Fetch error:', error);
+                
+                if (submitButton) {
+                    submitButton.innerText = submitButton.getAttribute('data-original-text') || 'Submit';
+                    submitButton.disabled = false;
                 }
-                alert('There was a problem sending your message. Please try again or contact us directly at KaynenBPellegrino@Sybertnetics.com');
+                
+                alert('There was a problem sending your message. Please try again later or contact us directly at KaynenBPellegrino@Sybertnetics.com');
             });
         });
+        
+        console.log(`Handler attached to ${formName}`);
+    }
+    
+    // Debug tool - add a test button
+    const testButton = document.createElement('button');
+    testButton.innerText = 'Test Form Submit';
+    testButton.style.position = 'fixed';
+    testButton.style.bottom = '10px';
+    testButton.style.right = '10px';
+    testButton.style.zIndex = '9999';
+    testButton.style.padding = '5px 10px';
+    testButton.style.background = 'rgba(0, 153, 255, 0.3)';
+    testButton.style.color = 'white';
+    testButton.style.border = '1px solid rgba(0, 153, 255, 0.5)';
+    testButton.style.borderRadius = '5px';
+    testButton.style.cursor = 'pointer';
+    
+    testButton.addEventListener('click', function() {
+        console.log('Testing form submit');
+        const form = document.querySelector('form, .contact-form');
+        if (form) {
+            // Fill in required fields with test data
+            const nameField = form.querySelector('#name, [name="name"]');
+            const emailField = form.querySelector('#email, [name="email"]');
+            const messageField = form.querySelector('#message, [name="message"]');
+            
+            if (nameField) nameField.value = nameField.value || 'Test Name';
+            if (emailField) emailField.value = emailField.value || 'test@example.com';
+            if (messageField) messageField.value = messageField.value || 'This is a test message from the debug tool.';
+            
+            // Trigger submit event
+            const submitEvent = new Event('submit', { cancelable: true });
+            form.dispatchEvent(submitEvent);
+        } else {
+            console.error('No form found to test');
+            alert('No form found to test');
+        }
     });
+    
+    // Only add in development, remove this for production
+    // document.body.appendChild(testButton);
 });
-</script>
 </body>
 </html>
