@@ -1,6 +1,75 @@
 // Enhanced form-handler.js with fixes for Sybertnetics website
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Form handler initialized');
+    console.log('Form handler initializing...');
+
+// Extra debugging to check for forms
+document.querySelectorAll('form').forEach((form, index) => {
+    console.log(`Form ${index + 1} found with ID: ${form.id}, class: ${form.className}`);
+});
+
+// Initialize direct form event listeners for standalone forms
+document.querySelectorAll('form').forEach(form => {
+    // Skip forms that aren't contact forms or already have event handlers
+    if (!form.classList.contains('contact-form') && !form.classList.contains('initialized')) {
+        form.classList.add('initialized');
+        
+        console.log('Adding submit event to form:', form);
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted directly');
+            
+            // Gather form data
+            const formData = {
+                name: form.querySelector('[name="name"], #name')?.value || '',
+                email: form.querySelector('[name="email"], #email')?.value || '',
+                subject: form.querySelector('[name="subject"], #subject')?.value || 'Website Form Submission',
+                message: form.querySelector('[name="message"], #message')?.value || '',
+                company: form.querySelector('[name="company"], #company')?.value || ''
+            };
+            
+            // Validate
+            if (!formData.name || !formData.email) {
+                alert('Please complete all required fields');
+                return;
+            }
+            
+            // Show loading
+            const submitButton = form.querySelector('button[type="submit"], input[type="submit"], .btn[type="submit"]');
+            const originalText = submitButton ? submitButton.innerText : null;
+            if (submitButton) {
+                submitButton.innerText = 'Sending...';
+                submitButton.disabled = true;
+            }
+            
+            // Send
+            sendFormData(formData)
+                .then(response => {
+                    if (submitButton) {
+                        submitButton.innerText = originalText || 'Submit';
+                        submitButton.disabled = false;
+                    }
+                    
+                    if (response.success) {
+                        alert('Thank you! Your message has been sent successfully.');
+                        form.reset();
+                    } else {
+                        alert('There was a problem sending your message: ' + response.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Form submission error:', error);
+                    
+                    if (submitButton) {
+                        submitButton.innerText = originalText || 'Submit';
+                        submitButton.disabled = false;
+                    }
+                    
+                    alert('There was a problem sending your message. Please try again later.');
+                });
+        });
+    }
+});
     
     // Initialize form data object if not already set
     window.formData = {
