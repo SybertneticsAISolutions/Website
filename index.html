@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sybertnetics - Pioneering autonomous artificial intelligence solutions that transform how businesses operate and innovate.">
     <title>Sybertnetics - Welcome</title>
     <style>
         body, html {
@@ -143,68 +144,7 @@
     <div class="landing-container">
         <h1 class="title">Syber<span style="color: #2ecc71;">t</span><span style="color: #4d80e4;">netics</span></h1>
         <div class="subtitle" id="enter-btn">Welcome to the Future</div>
-    
-    <script>
-        // Generate digital effect elements
-        window.addEventListener('DOMContentLoaded', () => {
-            const background = document.getElementById('background');
-            const numElements = 20; // Reduced number since we have a background image
-            
-            for (let i = 0; i < numElements; i++) {
-                const element = document.createElement('div');
-                element.classList.add('digital-effect');
-                
-                // Random properties
-                const width = Math.random() * 300 + 50;
-                const height = Math.random() * 20 + 5;
-                const x = Math.random() * window.innerWidth;
-                const y = Math.random() * window.innerHeight;
-                const opacity = Math.random() * 0.2 + 0.1;
-                const blur = Math.random() * 5 + 2;
-                
-                // Set random animation variables
-                element.style.setProperty('--rand-x', Math.random());
-                element.style.setProperty('--rand-y', Math.random());
-                element.style.setProperty('--rand-x2', Math.random());
-                element.style.setProperty('--rand-y2', Math.random());
-                element.style.setProperty('--rand-x3', Math.random());
-                element.style.setProperty('--rand-y3', Math.random());
-                
-                // Apply styles
-                element.style.width = `${width}px`;
-                element.style.height = `${height}px`;
-                element.style.left = `${x}px`;
-                element.style.top = `${y}px`;
-                element.style.opacity = opacity;
-                element.style.filter = `blur(${blur}px)`;
-                element.style.animationDelay = `${Math.random() * 5}s`;
-                
-                background.appendChild(element);
-            }
-        });
-        
-        // Handle transition to main page
-        document.getElementById('enter-btn').addEventListener('click', () => {
-            const transition = document.getElementById('transition');
-            const loadingBar = document.getElementById('loading-progress');
-            
-            // Show transition screen
-            transition.style.opacity = '1';
-            transition.style.visibility = 'visible';
-            
-            // Animate loading bar
-            setTimeout(() => {
-                loadingBar.style.width = '100%';
-            }, 100);
-            
-            // Navigate to main page after transition
-            setTimeout(() => {
-                window.location.href = 'main.html';
-            }, 3000);
-        });
-    </script>
-</body>
-</html>
+    </div>
     
     <div class="transition-screen" id="transition">
         <div class="transition-text">Sybertnetics Artificial Intelligence Solutions</div>
@@ -253,7 +193,7 @@
         });
         
         // Handle transition to main page
-        document.getElementById('enter-btn').addEventListener('click', () => {
+        document.getElementById('enter-btn').addEventListener('click', function() {
             const transition = document.getElementById('transition');
             const loadingBar = document.getElementById('loading-progress');
             
