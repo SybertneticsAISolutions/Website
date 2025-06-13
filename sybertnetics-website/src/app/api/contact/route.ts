@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
   try {
@@ -16,11 +17,8 @@ export async function POST(request: Request) {
     const smtpConfigured = process.env.SMTP_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS;
 
     if (smtpConfigured) {
-      // Only import nodemailer if SMTP is configured
-      const nodemailer = require('nodemailer');
-
       // Create transporter using your existing environment variables
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST || 'smtp.gmail.com',
         port: parseInt(process.env.SMTP_PORT || '587'),
         secure: false, // true for 465, false for other ports
