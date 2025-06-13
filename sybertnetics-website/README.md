@@ -80,8 +80,8 @@ Our core values that drive our mission:
    https://myaccount.google.com/apppasswords
 
 4. **Run the development server**
-   ```bash
-   npm run dev
+```bash
+npm run dev
    ```
 
 5. **Open your browser**
