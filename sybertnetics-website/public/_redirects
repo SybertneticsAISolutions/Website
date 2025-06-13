@@ -1,0 +1,7 @@
+# Netlify redirects file - takes precedence over netlify.toml
+# Handle trailing slash redirects
+/contact    /contact/    301
+/thank-you  /thank-you/  301
+
+# SPA fallback
+/*    /index.html   200 
