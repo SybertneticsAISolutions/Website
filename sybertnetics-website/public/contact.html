@@ -4,12 +4,17 @@
     <title>Contact Form</title>
 </head>
 <body>
-    <!-- This form is for Netlify to detect during build -->
-    <form name="contact" data-netlify="true" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
+    <!-- This form is for Netlify to detect during build and must match the React form exactly -->
+    <form name="contact" method="POST" action="/thank-you/" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+        <div style="display: none;">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </div>
+        <input type="text" name="name" required />
+        <input type="email" name="email" required />
         <input type="text" name="company" />
-        <select name="subject">
+        <select name="subject" required>
+            <option value="">Select a subject</option>
             <option value="general">General Inquiry</option>
             <option value="solutions">AI Solutions</option>
             <option value="partnership">Partnership Opportunity</option>
@@ -18,7 +23,8 @@
             <option value="support">Technical Support</option>
             <option value="other">Other</option>
         </select>
-        <textarea name="message"></textarea>
+        <textarea name="message" required></textarea>
+        <button type="submit">Send Message</button>
     </form>
 </body>
 </html> 

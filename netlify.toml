@@ -2,6 +2,21 @@
   publish = "sybertnetics-website/out"
   command = "cd sybertnetics-website && npm install && npm run build"
 
+# Enable form processing
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
 # Handle trailing slash consistency  
 [[redirects]]
   from = "/contact"
@@ -18,3 +33,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
+
+# Ensure form processing works
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"

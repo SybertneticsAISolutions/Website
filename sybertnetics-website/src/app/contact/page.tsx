@@ -1,60 +1,24 @@
 'use client';
 
 import Link from "next/link";
-import { useState } from "react";
-import { Mail, MapPin, Phone, Send, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, MapPin, Phone, Send, ArrowRight } from "lucide-react";
 
 export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Get form data
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    
-    try {
-      // Convert FormData to URLSearchParams
-      const params = new URLSearchParams();
-      formData.forEach((value, key) => {
-        params.append(key, value.toString());
-      });
-      
-      // Submit to Netlify Forms
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-      });
-
-      if (response.ok) {
-        // Only redirect on confirmed success
-        window.location.href = '/thank-you/';
-      } else {
-        // Show error and provide email fallback
-        alert(`Form submission failed (${response.status}). Please email us directly at support@sybertnetics.com`);
-      }
-    } catch (error) {
-      // Network error or other issue
-      console.error('Form submission error:', error);
-      alert('Network error. Please email us directly at support@sybertnetics.com');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-white">
-      {/* Hidden form for Netlify detection */}
+      {/* Hidden form for Netlify detection - must match visible form exactly */}
       <div dangerouslySetInnerHTML={{
         __html: `
-          <form name="contact" data-netlify="true" hidden>
-            <input type="text" name="name" />
-            <input type="email" name="email" />
+          <form name="contact" method="POST" action="/thank-you/" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+            <input type="hidden" name="form-name" value="contact" />
+            <div style="display: none;">
+              <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </div>
+            <input type="text" name="name" required />
+            <input type="email" name="email" required />
             <input type="text" name="company" />
-            <select name="subject">
+            <select name="subject" required>
+              <option value="">Select a subject</option>
               <option value="general">General Inquiry</option>
               <option value="solutions">AI Solutions</option>
               <option value="partnership">Partnership Opportunity</option>
@@ -63,7 +27,8 @@ export default function ContactPage() {
               <option value="support">Technical Support</option>
               <option value="other">Other</option>
             </select>
-            <textarea name="message"></textarea>
+            <textarea name="message" required></textarea>
+            <button type="submit">Send Message</button>
           </form>
         `
       }} />
@@ -135,9 +100,9 @@ export default function ContactPage() {
               <form
                 name="contact"
                 method="POST"
+                action="/thank-you/"
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
-                onSubmit={handleSubmit}
                 className="space-y-6"
               >
                 <input type="hidden" name="form-name" value="contact" />
@@ -228,20 +193,10 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="ml-2 w-5 h-5" />
-                    </>
-                  )}
+                  Send Message
+                  <Send className="ml-2 w-5 h-5" />
                 </button>
               </form>
             </div>
