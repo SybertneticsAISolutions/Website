@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Mail, MapPin, Phone, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Phone, Send } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -12,8 +12,6 @@ export default function ContactPage() {
     subject: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -21,49 +19,6 @@ export default function ContactPage() {
       ...prev,
       [name]: value
     }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const formElement = e.target as HTMLFormElement;
-      const formDataToSubmit = new FormData(formElement);
-
-      // Convert FormData to URLSearchParams for Netlify
-      const params = new URLSearchParams();
-      formDataToSubmit.forEach((value, key) => {
-        params.append(key, value.toString());
-      });
-
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-      });
-
-      if (response.ok) {
-        // Reset form on success
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          subject: '',
-          message: ''
-        });
-        setSubmitStatus('success');
-      } else {
-        setSubmitStatus('error');
-        console.error('Form submission failed with status:', response.status);
-      }
-    } catch (error) {
-      setSubmitStatus('error');
-      console.error('Network error:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
@@ -156,26 +111,14 @@ export default function ContactPage() {
                 Fill out the form below and we&apos;ll get back to you as soon as possible.
               </p>
 
-              {submitStatus === 'success' && (
-                <div className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-                  <p className="text-emerald-800">Thank you! Your message has been sent successfully.</p>
-                </div>
-              )}
-
-              {submitStatus === 'error' && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
-                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-                  <p className="text-red-800">Sorry, there was an error sending your message. Please try again.</p>
-                </div>
-              )}
+              {/* Status messages will be handled by the thank-you page redirect */}
 
               <form 
                 name="contact" 
                 method="POST" 
                 data-netlify="true" 
                 data-netlify-honeypot="bot-field"
-                onSubmit={handleSubmit} 
+                action="/thank-you.html"
                 className="space-y-6"
               >
                 <input type="hidden" name="form-name" value="contact" />
@@ -273,20 +216,10 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="ml-2 w-5 h-5" />
-                    </>
-                  )}
+                  Send Message
+                  <Send className="ml-2 w-5 h-5" />
                 </button>
               </form>
             </div>
