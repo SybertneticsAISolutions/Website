@@ -1,9 +1,49 @@
 'use client';
 
+import React, { useState } from 'react';
 import Link from "next/link";
-import { Mail, MapPin, Phone, Send, ArrowRight } from "lucide-react";
+import { Mail, MapPin, Phone, Send, ArrowRight, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 
 export default function ContactPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        form.reset();
+        // Redirect to thank you page after a short delay
+        setTimeout(() => {
+          window.location.href = '/thank-you/';
+        }, 2000);
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+      setErrorMessage('Failed to send message. Please try again or email us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hidden form for Netlify detection - must match visible form exactly */}
@@ -104,6 +144,7 @@ export default function ContactPage() {
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
                 className="space-y-6"
+                onSubmit={handleSubmit}
               >
                 <input type="hidden" name="form-name" value="contact" />
                 
@@ -194,11 +235,45 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center"
+                  disabled={isSubmitting}
                 >
-                  Send Message
-                  <Send className="ml-2 w-5 h-5" />
+                  {isSubmitting ? (
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="ml-2 w-5 h-5" />
+                    </>
+                  )}
                 </button>
               </form>
+
+              {/* Success/Error Messages */}
+              {submitStatus === 'success' && (
+                <div className="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center">
+                  <CheckCircle className="w-5 h-5 text-emerald-600 mr-3 flex-shrink-0" />
+                  <div>
+                    <p className="text-emerald-800 font-medium">Message sent successfully!</p>
+                    <p className="text-emerald-700 text-sm">Redirecting to thank you page...</p>
+                  </div>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center">
+                  <AlertCircle className="w-5 h-5 text-red-600 mr-3 flex-shrink-0" />
+                  <div>
+                    <p className="text-red-800 font-medium">Failed to send message</p>
+                    <p className="text-red-700 text-sm">{errorMessage}</p>
+                    <p className="text-red-700 text-sm mt-1">
+                      You can also email us directly at{' '}
+                      <a href="mailto:support@sybertnetics.com" className="underline font-medium">
+                        support@sybertnetics.com
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Contact Information */}
