@@ -29,17 +29,21 @@ export default function ContactPage() {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/contact', {
+      const form = e.target as HTMLFormElement;
+      const formDataToSubmit = new FormData(form);
+
+      const formEntries = Array.from(formDataToSubmit.entries()).map(([key, value]) => [
+        key,
+        value instanceof File ? value.name : value.toString()
+      ]);
+      
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formEntries).toString()
       });
 
-      const result = await response.json();
-
-      if (result.success) {
+      if (response.ok) {
         // Reset form on success
         setFormData({
           name: '',
@@ -51,7 +55,7 @@ export default function ContactPage() {
         setSubmitStatus('success');
       } else {
         setSubmitStatus('error');
-        console.error('Form submission error:', result.message);
+        console.error('Form submission failed');
       }
     } catch (error) {
       setSubmitStatus('error');
@@ -143,7 +147,20 @@ export default function ContactPage() {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form 
+                name="contact" 
+                method="POST" 
+                data-netlify="true" 
+                data-netlify-honeypot="bot-field"
+                onSubmit={handleSubmit} 
+                className="space-y-6"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                <div style={{ display: 'none' }}>
+                  <label>
+                    Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
+                  </label>
+                </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
