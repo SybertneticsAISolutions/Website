@@ -17,9 +17,12 @@ export default function ContactPage() {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
+    
+    // Ensure form-name is included
+    formData.set('form-name', 'contact');
 
     try {
-      const response = await fetch('/', {
+      const response = await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),

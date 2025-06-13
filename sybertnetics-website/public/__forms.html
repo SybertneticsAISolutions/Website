@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Contact Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netlify Forms Detection</title>
 </head>
 <body>
-    <!-- This form is for Netlify to detect during build and must match the React form exactly -->
-    <form name="contact" method="POST" action="/thank-you/" data-netlify="true" data-netlify-honeypot="bot-field" netlify>
+    <!-- Netlify Forms detection for Next.js 14+ -->
+    <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
         <input type="hidden" name="form-name" value="contact" />
         <div style="display: none;">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
