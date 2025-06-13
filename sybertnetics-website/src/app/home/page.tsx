@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Brain, Code, Shield, Zap, Users, Target, Globe } from "lucide-react";
+import { ArrowRight, Brain, Code, Shield, Zap, Target, Globe } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -52,7 +52,7 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              At Sybertnetics AI Solutions, we're building the future of artificial intelligence 
+              At Sybertnetics AI Solutions, we&apos;re building the future of artificial intelligence 
               through innovative methodologies, ethical design principles, and groundbreaking technology 
               that transforms how businesses operate and grow.
             </p>
@@ -77,7 +77,7 @@ export default function HomePage() {
                   <Target className="w-6 h-6 text-emerald-500 mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900">Innovation First</h3>
-                    <p className="text-gray-600">Pushing the boundaries of what's possible with AI</p>
+                    <p className="text-gray-600">Pushing the boundaries of what&apos;s possible with AI</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">

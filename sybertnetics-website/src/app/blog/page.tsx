@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, User, Clock, Tag } from "lucide-react";
+import { ArrowRight, Tag } from "lucide-react";
 
 export default function BlogPage() {
   return (
@@ -66,7 +66,7 @@ export default function BlogPage() {
             <div className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-2xl p-12 max-w-2xl mx-auto">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Coming Soon</h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                We're preparing exciting content about AI innovations, technical insights, 
+                We&apos;re preparing exciting content about AI innovations, technical insights, 
                 and industry perspectives. Our blog will feature deep dives into artificial 
                 intelligence, ethical AI development, and the future of technology.
               </p>
@@ -113,7 +113,7 @@ export default function BlogPage() {
               Upcoming Categories
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The topics we'll be covering in our upcoming blog posts
+              The topics we&apos;ll be covering in our upcoming blog posts
             </p>
           </div>
 

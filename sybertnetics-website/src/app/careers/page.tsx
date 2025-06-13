@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Brain, Code, Shield, Zap, Users, Target, Globe, Heart, Star } from "lucide-react";
+import { ArrowRight, Brain, Shield, Zap, Users, Target, Heart, Star } from "lucide-react";
 
 export default function CareersPage() {
   return (
@@ -52,8 +52,8 @@ export default function CareersPage() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Be part of a team that's shaping the future of artificial intelligence. 
-              While we're not currently hiring, we're planning to expand our team soon.
+              Be part of a team that&apos;s shaping the future of artificial intelligence. 
+              While we&apos;re not currently hiring, we&apos;re planning to expand our team soon.
             </p>
           </div>
         </div>
@@ -131,7 +131,7 @@ export default function CareersPage() {
               Future Opportunities
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              These are the types of roles we'll be looking to fill as we grow our team
+              These are the types of roles we&apos;ll be looking to fill as we grow our team
             </p>
           </div>
 
@@ -148,7 +148,7 @@ export default function CareersPage() {
                 </span>
               </div>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Join our core team to develop next-generation AI systems. You'll work on cutting-edge 
+                Join our core team to develop next-generation AI systems. You&apos;ll work on cutting-edge 
                 research, implement novel architectures, and help shape the future of artificial intelligence.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -178,7 +178,7 @@ export default function CareersPage() {
                 </span>
               </div>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Build the interfaces and infrastructure that power our AI solutions. You'll create 
+                Build the interfaces and infrastructure that power our AI solutions. You&apos;ll create 
                 user-friendly applications and robust backend systems that make AI accessible to everyone.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -208,7 +208,7 @@ export default function CareersPage() {
                 </span>
               </div>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Help us expand our reach and build strategic partnerships. You'll identify new opportunities, 
+                Help us expand our reach and build strategic partnerships. You&apos;ll identify new opportunities, 
                 develop relationships, and drive growth for our AI solutions.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -230,11 +230,11 @@ export default function CareersPage() {
           {/* Don't see a fit? */}
           <div className="text-center mt-16">
             <div className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-2xl p-8 max-w-2xl mx-auto">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Don't See the Perfect Role?</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Don&apos;t See the Perfect Role?</h3>
               <p className="text-gray-600 mb-6">
-                We're always interested in hearing from talented individuals who are passionate 
+                We&apos;re always interested in hearing from talented individuals who are passionate 
                 about AI and want to make a difference. Send us your resume and tell us how 
-                you'd like to contribute to our mission.
+                you&apos;d like to contribute to our mission.
               </p>
               <Link 
                 href="/contact" 
@@ -277,7 +277,7 @@ export default function CareersPage() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Collaboration</h3>
               <p className="text-gray-600">
-                We work together as a team, sharing knowledge and supporting each other's growth
+                We work together as a team, sharing knowledge and supporting each other&apos;s growth
               </p>
             </div>
 
@@ -287,7 +287,7 @@ export default function CareersPage() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Innovation</h3>
               <p className="text-gray-600">
-                We encourage creative thinking and aren't afraid to challenge conventional approaches
+                We encourage creative thinking and aren&apos;t afraid to challenge conventional approaches
               </p>
             </div>
           </div>
@@ -336,7 +336,7 @@ export default function CareersPage() {
                 <Star className="w-6 h-6" />
               </div>
               <h3 className="font-semibold mb-2">Equity Options</h3>
-              <p className="text-white/80 text-sm">Share in our company's success</p>
+              <p className="text-white/80 text-sm">Share in our company&apos;s success</p>
             </div>
           </div>
         </div>

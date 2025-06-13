@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Brain, Code, Shield, Zap, Users, Target, Globe, Lightbulb, Heart } from "lucide-react";
+import { ArrowRight, Brain, Code, Shield, Zap, Users, Target, Globe } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -52,7 +52,7 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We're a passionate team of innovators dedicated to pushing the boundaries 
+              We&apos;re a passionate team of innovators dedicated to pushing the boundaries 
               of artificial intelligence and creating technology that makes a meaningful impact.
             </p>
           </div>
@@ -154,7 +154,7 @@ export default function AboutPage() {
               <Target className="w-12 h-12 text-orange-500 mb-4 mx-auto" />
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Solutions</h3>
               <p className="text-gray-600">
-                Continuously adapting and growing to meet tomorrow's challenges today
+                Continuously adapting and growing to meet tomorrow&apos;s challenges today
               </p>
             </div>
           </div>
@@ -172,7 +172,7 @@ export default function AboutPage() {
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
                 <h4 className="text-lg font-semibold text-blue-800 mb-2">Empowering the Future</h4>
                 <p className="text-blue-700 text-sm">
-                  Creating tools and technologies that enable tomorrow's breakthroughs
+                  Creating tools and technologies that enable tomorrow&apos;s breakthroughs
                 </p>
               </div>
               <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6">
@@ -209,7 +209,7 @@ export default function AboutPage() {
               <p className="text-gray-600 leading-relaxed mb-6">
                 Kaynen leads our technical vision and development efforts, bringing deep expertise 
                 in AI architecture, system design, and innovative problem-solving. His passion for 
-                cutting-edge technology drives our commitment to pushing the boundaries of what's 
+                cutting-edge technology drives our commitment to pushing the boundaries of what&apos;s 
                 possible with artificial intelligence.
               </p>
               <div className="flex justify-center space-x-4">
@@ -329,7 +329,7 @@ export default function AboutPage() {
             Ready to Work Together?
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Let's discuss how Sybertnetics AI Solutions can help transform your business 
+            Let&apos;s discuss how Sybertnetics AI Solutions can help transform your business 
             with innovative artificial intelligence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

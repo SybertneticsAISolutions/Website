@@ -67,12 +67,12 @@ export default function NewsPage() {
               <Newspaper className="w-16 h-16 text-emerald-500 mx-auto mb-6" />
               <h2 className="text-3xl font-bold text-gray-900 mb-6">News Coming Soon</h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                We're preparing to share exciting updates about our company milestones, 
+                We&apos;re preparing to share exciting updates about our company milestones, 
                 product launches, partnerships, and industry recognition. Stay tuned for 
                 important announcements from the Sybertnetics team.
               </p>
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-gray-900">What We'll Share:</h3>
+                <h3 className="text-xl font-semibold text-gray-900">What We&apos;ll Share:</h3>
                 <ul className="text-left space-y-2 text-gray-600">
                   <li className="flex items-center">
                     <ArrowRight className="w-4 h-4 mr-2 text-emerald-500" />
@@ -196,7 +196,7 @@ export default function NewsPage() {
               </h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 Are you a journalist, blogger, or media professional interested in covering 
-                Sybertnetics AI Solutions? We'd love to hear from you and provide the 
+                Sybertnetics AI Solutions? We&apos;d love to hear from you and provide the 
                 information you need for your story.
               </p>
               <div className="space-y-4">

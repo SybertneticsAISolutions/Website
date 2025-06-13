@@ -112,7 +112,7 @@ export default function ContactPage() {
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Ready to transform your business with cutting-edge AI solutions? 
-              We'd love to hear from you and discuss how we can help.
+              We&apos;d love to hear from you and discuss how we can help.
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Send us a Message</h2>
               <p className="text-gray-600 mb-8">
-                Fill out the form below and we'll get back to you as soon as possible.
+                Fill out the form below and we&apos;ll get back to you as soon as possible.
               </p>
 
               {submitStatus === 'success' && (
@@ -256,7 +256,7 @@ export default function ContactPage() {
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">Contact Information</h2>
                 <p className="text-lg text-gray-600 mb-8">
-                  We're here to help and answer any questions you might have. 
+                  We&apos;re here to help and answer any questions you might have. 
                   We look forward to hearing from you.
                 </p>
               </div>
@@ -400,7 +400,7 @@ export default function ContactPage() {
                 How do I get started with your services?
               </h3>
               <p className="text-gray-600">
-                Simply fill out our contact form or email us directly. We'll schedule 
+                Simply fill out our contact form or email us directly. We&apos;ll schedule 
                 a consultation to discuss your needs and how we can help.
               </p>
             </div>

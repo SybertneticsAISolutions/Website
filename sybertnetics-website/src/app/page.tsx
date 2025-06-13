@@ -69,7 +69,7 @@ export default function LandingPage() {
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Pioneering next-generation AI systems that redefine what's possible. 
+                              Pioneering next-generation AI systems that redefine what&apos;s possible. 
               Our groundbreaking technology delivers unprecedented capabilities 
               through innovative methodologies and ethical design.
             </p>
