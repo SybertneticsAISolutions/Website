@@ -1,19 +1,26 @@
-import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
-export async function POST(request: Request) {
+exports.handler = async (event, context) => {
+  // Only allow POST requests
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: 'Method not allowed' })
+    };
+  }
+
   try {
-    const { name, email, company, message } = await request.json();
+    const { name, email, company, message } = JSON.parse(event.body);
 
     // Validate required fields
     if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Missing required fields' })
+      };
     }
 
-    // Check if SMTP is configured (using your existing variable names)
+    // Check if SMTP is configured
     const smtpConfigured = process.env.SMTP_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS;
 
     if (smtpConfigured) {
@@ -21,7 +28,7 @@ export async function POST(request: Request) {
       const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST || 'smtp.gmail.com',
         port: parseInt(process.env.SMTP_PORT || '587'),
-        secure: false, // true for 465, false for other ports
+        secure: false,
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS,
@@ -82,12 +89,12 @@ export async function POST(request: Request) {
         transporter.sendMail(supportEmailOptions),
       ]);
 
-      return NextResponse.json(
-        { message: 'Emails sent successfully' },
-        { status: 200 }
-      );
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'Emails sent successfully' })
+      };
     } else {
-      // SMTP not configured - log the message for development/testing
+      // SMTP not configured - log the message
       console.log('=== CONTACT FORM SUBMISSION ===');
       console.log('Name:', name);
       console.log('Email:', email);
@@ -96,18 +103,17 @@ export async function POST(request: Request) {
       console.log('Submitted at:', new Date().toLocaleString());
       console.log('===============================');
 
-      // Return success even without email sending for development
-      return NextResponse.json(
-        { message: 'Form submitted successfully (SMTP not configured - check console logs)' },
-        { status: 200 }
-      );
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'Form submitted successfully (SMTP not configured - check console logs)' })
+      };
     }
 
   } catch (error) {
     console.error('Contact form error:', error);
-    return NextResponse.json(
-      { error: 'Failed to process form submission' },
-      { status: 500 }
-    );
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Failed to process form submission' })
+    };
   }
-} 
+}; 
