@@ -12,6 +12,10 @@ export default function ContactPage() {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [retryCount, setRetryCount] = useState(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -19,6 +23,108 @@ export default function ContactPage() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const submitForm = async (formElement: HTMLFormElement): Promise<boolean> => {
+    const formDataToSubmit = new FormData(formElement);
+
+    // Convert FormData to URLSearchParams for Netlify
+    const params = new URLSearchParams();
+    formDataToSubmit.forEach((value, key) => {
+      params.append(key, value.toString());
+    });
+
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+
+    if (response.ok) {
+      return true;
+    } else {
+      // Handle specific error cases
+      let errorMsg = 'Sorry, there was an error sending your message. Please try again.';
+      
+      if (response.status === 404) {
+        errorMsg = 'Form submission endpoint not found. Please contact us directly at support@sybertnetics.com';
+      } else if (response.status >= 500) {
+        errorMsg = 'Server error occurred. Please try again in a few minutes or contact us directly.';
+      } else if (response.status === 429) {
+        errorMsg = 'Too many requests. Please wait a moment before trying again.';
+      }
+      
+      setErrorMessage(errorMsg);
+      console.error('Form submission failed:', response.status, response.statusText);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const formElement = e.target as HTMLFormElement;
+      const success = await submitForm(formElement);
+
+      if (success) {
+        // Only redirect on successful submission
+        setRetryCount(0);
+        window.location.href = '/thank-you';
+      } else {
+        setSubmitStatus('error');
+        setRetryCount(prev => prev + 1);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setRetryCount(prev => prev + 1);
+      
+      // Check if it's a network error
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        setErrorMessage('Network error occurred. Please check your internet connection and try again.');
+      } else {
+        setErrorMessage('An unexpected error occurred. Please try again or contact us directly.');
+      }
+      console.error('Network error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleRetry = async () => {
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const formElement = document.querySelector('form[name="contact"]') as HTMLFormElement;
+      if (formElement) {
+        const success = await submitForm(formElement);
+
+        if (success) {
+          setRetryCount(0);
+          window.location.href = '/thank-you';
+        } else {
+          setSubmitStatus('error');
+          setRetryCount(prev => prev + 1);
+        }
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setRetryCount(prev => prev + 1);
+      
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        setErrorMessage('Network error occurred. Please check your internet connection and try again.');
+      } else {
+        setErrorMessage('An unexpected error occurred. Please try again or contact us directly.');
+      }
+      console.error('Retry error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -111,14 +217,54 @@ export default function ContactPage() {
                 Fill out the form below and we&apos;ll get back to you as soon as possible.
               </p>
 
-              {/* Status messages will be handled by the thank-you page redirect */}
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <svg className="w-5 h-5 text-red-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-medium text-red-800 mb-1">
+                        Message Failed to Send {retryCount > 0 && `(Attempt ${retryCount + 1})`}
+                      </h3>
+                      <p className="text-sm text-red-700 mb-3">
+                        {errorMessage}
+                      </p>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <button
+                          onClick={handleRetry}
+                          disabled={isSubmitting}
+                          className="inline-flex items-center px-3 py-1.5 border border-red-300 text-xs font-medium rounded text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <div className="animate-spin rounded-full h-3 w-3 border-b border-red-600 mr-1"></div>
+                              Retrying...
+                            </>
+                          ) : (
+                            'Try Again'
+                          )}
+                        </button>
+                        <a
+                          href="mailto:support@sybertnetics.com?subject=Contact Form Issue&body=I had trouble submitting the contact form on your website."
+                          className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-red-700 hover:text-red-800"
+                        >
+                          Email us directly
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <form 
                 name="contact" 
                 method="POST" 
                 data-netlify="true" 
                 data-netlify-honeypot="bot-field"
-                action="/thank-you.html"
+                onSubmit={handleSubmit}
                 className="space-y-6"
               >
                 <input type="hidden" name="form-name" value="contact" />
@@ -216,10 +362,20 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
-                  <Send className="ml-2 w-5 h-5" />
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="ml-2 w-5 h-5" />
+                    </>
+                  )}
                 </button>
               </form>
             </div>
