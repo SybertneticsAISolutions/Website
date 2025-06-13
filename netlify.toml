@@ -2,12 +2,18 @@
   publish = "sybertnetics-website/out"
   command = "cd sybertnetics-website && npm install && npm run build"
 
+# Handle trailing slash consistency  
 [[redirects]]
-  from = "/api/*"
-  to = "/api/:splat"
-  status = 200
-  force = true
+  from = "/contact"
+  to = "/contact/"
+  status = 301
 
+[[redirects]]
+  from = "/thank-you"
+  to = "/thank-you/"
+  status = 301
+
+# SPA redirect (but preserve form endpoints)
 [[redirects]]
   from = "/*"
   to = "/index.html"

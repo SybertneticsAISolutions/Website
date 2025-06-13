@@ -27,12 +27,12 @@ export default function ThankYouPage() {
               <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
                 About
               </Link>
-              <Link href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="/contact/" className="text-gray-600 hover:text-gray-900 transition-colors">
                 Contact
               </Link>
             </div>
             <Link 
-              href="/contact" 
+              href="/contact/" 
               className="bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-6 py-2 rounded-full hover:from-emerald-600 hover:to-blue-700 transition-all duration-300"
             >
               Get Started
@@ -71,7 +71,7 @@ export default function ThankYouPage() {
             </Link>
             
             <Link
-              href="/contact"
+              href="/contact/"
               className="group flex items-center space-x-2 bg-white border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full font-semibold hover:border-emerald-500 hover:text-emerald-600 transition-all duration-300 hover:scale-105"
             >
               <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
