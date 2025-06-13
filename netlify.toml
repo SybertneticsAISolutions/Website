@@ -17,7 +17,7 @@
 [build.processing.html]
   pretty_urls = true
 
-# Handle trailing slash consistency  
+# Handle specific page redirects to ensure consistency
 [[redirects]]
   from = "/contact"
   to = "/contact/"
@@ -28,12 +28,11 @@
   to = "/thank-you/"
   status = 301
 
-# SPA redirect (but preserve form endpoints)
+# SPA redirect for all other routes (except existing files)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  force = false
 
 # Ensure form processing works
 [[headers]]

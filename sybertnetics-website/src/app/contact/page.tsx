@@ -9,7 +9,7 @@ export default function ContactPage() {
       {/* Hidden form for Netlify detection - must match visible form exactly */}
       <div dangerouslySetInnerHTML={{
         __html: `
-          <form name="contact" method="POST" action="/thank-you/" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+          <form name="contact" method="POST" action="/thank-you" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
             <input type="hidden" name="form-name" value="contact" />
             <div style="display: none;">
               <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -100,7 +100,7 @@ export default function ContactPage() {
               <form
                 name="contact"
                 method="POST"
-                action="/thank-you/"
+                action="/thank-you"
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
                 className="space-y-6"
