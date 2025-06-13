@@ -9,9 +9,6 @@ yarn-error.log*
 /build/
 /.next/
 
-# Local Netlify folder
-.netlify/
-
 # OS generated files
 .DS_Store
 .DS_Store?
