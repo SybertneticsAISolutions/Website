@@ -2,41 +2,117 @@
 
 import React, { useState } from 'react';
 import Link from "next/link";
-import { Mail, MapPin, Phone, Send, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, MapPin, Phone, Send, ArrowRight, Loader2, CheckCircle, XCircle } from "lucide-react";
+
+// Notification component
+interface NotificationProps {
+  type: 'success' | 'error';
+  message: string;
+  isVisible: boolean;
+}
+
+const Notification = ({ type, message, isVisible }: NotificationProps) => {
+  if (!isVisible) return null;
+
+  return (
+    <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-md transition-all duration-300 ${
+      type === 'success' 
+        ? 'bg-green-500 text-white' 
+        : 'bg-red-500 text-white'
+    }`}>
+      <div className="flex items-start space-x-3">
+        {type === 'success' ? (
+          <CheckCircle className="w-6 h-6 flex-shrink-0 mt-0.5" />
+        ) : (
+          <XCircle className="w-6 h-6 flex-shrink-0 mt-0.5" />
+        )}
+        <div className="flex-1">
+          <p className="font-medium text-sm leading-relaxed">{message}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error';
+    message: string;
+    isVisible: boolean;
+  }>({
+    type: 'success',
+    message: '',
+    isVisible: false
+  });
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
+  const showNotification = (type: 'success' | 'error', message: string) => {
+    setNotification({ type, message, isVisible: true });
+    
+    // Hide notification after 5 seconds
+    setTimeout(() => {
+      setNotification(prev => ({ ...prev, isVisible: false }));
+    }, 5000);
+  };
+
+  const clearForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      company: '',
+      message: ''
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        showNotification(
+          'success',
+          'Thank you for your message! Please check your inbox for a confirmation email. We will reach out to you soon.'
+        );
+        clearForm();
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      showNotification(
+        'error',
+        'Sorry, there was an issue sending your message. Please reach out to us directly at support@sybertnetics.com'
+      );
+      clearForm();
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hidden form for Netlify detection - must match visible form exactly */}
-      <div dangerouslySetInnerHTML={{
-        __html: `
-          <form name="contact" method="POST" action="/thank-you/" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-            <input type="hidden" name="form-name" value="contact" />
-            <div style="display: none;">
-              <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-            </div>
-            <input type="text" name="name" required />
-            <input type="email" name="email" required />
-            <input type="text" name="company" />
-            <select name="subject" required>
-              <option value="">Select a subject</option>
-              <option value="general">General Inquiry</option>
-              <option value="solutions">AI Solutions</option>
-              <option value="partnership">Partnership Opportunity</option>
-              <option value="investment">Investment Inquiry</option>
-              <option value="careers">Career Opportunities</option>
-              <option value="support">Technical Support</option>
-              <option value="other">Other</option>
-            </select>
-            <textarea name="message" required></textarea>
-            <button type="submit">Send Message</button>
-          </form>
-        `
-      }} />
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
@@ -102,26 +178,10 @@ export default function ContactPage() {
                 Fill out the form below and we&apos;ll get back to you as soon as possible.
               </p>
 
-              <form
-                name="contact"
-                method="POST"
-                action="/thank-you/"
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                className="space-y-6"
-                onSubmit={() => {
-                  setIsSubmitting(true);
-                  // Let the native form submission handle the rest
-                }}
-              >
-                <input type="hidden" name="form-name" value="contact" />
-                
-                {/* Honeypot field */}
-                <div style={{ display: 'none' }}>
-                  <label>
-                    Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
-                  </label>
-                </div>
+                              <form 
+                  className="space-y-6"
+                  onSubmit={handleSubmit}
+                >
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -135,6 +195,8 @@ export default function ContactPage() {
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500 text-gray-900"
                       placeholder="Your full name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div>
@@ -148,6 +210,8 @@ export default function ContactPage() {
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500 text-gray-900"
                       placeholder="your.email@company.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -162,6 +226,8 @@ export default function ContactPage() {
                     name="company"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500 text-gray-900"
                     placeholder="Your company name"
+                    value={formData.company}
+                    onChange={handleInputChange}
                   />
                 </div>
 
@@ -197,6 +263,8 @@ export default function ContactPage() {
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors resize-none placeholder:text-gray-500 text-gray-900"
                     placeholder="Tell us about your project, goals, or how we can help..."
+                    value={formData.message}
+                    onChange={handleInputChange}
                   />
                 </div>
 
@@ -421,6 +489,9 @@ export default function ContactPage() {
           </div>
         </div>
       </footer>
+
+      {/* Notification Component */}
+      <Notification type={notification.type} message={notification.message} isVisible={notification.isVisible} />
     </div>
   );
 } 
