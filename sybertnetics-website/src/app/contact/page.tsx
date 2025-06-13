@@ -82,7 +82,6 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      // Try Netlify Function first
       const response = await fetch('/.netlify/functions/contact', {
         method: 'POST',
         headers: {
@@ -98,44 +97,15 @@ export default function ContactPage() {
         );
         clearForm();
       } else {
-        // If Netlify Function fails, fall back to Netlify Forms
-        throw new Error('Netlify Function failed, trying Netlify Forms');
+        throw new Error('Failed to send message');
       }
     } catch (error) {
       console.error('Contact form error:', error);
-      
-      // Fallback to Netlify Forms
-      try {
-        const formData2 = new FormData();
-        formData2.append('form-name', 'contact');
-        formData2.append('name', formData.name);
-        formData2.append('email', formData.email);
-        formData2.append('company', formData.company);
-        formData2.append('message', formData.message);
-
-        const netlifyResponse = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData2 as any).toString()
-        });
-
-        if (netlifyResponse.ok) {
-          showNotification(
-            'success',
-            'Thank you for your message! We have received it and will reach out to you soon.'
-          );
-          clearForm();
-        } else {
-          throw new Error('Both submission methods failed');
-        }
-      } catch (fallbackError) {
-        console.error('Fallback form error:', fallbackError);
-        showNotification(
-          'error',
-          'Sorry, there was an issue sending your message. Please reach out to us directly at support@sybertnetics.com'
-        );
-        clearForm();
-      }
+      showNotification(
+        'error',
+        'Sorry, there was an issue sending your message. Please reach out to us directly at support@sybertnetics.com'
+      );
+      clearForm();
     } finally {
       setIsSubmitting(false);
     }
@@ -143,13 +113,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hidden form for Netlify detection */}
-      <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <input type="text" name="company" />
-        <textarea name="message"></textarea>
-      </form>
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
