@@ -324,7 +324,7 @@ export default function NewsPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Sybertnetics AI Solutions. All rights reserved.</p>
+            <p>&copy; 2019-2025 Sybertnetics AI Solutions. All rights reserved.</p>
           </div>
         </div>
       </footer>
