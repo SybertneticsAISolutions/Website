@@ -29,18 +29,19 @@ export default function ContactPage() {
     setSubmitStatus('idle');
 
     try {
-      const form = e.target as HTMLFormElement;
-      const formDataToSubmit = new FormData(form);
+      const formElement = e.target as HTMLFormElement;
+      const formDataToSubmit = new FormData(formElement);
 
-      const formEntries = Array.from(formDataToSubmit.entries()).map(([key, value]) => [
-        key,
-        value instanceof File ? value.name : value.toString()
-      ]);
-      
+      // Convert FormData to URLSearchParams for Netlify
+      const params = new URLSearchParams();
+      formDataToSubmit.forEach((value, key) => {
+        params.append(key, value.toString());
+      });
+
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formEntries).toString()
+        body: params.toString()
       });
 
       if (response.ok) {
@@ -55,7 +56,7 @@ export default function ContactPage() {
         setSubmitStatus('success');
       } else {
         setSubmitStatus('error');
-        console.error('Form submission failed');
+        console.error('Form submission failed with status:', response.status);
       }
     } catch (error) {
       setSubmitStatus('error');
@@ -67,6 +68,28 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Hidden form for Netlify to detect */}
+      <div 
+        dangerouslySetInnerHTML={{
+          __html: `
+            <form name="contact" data-netlify="true" hidden>
+              <input type="text" name="name" />
+              <input type="email" name="email" />
+              <input type="text" name="company" />
+              <select name="subject">
+                <option value="general">General Inquiry</option>
+                <option value="solutions">AI Solutions</option>
+                <option value="partnership">Partnership Opportunity</option>
+                <option value="investment">Investment Inquiry</option>
+                <option value="careers">Career Opportunities</option>
+                <option value="support">Technical Support</option>
+                <option value="other">Other</option>
+              </select>
+              <textarea name="message"></textarea>
+            </form>
+          `
+        }}
+      />
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -173,7 +196,7 @@ export default function ContactPage() {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500 text-gray-900"
                       placeholder="Your full name"
                     />
                   </div>
@@ -188,7 +211,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500 text-gray-900"
                       placeholder="your.email@company.com"
                     />
                   </div>
@@ -204,7 +227,7 @@ export default function ContactPage() {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors placeholder:text-gray-500 text-gray-900"
                     placeholder="Your company name"
                   />
                 </div>
@@ -243,7 +266,7 @@ export default function ContactPage() {
                     rows={6}
                     value={formData.message}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors resize-none placeholder:text-gray-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors resize-none placeholder:text-gray-500 text-gray-900"
                     placeholder="Tell us about your project, goals, or how we can help..."
                   />
                 </div>
