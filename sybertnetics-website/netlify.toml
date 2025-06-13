@@ -1,6 +1,7 @@
 [build]
   publish = "out"
-  command = "npm run build"
+  command = "cd sybertnetics-website && npm install && npm run build"
+  functions = "sybertnetics-website/netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
