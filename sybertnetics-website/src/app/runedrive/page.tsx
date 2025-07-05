@@ -80,7 +80,7 @@ export default function RuneDriveLanding() {
                 Why Rune Drive?
               </h2>
               <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
-                We're reimagining how tabletop RPGs work in the digital age, bringing together 
+                We&apos;re reimagining how tabletop RPGs work in the digital age, bringing together 
                 the best of collaborative storytelling with powerful digital tools.
               </p>
             </div>
@@ -140,7 +140,7 @@ export default function RuneDriveLanding() {
                 </div>
                 <h3 className="text-lg font-bold mb-2 text-purple-300">Create Your World</h3>
                 <p className="text-indigo-200 text-sm">
-                  Start with our "Stories of the Abyss" setting or create your own universe from scratch
+                  Start with our &quot;Stories of the Abyss&quot; setting or create your own universe from scratch
                 </p>
               </div>
               <div className="text-center">

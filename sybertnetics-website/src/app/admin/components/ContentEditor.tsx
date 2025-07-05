@@ -1,58 +1,104 @@
 "use client";
-import { useState } from "react";
-import type { Post } from "@/types";
-import RichTextEditor from "./RichTextEditor";
+import { useState, useEffect } from 'react';
+import { marked } from 'marked';
 
-export default function ContentEditor({
-  content,
-  onSave,
-  onCancel,
-  contentType,
-}: {
-  content: Partial<Post>;
-  onSave: (contentData: Post) => void;
+interface ContentEditorProps {
+  pagePath: string;
+  onSave: (content: string) => Promise<void>;
   onCancel: () => void;
-  contentType: 'blog' | 'news';
-}) {
-  const [title, setTitle] = useState(content?.title || "");
-  const [body, setBody] = useState(content?.content || "");
+}
 
-  const handleSave = () => {
-    const slug = content.slug || title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    const lastModified = content.lastModified || new Date().toISOString();
-    onSave({ slug, title, lastModified, content: body });
+export default function ContentEditor({ pagePath, onSave, onCancel }: ContentEditorProps) {
+  const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
+
+  useEffect(() => {
+    loadContent();
+  }, [pagePath]);
+
+  const loadContent = async () => {
+    try {
+      const response = await fetch(`/api/content/${pagePath}`);
+      if (response.ok) {
+        const data = await response.json();
+        setContent(data.content || '');
+      }
+    } catch (error) {
+      console.error('Error loading content:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const singularType = contentType.slice(0, -1);
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await onSave(content);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const renderPreview = () => {
+    try {
+      return marked(content);
+    } catch (error) {
+      return '<p>Error rendering preview</p>';
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">{singularType.charAt(0).toUpperCase() + singularType.slice(1)} Title</label>
-        <input
-          id="title"
-          type="text"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Content</label>
-        <div className="mt-1">
-          <RichTextEditor value={body} onChange={setBody} />
+    <div className="bg-white rounded-lg shadow-lg">
+      <div className="border-b border-gray-200 p-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-gray-900">Edit Content: {pagePath}</h2>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setPreviewMode(!previewMode)}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+            >
+              {previewMode ? 'Edit' : 'Preview'}
+            </button>
+            <button
+              onClick={onCancel}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              className="px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md disabled:opacity-50"
+            >
+              {isSaving ? 'Saving...' : 'Save'}
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-end space-x-4">
-        <button type="button" onClick={onCancel} className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-          Cancel
-        </button>
-        <button type="button" onClick={handleSave} className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700">
-          Save {singularType.charAt(0).toUpperCase() + singularType.slice(1)}
-        </button>
+      <div className="p-4">
+        {previewMode ? (
+          <div className="prose max-w-none">
+            <div dangerouslySetInnerHTML={{ __html: renderPreview() }} />
+          </div>
+        ) : (
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="w-full h-96 p-4 border border-gray-300 rounded-md font-mono text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="Enter your markdown content here..."
+          />
+        )}
       </div>
     </div>
   );

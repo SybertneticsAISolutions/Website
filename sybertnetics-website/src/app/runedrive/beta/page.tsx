@@ -185,11 +185,11 @@ export default function RuneDriveBeta() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="font-semibold mb-2">When does the beta start?</h3>
-                  <p className="text-indigo-200 text-sm">We&apos;re targeting Q2 2025 for the first beta release. Join the waitlist to be notified!</p>
+                  <p className="text-indigo-200 text-sm">We&apos;re targeting Q2 2026 for the first beta release. Join the waitlist to be notified!</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-2">Will it be free?</h3>
-                  <p className="text-indigo-200 text-sm">Yes! The beta will be completely free for all participants.</p>
+                  <p className="text-indigo-200 text-sm">Beta access will be exclusive to early supporters and premium tiers of our Kickstarter backers.</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-2">What platforms?</h3>

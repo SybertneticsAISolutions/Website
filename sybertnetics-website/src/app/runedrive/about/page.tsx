@@ -18,7 +18,7 @@ export default function RuneDriveAbout() {
                 About Rune Drive
               </h1>
               <p className="text-xl text-indigo-200 max-w-3xl mx-auto leading-relaxed">
-                We're building the future of collaborative tabletop RPGs, where every story matters 
+                We&apos;re building the future of collaborative tabletop RPGs, where every story matters 
                 and every player can shape the world they play in.
               </p>
             </div>
@@ -52,7 +52,7 @@ export default function RuneDriveAbout() {
                 </p>
                 <p className="text-indigo-200 leading-relaxed">
                   We envision a future where players can see their choices ripple across multiple 
-                  campaigns, where GMs can build upon each other's work, and where the line between 
+                  campaigns, where GMs can build upon each other&apos;s work, and where the line between 
                   creator and participant becomes beautifully blurred.
                 </p>
               </div>
@@ -143,7 +143,7 @@ export default function RuneDriveAbout() {
                   <h3 className="text-xl font-bold mb-4 text-purple-300">Development Philosophy</h3>
                   <p className="text-indigo-200 mb-4">
                     We believe in building in public, with our community guiding every major decision. 
-                    Your feedback shapes the platform's evolution.
+                    Your feedback shapes the platform&apos;s evolution.
                   </p>
                   <p className="text-indigo-200">
                     Our development process is iterative and community-driven, ensuring that 
