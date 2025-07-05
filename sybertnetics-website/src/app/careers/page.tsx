@@ -12,7 +12,7 @@ interface Job {
 
 // This function runs on the server during the build process
 async function getJobs(): Promise<Job[]> {
-  const jobsDirectory = path.join(process.cwd(), 'sybertnetics-website/src/content/careers');
+  const jobsDirectory = path.join(process.cwd(), 'src/content/careers');
   try {
     const files = await fs.readdir(jobsDirectory);
     const jobs = await Promise.all(

@@ -6,16 +6,27 @@ const states = [
   'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 ];
 
-export default function ApplicationForm({ job }) {
+interface Job {
+  slug: string;
+  title: string;
+  description: string;
+  posterEmail: string;
+  customQuestions: {
+    question: string;
+    required: boolean;
+  }[];
+}
+
+export default function ApplicationForm({ job }: { job: Job }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: false, message: '' });
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus({ success: false, message: '' });
 
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.currentTarget);
     // Append job details for the backend
     formData.append('jobTitle', job.title);
     formData.append('posterEmail', job.posterEmail);
@@ -33,9 +44,13 @@ export default function ApplicationForm({ job }) {
       }
       
       setSubmitStatus({ success: true, message: 'Your application has been submitted successfully!' });
-      event.target.reset(); // Clear form on success
+      event.currentTarget.reset(); // Clear form on success
     } catch (error) {
-      setSubmitStatus({ success: false, message: error.message });
+      if (error instanceof Error) {
+        setSubmitStatus({ success: false, message: error.message });
+      } else {
+        setSubmitStatus({ success: false, message: 'An unknown error occurred.' });
+      }
     } finally {
       setIsSubmitting(false);
     }

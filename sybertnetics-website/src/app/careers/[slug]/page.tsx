@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-// TypeScript checks disabled for this file due to PageProps constraint conflict.
-// We can revisit and properly type this component later.
-
 import fs from 'fs/promises';
 import path from 'path';
 import { notFound } from 'next/navigation';
@@ -16,7 +11,13 @@ interface Job {
   customQuestions: { question: string; required: boolean }[];
 }
 
-const jobsDirectory = path.join(process.cwd(), 'sybertnetics-website/src/content/careers');
+// Defining the props type for the page component to satisfy Next.js constraints.
+type PageProps = {
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+const jobsDirectory = path.join(process.cwd(), 'src/content/careers');
 
 // This function generates the static pages at build time
 export async function generateStaticParams() {
@@ -45,8 +46,9 @@ async function getJob(slug: string): Promise<Job | null> {
   }
 }
 
-export default async function JobDetailsPage({ params }: { params: { slug: string } }) {
-  const job = await getJob(params.slug);
+export default async function JobDetailsPage({ params }: PageProps) {
+  const { slug } = await params;
+  const job = await getJob(slug);
 
   if (!job) {
     notFound();

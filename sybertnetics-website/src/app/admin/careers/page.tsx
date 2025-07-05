@@ -4,10 +4,24 @@ import JobEditor from "../components/JobEditor";
 
 const API_URL = "/.netlify/functions/manage-jobs";
 
-function getAuthHeader() {
+interface Job {
+  slug: string;
+  title: string;
+  description: string;
+  posterEmail: string;
+  customQuestions: {
+    question: string;
+    required: boolean;
+  }[];
+}
+
+function getAuthHeader(): Record<string, string> {
   const token = typeof window !== 'undefined' ? localStorage.getItem("admin_jwt") : null;
-  if (!token) return {};
-  return { "Authorization": `Bearer ${token}` };
+  const headers: Record<string, string> = {};
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  return headers;
 }
 
 async function fetchJobs() {
@@ -19,7 +33,7 @@ async function fetchJobs() {
   return res.json();
 }
 
-async function saveJob(jobData) {
+async function saveJob(jobData: Job) {
   return fetch(API_URL, {
     method: 'POST',
     headers: { ...getAuthHeader(), 'Content-Type': 'application/json' },
@@ -27,7 +41,7 @@ async function saveJob(jobData) {
   });
 }
 
-async function deleteJob(slug) {
+async function deleteJob(slug: string) {
   return fetch(`${API_URL}?slug=${slug}`, {
     method: 'DELETE',
     headers: getAuthHeader()
@@ -35,8 +49,8 @@ async function deleteJob(slug) {
 }
 
 export default function CareersAdmin() {
-  const [jobs, setJobs] = useState([]);
-  const [editingJob, setEditingJob] = useState(null);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [editingJob, setEditingJob] = useState<Partial<Job> | null>(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,7 +61,11 @@ export default function CareersAdmin() {
       const jobsData = await fetchJobs();
       setJobs(jobsData);
     } catch (err) {
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred while loading jobs.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +75,7 @@ export default function CareersAdmin() {
     loadJobs();
   }, []);
 
-  const handleSave = async (jobData) => {
+  const handleSave = async (jobData: Job) => {
     const res = await saveJob(jobData);
     if (res.ok) {
       await loadJobs();
@@ -68,7 +86,7 @@ export default function CareersAdmin() {
     }
   };
   
-  const handleDelete = async (slug) => {
+  const handleDelete = async (slug: string) => {
     if (window.confirm("Are you sure you want to delete this job posting?")) {
       const res = await deleteJob(slug);
       if (res.ok) {

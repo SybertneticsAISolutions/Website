@@ -1,12 +1,23 @@
 import { PlusCircle, Trash } from "lucide-react";
 import { useState } from "react";
 
+interface Job {
+  slug: string;
+  title: string;
+  description: string;
+  posterEmail: string;
+  customQuestions: {
+    question: string;
+    required: boolean;
+  }[];
+}
+
 // TODO: Replace with a proper rich text editor
-function RichTextEditor({ value, onChange }) {
+function RichTextEditor({ value, onChange }: { value: string; onChange: (newValue: string) => void }) {
   return <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={10} required />;
 }
 
-export default function JobEditor({ job, onSave, onCancel }) {
+export default function JobEditor({ job, onSave, onCancel }: { job: Partial<Job>, onSave: (jobData: Job) => void, onCancel: () => void }) {
   const [title, setTitle] = useState(job?.title || "");
   const [description, setDescription] = useState(job?.description || "");
   const [posterEmail, setPosterEmail] = useState(job?.posterEmail || "");
@@ -21,13 +32,19 @@ export default function JobEditor({ job, onSave, onCancel }) {
     setCustomQuestions([...customQuestions, { question: "", required: false }]);
   };
 
-  const updateQuestion = (index, field, value) => {
+  const updateQuestionText = (index: number, text: string) => {
     const newQuestions = [...customQuestions];
-    newQuestions[index][field] = value;
+    newQuestions[index].question = text;
     setCustomQuestions(newQuestions);
   };
 
-  const removeQuestion = (index) => {
+  const updateQuestionRequired = (index: number, required: boolean) => {
+    const newQuestions = [...customQuestions];
+    newQuestions[index].required = required;
+    setCustomQuestions(newQuestions);
+  };
+
+  const removeQuestion = (index: number) => {
     setCustomQuestions(customQuestions.filter((_, i) => i !== index));
   };
 
@@ -51,13 +68,13 @@ export default function JobEditor({ job, onSave, onCancel }) {
             type="text" 
             placeholder="Question" 
             value={q.question} 
-            onChange={(e) => updateQuestion(index, 'question', e.target.value)} 
+            onChange={(e) => updateQuestionText(index, e.target.value)} 
           />
           <label>
             <input 
               type="checkbox" 
               checked={q.required} 
-              onChange={(e) => updateQuestion(index, 'required', e.target.checked)} 
+              onChange={(e) => updateQuestionRequired(index, e.target.checked)} 
             />
             Required
           </label>
