@@ -3,7 +3,7 @@
 // TODO: Replace placeholders with final content and assets
 
 import Link from 'next/link';
-import { Sparkles, Gamepad2, Users, BookOpen, GitBranch } from 'lucide-react';
+import { Gamepad2, GitBranch, BookOpen } from "lucide-react";
 import RuneDriveHeader from './components/RuneDriveHeader';
 
 // TODO: The styles for this page should be moved to a dedicated CSS module

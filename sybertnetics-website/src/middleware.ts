@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
       await jwtVerify(token, ADMIN_JWT_SECRET);
       // If verification is successful, proceed
       return NextResponse.next();
-    } catch (err) {
+    } catch {
       // If token is invalid, redirect to login
       const loginUrl = new URL('/admin/login', request.url);
       return NextResponse.redirect(loginUrl);

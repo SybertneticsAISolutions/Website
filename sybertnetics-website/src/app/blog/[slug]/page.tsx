@@ -1,8 +1,7 @@
+import { notFound } from 'next/navigation';
 import fs from 'fs/promises';
 import path from 'path';
-import { notFound } from 'next/navigation';
 import { Post } from '@/types';
-import { ParsedUrlQuery } from 'querystring';
 
 const contentDir = path.join(process.cwd(), 'src/content/blog');
 

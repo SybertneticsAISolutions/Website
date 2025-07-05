@@ -52,7 +52,7 @@ export default function AdminDashboard() {
       <main className="ml-64 p-8">
         <h1 className="text-3xl font-bold text-gray-900">Welcome, Admin</h1>
         <p className="text-gray-600 mt-2">
-          Select a section from the sidebar to manage your website's content.
+          Select a section from the sidebar to manage your website&apos;s content.
         </p>
       </main>
     </div>

@@ -12,7 +12,7 @@ export default function RuneDriveCreators() {
             </h1>
             <div className="prose prose-invert lg:prose-xl mx-auto text-indigo-200">
               <p>
-                Information about the creator program will go here. We'll detail how
+                Information about the creator program will go here. We&apos;ll detail how
                 Game Masters can build their own universes, invite players, and even
                 monetize their creations on the Rune Drive platform.
               </p>

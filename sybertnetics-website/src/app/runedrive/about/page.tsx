@@ -16,10 +16,9 @@ export default function RuneDriveAbout() {
             </h1>
             <div className="prose prose-invert lg:prose-xl mx-auto text-indigo-200">
               <p>
-                This is where the detailed explanation of the Rune Drive platform will go.
-                We'll talk about the core mission, the vision for a collaborative TTRPG
-                ecosystem, and what makes Rune Drive a unique platform for creators
-                and players alike.
+                We&apos;re building something revolutionary. Rune Drive will be the ultimate
+                platform for tabletop RPG enthusiasts, combining the best of digital
+                tools with the magic of collaborative storytelling.
               </p>
               <h2 className="text-purple-300">Our Mission</h2>
               <p>

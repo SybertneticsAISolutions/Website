@@ -1,5 +1,5 @@
 "use client";
-import { useEditor, EditorContent, FloatingMenu, BubbleMenu } from '@tiptap/react';
+import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Bold, Italic, Strikethrough, Code, List, ListOrdered } from 'lucide-react';
 

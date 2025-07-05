@@ -15,9 +15,9 @@ export default function RuneDriveUniverse() {
             </h1>
             <div className="prose prose-invert lg:prose-xl mx-auto text-indigo-200">
               <p>
-                Welcome to the official lore hub for "Stories of the Abyss," the flagship
-                universe for Rune Drive. Here you will find information on the world, its
-                history, key factions, and the cataclysmic events that shape every new story.
+                The &quot;Stories of the Abyss&quot; universe is our flagship shared campaign
+                setting. Here, multiple Game Masters and their players contribute to
+                an ever-evolving dark fantasy world.
               </p>
               <h2 className="text-purple-300">The World</h2>
               <p>

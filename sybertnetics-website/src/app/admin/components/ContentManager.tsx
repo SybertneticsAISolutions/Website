@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { PlusCircle, Edit, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import AdminLayout from "./AdminLayout";
 import ContentEditor from "./ContentEditor";
@@ -40,7 +40,7 @@ export default function ContentManager({ contentType }: ContentManagerProps) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadPosts = async () => {
+  const loadPosts = useCallback(async () => {
     try {
       setIsLoading(true);
       setError("");
@@ -51,11 +51,11 @@ export default function ContentManager({ contentType }: ContentManagerProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [contentType]);
 
   useEffect(() => {
     loadPosts();
-  }, [contentType]);
+  }, [loadPosts]);
 
   const handleSave = async (postData: Post) => {
     const res = await savePost(postData, contentType);

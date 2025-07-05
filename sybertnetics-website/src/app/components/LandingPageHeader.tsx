@@ -1,22 +1,19 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { href: '/home', label: 'Home' },
-  { href: '/solutions', label: 'Solutions' },
   { href: '/about', label: 'About' },
-  { href: '/careers', label: 'Careers' },
+  { href: '/solutions', label: 'Solutions' },
   { href: '/blog', label: 'Blog' },
   { href: '/news', label: 'News' },
-  { href: '/runedrive', label: 'Rune Drive' },
+  { href: '/careers', label: 'Careers' },
   { href: '/contact', label: 'Contact' },
+  { href: '/runedrive', label: 'Rune Drive' },
 ];
 
 export default function LandingPageHeader() {
-  const pathname = usePathname();
-
   return (
     <header className="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
