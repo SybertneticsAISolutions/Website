@@ -1,16 +1,6 @@
 import { PlusCircle, Trash } from "lucide-react";
 import { useState } from "react";
-
-interface Job {
-  slug: string;
-  title: string;
-  description: string;
-  posterEmail: string;
-  customQuestions: {
-    question: string;
-    required: boolean;
-  }[];
-}
+import type { Job } from "@/types";
 
 // TODO: Replace with a proper rich text editor
 function RichTextEditor({ value, onChange }: { value: string; onChange: (newValue: string) => void }) {

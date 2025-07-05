@@ -2,14 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { notFound } from 'next/navigation';
 import ApplicationForm from './components/ApplicationForm'; 
-
-interface Job {
-  slug: string;
-  title: string;
-  description: string;
-  posterEmail: string;
-  customQuestions: { question: string; required: boolean }[];
-}
+import type { Job } from '@/types';
 
 // Defining the props type for the page component to satisfy Next.js constraints.
 type PageProps = {

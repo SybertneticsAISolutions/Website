@@ -1,19 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import JobEditor from "../components/JobEditor";
+import type { Job } from "@/types";
 
 const API_URL = "/.netlify/functions/manage-jobs";
-
-interface Job {
-  slug: string;
-  title: string;
-  description: string;
-  posterEmail: string;
-  customQuestions: {
-    question: string;
-    required: boolean;
-  }[];
-}
 
 function getAuthHeader(): Record<string, string> {
   const token = typeof window !== 'undefined' ? localStorage.getItem("admin_jwt") : null;

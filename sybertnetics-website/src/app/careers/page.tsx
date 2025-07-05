@@ -2,16 +2,10 @@ import fs from 'fs/promises';
 import path from 'path';
 import Link from "next/link";
 import { ArrowRight, Brain, Shield, Zap, Users, Target, Heart, Star } from "lucide-react";
-
-// Define the Job type for type safety
-interface Job {
-  slug: string;
-  title: string;
-  description: string;
-}
+import type { Job } from '@/types';
 
 // This function runs on the server during the build process
-async function getJobs(): Promise<Job[]> {
+async function getJobs(): Promise<Partial<Job>[]> {
   const jobsDirectory = path.join(process.cwd(), 'src/content/careers');
   try {
     const files = await fs.readdir(jobsDirectory);
