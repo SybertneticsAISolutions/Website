@@ -1,6 +1,7 @@
 export interface Job {
   slug: string;
   title: string;
+  location: string;
   description: string;
   posterEmail: string;
   customQuestions: {

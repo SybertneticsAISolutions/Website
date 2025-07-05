@@ -2,6 +2,7 @@ import Link from 'next/link';
 import fs from 'fs/promises';
 import path from 'path';
 import { Post } from '@/types';
+import Header from '../components/Header';
 
 const contentDir = path.join(process.cwd(), 'src/content/news');
 
@@ -20,7 +21,7 @@ async function getNewsArticles(): Promise<Post[]> {
     // Sort articles by lastModified date, newest first
     return articles.sort((a, b) => new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime());
   } catch (error) {
-    if (error.code === 'ENOENT') {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
       console.log('News content directory not found. Returning empty list.');
       return [];
     }
@@ -32,24 +33,57 @@ export default async function NewsPage() {
   const articles = await getNewsArticles();
 
   return (
-    <main>
-      <h1>News</h1>
-      <p>Stay updated with the latest announcements, milestones, and developments from Sybertnetics AI Solutions.</p>
-      
-      {articles.length > 0 ? (
-        <ul>
-          {articles.map((article) => (
-            <li key={article.slug}>
-              <Link href={`/news/${article.slug}`}>
-                <h2>{article.title}</h2>
-                <p>Published on: {new Date(article.lastModified).toLocaleDateString()}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No news articles have been published yet. Please check back soon!</p>
-      )}
-    </main>
+    <>
+      <Header />
+      <main className="min-h-screen bg-gray-50 pt-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">News</h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Stay updated with the latest announcements, milestones, and developments from Sybertnetics AI Solutions.
+            </p>
+          </div>
+          
+          {articles.length > 0 ? (
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {articles.map((article) => (
+                <article key={article.slug} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="p-6">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-2 hover:text-emerald-600 transition-colors">
+                      <Link href={`/news/${article.slug}`}>
+                        {article.title}
+                      </Link>
+                    </h2>
+                    <p className="text-gray-600 text-sm mb-4">
+                      {new Date(article.lastModified).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                    <div className="text-gray-700 line-clamp-3" dangerouslySetInnerHTML={{ __html: article.content.substring(0, 150) + '...' }} />
+                    <Link 
+                      href={`/news/${article.slug}`}
+                      className="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium"
+                    >
+                      Read more →
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="bg-white rounded-lg shadow-md p-8 max-w-md mx-auto">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No News Yet</h3>
+                <p className="text-gray-600">
+                  We&apos;re working on some exciting announcements. Please check back soon!
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
   );
 } 

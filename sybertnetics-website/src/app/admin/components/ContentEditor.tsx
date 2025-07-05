@@ -19,8 +19,8 @@ export default function ContentEditor({
 
   const handleSave = () => {
     const slug = content.slug || title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    const date = content.date || new Date().toISOString();
-    onSave({ slug, title, date, content: body });
+    const lastModified = content.lastModified || new Date().toISOString();
+    onSave({ slug, title, lastModified, content: body });
   };
 
   const singularType = contentType.slice(0, -1);

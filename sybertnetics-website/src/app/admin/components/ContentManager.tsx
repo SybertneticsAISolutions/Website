@@ -138,7 +138,7 @@ export default function ContentManager({ contentType }: ContentManagerProps) {
               {posts.map(post => (
                 <tr key={post.slug}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{post.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(post.date).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(post.lastModified).toLocaleDateString()}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                     <button onClick={() => setEditingPost(post)} className="text-indigo-600 hover:text-indigo-900">
                       <Edit className="w-5 h-5" />

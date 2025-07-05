@@ -4,14 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navLinks = [
+  { href: '/', label: 'Landing' },
   { href: '/home', label: 'Home' },
   { href: '/solutions', label: 'Solutions' },
   { href: '/about', label: 'About' },
-  { href: '/careers', label: 'Careers' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/news', label: 'News' },
-  { href: '/runedrive', label: 'Rune Drive' },
   { href: '/contact', label: 'Contact' },
+  { href: '/runedrive', label: 'Rune Drive' },
 ];
 
 export default function Header() {
