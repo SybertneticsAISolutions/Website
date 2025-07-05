@@ -22,7 +22,8 @@ export async function generateStaticParams() {
       .map(file => ({
         slug: file.replace('.json', ''),
       }));
-  } catch (error) {
+  } catch {
+    // If the directory doesn't exist (e.g., before first job is created), return empty array.
     return [];
   }
 }
@@ -33,7 +34,8 @@ async function getJob(slug: string): Promise<Job | null> {
   try {
     const content = await fs.readFile(filePath, 'utf-8');
     return JSON.parse(content);
-  } catch (error) {
+  } catch {
+    // If the file doesn't exist for a given slug, return null.
     return null;
   }
 }
