@@ -3,12 +3,10 @@
 import Link from 'next/link';
 
 const navLinks = [
+  { href: '/', label: 'Landing' },
   { href: '/home', label: 'Home' },
-  { href: '/about', label: 'About' },
   { href: '/solutions', label: 'Solutions' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/news', label: 'News' },
-  { href: '/careers', label: 'Careers' },
+  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
   { href: '/runedrive', label: 'Rune Drive' },
 ];
