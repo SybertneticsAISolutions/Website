@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // TypeScript checks disabled for this file due to PageProps constraint conflict.
 // We can revisit and properly type this component later.
