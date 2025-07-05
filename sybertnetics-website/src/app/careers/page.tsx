@@ -1,7 +1,45 @@
+import fs from 'fs/promises';
+import path from 'path';
 import Link from "next/link";
 import { ArrowRight, Brain, Shield, Zap, Users, Target, Heart, Star } from "lucide-react";
 
-export default function CareersPage() {
+// Define the Job type for type safety
+interface Job {
+  slug: string;
+  title: string;
+  description: string;
+}
+
+// This function runs on the server during the build process
+async function getJobs(): Promise<Job[]> {
+  const jobsDirectory = path.join(process.cwd(), 'sybertnetics-website/src/content/careers');
+  try {
+    const files = await fs.readdir(jobsDirectory);
+    const jobs = await Promise.all(
+      files
+        .filter(file => file.endsWith('.json'))
+        .map(async file => {
+          const content = await fs.readFile(path.join(jobsDirectory, file), 'utf-8');
+          const jobData = JSON.parse(content);
+          // Return only essential data for the list page
+          return {
+            slug: jobData.slug,
+            title: jobData.title,
+            description: jobData.description.substring(0, 150) + '...', // Short preview
+          };
+        })
+    );
+    return jobs;
+  } catch (error) {
+    // If the directory doesn't exist or there's an error, return an empty array
+    console.error("Could not read job postings:", error);
+    return [];
+  }
+}
+
+export default async function CareersPage() {
+  const jobs = await getJobs();
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -136,95 +174,25 @@ export default function CareersPage() {
           </div>
 
           <div className="space-y-6 max-w-4xl mx-auto">
-            {/* AI Research Engineer */}
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">AI Research Engineer</h3>
-                  <p className="text-emerald-600 font-medium">Full-time • Remote/Hybrid</p>
-                </div>
-                <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
-                  Future Role
-                </span>
+            {jobs.length > 0 ? (
+              <div className="job-listings">
+                {jobs.map(job => (
+                  <div key={job.slug} className="job-card">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{job.title}</h3>
+                    <p className="text-gray-600 mb-6 leading-relaxed">{job.description}</p>
+                    <Link 
+                      href={`/careers/${job.slug}`} 
+                      className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium"
+                    >
+                      View Details and Apply
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </div>
+                ))}
               </div>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Join our core team to develop next-generation AI systems. You&apos;ll work on cutting-edge 
-                research, implement novel architectures, and help shape the future of artificial intelligence.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Machine Learning</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Python</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">PyTorch</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Research</span>
-              </div>
-              <Link 
-                href="/contact" 
-                className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium"
-              >
-                Apply Now
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Full-Stack Developer */}
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Full-Stack Developer</h3>
-                  <p className="text-blue-600 font-medium">Full-time • Remote/Hybrid</p>
-                </div>
-                <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
-                  Future Role
-                </span>
-              </div>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Build the interfaces and infrastructure that power our AI solutions. You&apos;ll create 
-                user-friendly applications and robust backend systems that make AI accessible to everyone.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">React</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Node.js</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">TypeScript</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Cloud</span>
-              </div>
-              <Link 
-                href="/contact" 
-                className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
-              >
-                Apply Now
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Business Development */}
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Business Development Specialist</h3>
-                  <p className="text-purple-600 font-medium">Full-time • Remote/Hybrid</p>
-                </div>
-                <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
-                  Future Role
-                </span>
-              </div>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Help us expand our reach and build strategic partnerships. You&apos;ll identify new opportunities, 
-                develop relationships, and drive growth for our AI solutions.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Sales</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Partnerships</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Strategy</span>
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">AI Industry</span>
-              </div>
-              <Link 
-                href="/contact" 
-                className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
-              >
-                Apply Now
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </div>
+            ) : (
+              <p>There are currently no open positions. Please check back later.</p>
+            )}
           </div>
 
           {/* Don't see a fit? */}
