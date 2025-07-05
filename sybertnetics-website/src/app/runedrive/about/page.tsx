@@ -2,7 +2,7 @@
 // Enhanced with comprehensive information about the platform
 
 import Link from 'next/link';
-import { Target, Eye, Users, Code, Shield, Zap, GitBranch, BookOpen, Sparkles, ArrowRight, Star, Globe } from "lucide-react";
+import { Users, Zap, GitBranch, BookOpen, Sparkles, ArrowRight, Globe } from "lucide-react";
 import RuneDriveHeader from "../components/RuneDriveHeader";
 
 export default function RuneDriveAbout() {

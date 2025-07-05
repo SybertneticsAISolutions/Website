@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Edit, FileText, ArrowRight } from 'lucide-react';
 import AdminLayout from '../components/AdminLayout';
 import ContentEditor from '../components/ContentEditor';
 

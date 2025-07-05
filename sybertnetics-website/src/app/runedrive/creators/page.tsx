@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Palette, Users, DollarSign, Zap, Star, Award, BookOpen, GitBranch, ArrowRight, Globe } from "lucide-react";
 import RuneDriveHeader from "../components/RuneDriveHeader";
+import { Users, GitBranch, BookOpen, Zap, Globe, Award, ArrowRight } from 'lucide-react';
 
 export default function RuneDriveCreators() {
   return (

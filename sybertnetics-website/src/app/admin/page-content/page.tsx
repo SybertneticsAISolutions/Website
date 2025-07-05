@@ -110,9 +110,9 @@ export default function PageContentManager() {
         <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <h3 className="text-lg font-semibold text-blue-900 mb-2">How to Use</h3>
           <ul className="text-blue-800 space-y-1 text-sm">
-            <li>• Click "Edit Content" to modify the markdown content for each page</li>
+            <li>• Click &quot;Edit Content&quot; to modify the markdown content for each page</li>
             <li>• Changes are saved automatically as you type</li>
-            <li>• Use "View Page" to see how your changes look on the live site</li>
+            <li>• Use &quot;View Page&quot; to see how your changes look on the live site</li>
             <li>• All content is version controlled and can be reverted if needed</li>
           </ul>
         </div>

@@ -2,8 +2,8 @@
 // Enhanced with comprehensive community information and engagement features
 
 import RuneDriveHeader from "../components/RuneDriveHeader";
-import { Users, MessageSquare, Rss, Calendar, Award, Zap, Star, ArrowRight, Heart, BookOpen } from 'lucide-react';
 import Link from "next/link";
+import { MessageSquare, Rss, Calendar, Award, Zap, ArrowRight } from 'lucide-react';
 
 const communityLinks = [
   { 

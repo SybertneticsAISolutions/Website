@@ -2,8 +2,8 @@
 // Clear messaging that demos are not yet scheduled
 
 import RuneDriveHeader from "../components/RuneDriveHeader";
-import { Calendar, ArrowRight, Play } from 'lucide-react';
 import Link from "next/link";
+import { Play, ArrowRight } from 'lucide-react';
 
 export default function RuneDriveDemo() {
   return (
