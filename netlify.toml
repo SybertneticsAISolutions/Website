@@ -1,40 +1,17 @@
+# This is the single source of truth for your Netlify build settings.
+
 [build]
+  # We specify the base directory, so Netlify runs the build from here.
   base = "sybertnetics-website"
+  # The publish directory for a standard Next.js build is .next
   publish = ".next"
+  # The build command remains the same.
   command = "npm install && npm run build"
 
+# The functions directory is relative to the root.
 [functions]
   directory = "netlify/functions"
 
-# Enable form processing
-[build.processing]
-  skip_processing = false
-
-[build.processing.css]
-  bundle = true
-  minify = true
-
-[build.processing.js]
-  bundle = true
-  minify = true
-
-[build.processing.html]
-  pretty_urls = true
-
-# Handle specific page redirects to ensure consistency
-[[redirects]]
-  from = "/contact"
-  to = "/contact/"
-  status = 301
-
-[[redirects]]
-  from = "/thank-you"
-  to = "/thank-you/"
-  status = 301
-
-# Ensure form processing works
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
+# The Next.js plugin is essential for handling routing, SSR, etc.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
