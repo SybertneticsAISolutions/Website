@@ -1,46 +1,11 @@
 import Link from "next/link";
 import { ArrowRight, Brain, Zap, Shield } from "lucide-react";
+import LandingPageHeader from "./components/LandingPageHeader";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">S</span>
-              </div>
-              <span className="font-semibold text-xl">
-                <span className="text-blue-400">Syber</span>
-                <span className="text-emerald-400">t</span>
-                <span className="text-white">netics</span>
-              </span>
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <Link href="/home" className="text-white/80 hover:text-white transition-colors">
-                Home
-              </Link>
-              <Link href="/solutions" className="text-white/80 hover:text-white transition-colors">
-                Solutions
-              </Link>
-              <Link href="/about" className="text-white/80 hover:text-white transition-colors">
-                About
-              </Link>
-              <Link href="/contact" className="text-white/80 hover:text-white transition-colors">
-                Contact
-              </Link>
-            </div>
-            <Link 
-              href="/contact" 
-              className="bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-6 py-2 rounded-full hover:from-emerald-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <LandingPageHeader />
 
       {/* Hero Section */}
       <main className="pt-20">

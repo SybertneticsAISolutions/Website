@@ -7,4 +7,11 @@ export interface Job {
     question: string;
     required: boolean;
   }[];
+}
+
+export interface Post {
+  slug: string;
+  title: string;
+  content: string;
+  lastModified: string;
 } 
