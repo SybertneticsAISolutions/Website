@@ -81,17 +81,6 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Temporary: Skip the function call and show maintenance message
-    setTimeout(() => {
-      showNotification(
-        'error',
-        'We are currently working on a technical issue with our contact form. Please reach out to us directly at support@sybertnetics.com and we will respond promptly.'
-      );
-      clearForm();
-      setIsSubmitting(false);
-    }, 1000); // Short delay to show it's "processing"
-
-    /* COMMENTED OUT UNTIL NETLIFY FUNCTION IS WORKING:
     try {
       const response = await fetch('/.netlify/functions/contact', {
         method: 'POST',
@@ -108,7 +97,8 @@ export default function ContactPage() {
         );
         clearForm();
       } else {
-        throw new Error('Failed to send message');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send message');
       }
     } catch (error) {
       console.error('Contact form error:', error);
@@ -116,11 +106,10 @@ export default function ContactPage() {
         'error',
         'Sorry, there was an issue sending your message. Please reach out to us directly at support@sybertnetics.com'
       );
-      clearForm();
+      // Do not clear the form on error, so the user can retry
     } finally {
       setIsSubmitting(false);
     }
-    */
   };
 
   return (
