@@ -1,24 +1,18 @@
 "use client";
 import { useState } from 'react';
 import AdminLayout from '../components/AdminLayout';
-import ContentEditor from '../components/ContentEditor';
+import PageContentEditor from '../components/PageContentEditor';
 
 const PAGES = [
-  { path: 'home', name: 'Home Page' },
-  { path: 'about', name: 'About Page' },
-  { path: 'runedrive', name: 'Rune Drive Main Page' },
-  { path: 'runedrive/about', name: 'Rune Drive About Page' },
-  { path: 'runedrive/universe', name: 'Rune Drive Universe Page' },
-  { path: 'runedrive/creators', name: 'Rune Drive Creators Page' },
+  { path: 'runedrive/demo', name: 'Rune Drive Demo Page' },
   { path: 'runedrive/community', name: 'Rune Drive Community Page' },
   { path: 'runedrive/blog', name: 'Rune Drive Blog Page' },
-  { path: 'runedrive/demo', name: 'Rune Drive Demo Page' },
-  { path: 'solutions', name: 'Solutions Page' },
-  { path: 'contact', name: 'Contact Page' },
-  { path: 'careers', name: 'Careers Page' },
+  { path: 'runedrive/creators', name: 'Rune Drive Creators Page' },
+  { path: 'runedrive/universe', name: 'Rune Drive Universe Page' },
+  { path: 'runedrive/about', name: 'Rune Drive About Page' },
 ];
 
-export default function ContentManagement() {
+export default function PageContentManagement() {
   const [selectedPage, setSelectedPage] = useState<string | null>(null);
   const [message, setMessage] = useState('');
 
@@ -56,10 +50,10 @@ export default function ContentManagement() {
   };
 
   return (
-    <AdminLayout title="Content Management">
+    <AdminLayout title="Page Content Management">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">Content Management</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Page Content Management</h1>
         </div>
 
         {message && (
@@ -89,7 +83,7 @@ export default function ContentManagement() {
             </div>
           </div>
         ) : (
-          <ContentEditor
+          <PageContentEditor
             pagePath={selectedPage}
             onSave={handleSave}
             onCancel={handleCancel}

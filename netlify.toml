@@ -8,7 +8,7 @@
   # The build command remains the same.
   command = "npm install && npm run build"
 
-# The functions directory is relative to the root.
+# The functions directory is relative to the base directory.
 [functions]
   directory = "netlify/functions"
 

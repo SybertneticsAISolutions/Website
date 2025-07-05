@@ -5,37 +5,37 @@ import { verifyToken } from '@/app/admin/utils';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string } }
+  { params }: { params: Promise<{ path: string }> }
 ) {
   try {
-    const pagePath = params.path;
+    const { path: pagePath } = await params;
     const filePath = path.join(process.cwd(), 'src', 'content', 'pages', `${pagePath}.md`);
     
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       return NextResponse.json({ content });
-    } catch (error) {
+    } catch {
       // If file doesn't exist, return empty content
       return NextResponse.json({ content: '' });
     }
-  } catch (error) {
-    console.error('Error reading content:', error);
+  } catch {
+    console.error('Error reading content');
     return NextResponse.json({ error: 'Failed to read content' }, { status: 500 });
   }
 }
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { path: string } }
+  { params }: { params: Promise<{ path: string }> }
 ) {
   try {
     // Verify admin authentication
     const token = request.headers.get('authorization')?.replace('Bearer ', '');
-    if (!token || !verifyToken(token)) {
+    if (!token || !(await verifyToken(token))) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const pagePath = params.path;
+    const { path: pagePath } = await params;
     const { content } = await request.json();
     
     const filePath = path.join(process.cwd(), 'src', 'content', 'pages', `${pagePath}.md`);
@@ -48,8 +48,8 @@ export async function PUT(
     await fs.writeFile(filePath, content, 'utf-8');
     
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error writing content:', error);
+  } catch {
+    console.error('Error writing content');
     return NextResponse.json({ error: 'Failed to save content' }, { status: 500 });
   }
 } 

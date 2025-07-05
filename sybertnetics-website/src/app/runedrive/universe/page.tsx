@@ -1,7 +1,6 @@
 // Universe page for Rune Drive
 // Factual, platform-focused description. No fabricated lore.
 
-import Link from 'next/link';
 import RuneDriveHeader from "../components/RuneDriveHeader";
 import { ArrowRight } from 'lucide-react';
 

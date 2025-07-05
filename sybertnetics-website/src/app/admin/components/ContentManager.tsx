@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { PlusCircle, Edit, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import AdminLayout from "./AdminLayout";
-import ContentEditor from "./ContentEditor";
+import PostEditor from "./PostEditor";
 import type { Post } from "@/types";
 
 interface ContentManagerProps {
@@ -86,8 +86,8 @@ export default function ContentManager({ contentType }: ContentManagerProps) {
   if (editingPost) {
     return (
       <AdminLayout title={editingPost.slug ? `Edit ${singularType}` : `Create New ${singularType}`}>
-        <ContentEditor
-          content={editingPost}
+        <PostEditor
+          post={editingPost}
           onSave={handleSave}
           onCancel={() => setEditingPost(null)}
           contentType={contentType}

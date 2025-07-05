@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Palette, Users, DollarSign, Zap, Star, Award, BookOpen, ArrowRight } from "lucide-react";
+import { Palette, Users, DollarSign, Zap, Star, Award, BookOpen } from "lucide-react";
 import RuneDriveHeader from "../components/RuneDriveHeader";
 
 export default function RuneDriveCreators() {
@@ -34,7 +34,7 @@ export default function RuneDriveCreators() {
                       storytellers to create their own collaborative universes on our platform.
                     </p>
                     <p className="text-indigo-200 leading-relaxed">
-                      Whether you're a veteran GM with years of experience or a newcomer with 
+                      Whether you&apos;re a veteran GM with years of experience or a newcomer with 
                       a unique vision, our tools and community support will help you bring your 
                       stories to life and share them with players around the world.
                     </p>
@@ -49,6 +49,11 @@ export default function RuneDriveCreators() {
                       <li>• Anyone with a story to tell</li>
                     </ul>
                   </div>
+                </div>
+                <div className="mt-8 p-4 bg-purple-600/20 rounded-lg text-center">
+                  <p className="text-purple-200 text-lg font-semibold">
+                    <strong>Anyone with access to the Worldbuilder is a creator. There is no application process or gatekeeping.</strong>
+                  </p>
                 </div>
               </div>
             </div>
@@ -198,97 +203,27 @@ export default function RuneDriveCreators() {
               <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                 How to Get Started
               </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-                  <h3 className="text-xl font-bold mb-4 text-purple-300">Application Process</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="bg-purple-600/20 p-2 rounded-full mr-4 mt-1">
-                        <span className="text-purple-400 font-bold text-sm">1</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-purple-300 mb-1">Submit Application</h4>
-                        <p className="text-indigo-200 text-sm">Fill out our creator application with your experience and vision.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="bg-purple-600/20 p-2 rounded-full mr-4 mt-1">
-                        <span className="text-purple-400 font-bold text-sm">2</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-purple-300 mb-1">Review Process</h4>
-                        <p className="text-indigo-200 text-sm">Our team reviews your application within 5-7 business days.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="bg-purple-600/20 p-2 rounded-full mr-4 mt-1">
-                        <span className="text-purple-400 font-bold text-sm">3</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-purple-300 mb-1">Onboarding</h4>
-                        <p className="text-indigo-200 text-sm">Get access to tools and resources to start building your world.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-                  <h3 className="text-xl font-bold mb-4 text-purple-300">Requirements</h3>
-                  <ul className="text-indigo-200 space-y-3">
-                    <li>• Passion for storytelling and world-building</li>
-                    <li>• Basic understanding of TTRPGs (any system)</li>
-                    <li>• Commitment to creating quality content</li>
-                    <li>• Willingness to collaborate with the community</li>
-                    <li>• Regular activity and engagement</li>
-                  </ul>
-                  <div className="mt-6 p-4 bg-purple-600/20 rounded-lg">
-                    <p className="text-purple-200 text-sm">
-                      <strong>Note:</strong> No prior professional experience required. 
-                      We value creativity and passion over credentials.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Success Stories */}
-            <div className="mb-20">
-              <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Creator Success Stories
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-purple-600/30 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-purple-300 font-bold">S</span>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-purple-300">Sarah Chen</h4>
-                      <p className="text-indigo-200 text-sm">Creator of "Whispers of the Void"</p>
-                    </div>
-                  </div>
-                  <p className="text-indigo-200 text-sm leading-relaxed">
-                    "Rune Drive helped me turn my homebrew campaign into a thriving community. 
-                    I've connected with players from around the world and earned enough to 
-                    pursue content creation full-time."
-                  </p>
-                </div>
-
-                <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-purple-600/30 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-purple-300 font-bold">M</span>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-purple-300">Marcus Rodriguez</h4>
-                      <p className="text-indigo-200 text-sm">Creator of "The Iron Republic"</p>
-                    </div>
-                  </div>
-                  <p className="text-indigo-200 text-sm leading-relaxed">
-                    "The collaborative tools are incredible. My players can contribute to 
-                    the world-building, and seeing their ideas come to life has made our 
-                    campaign more engaging than ever."
-                  </p>
+              <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20 text-center">
+                <h3 className="text-xl font-bold mb-4 text-purple-300">Start Creating Instantly</h3>
+                <p className="text-indigo-200 text-lg mb-4">
+                  If you have access to the Worldbuilder, you are already a creator! There is no application, no vetting, and no gatekeeping. Just start building your world and sharing your stories.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+                  <Link
+                    href="/runedrive/beta"
+                    className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105"
+                  >
+                    <Zap className="w-5 h-5 mr-2" />
+                    Get Worldbuilder Access
+                  </Link>
+                  <a
+                    href="https://discord.gg/RQWDbbXSPG"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center border-2 border-indigo-400 text-indigo-200 font-bold py-3 px-8 rounded-lg hover:bg-indigo-400/20 transition-all"
+                  >
+                    Join Creator Discord
+                  </a>
                 </div>
               </div>
             </div>
@@ -299,8 +234,7 @@ export default function RuneDriveCreators() {
                 Ready to Create Your Universe?
               </h2>
               <p className="text-xl text-indigo-200 mb-8 max-w-2xl mx-auto">
-                Join our creator program and start building the next great TTRPG universe. 
-                Your stories deserve to be shared with the world.
+                Start building your world today. Your stories deserve to be shared with the world.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
@@ -308,8 +242,7 @@ export default function RuneDriveCreators() {
                   className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105"
                 >
                   <Zap className="w-5 h-5 mr-2" />
-                  Apply for Creator Program
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  Get Worldbuilder Access
                 </Link>
                 <a
                   href="https://discord.gg/RQWDbbXSPG"

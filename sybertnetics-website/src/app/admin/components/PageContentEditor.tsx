@@ -2,13 +2,13 @@
 import { useState, useEffect } from 'react';
 import { marked } from 'marked';
 
-interface ContentEditorProps {
+interface PageContentEditorProps {
   pagePath: string;
   onSave: (content: string) => Promise<void>;
   onCancel: () => void;
 }
 
-export default function ContentEditor({ pagePath, onSave, onCancel }: ContentEditorProps) {
+export default function PageContentEditor({ pagePath, onSave, onCancel }: PageContentEditorProps) {
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -62,7 +62,7 @@ export default function ContentEditor({ pagePath, onSave, onCancel }: ContentEdi
     <div className="bg-white rounded-lg shadow-lg">
       <div className="border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Edit Content: {pagePath}</h2>
+          <h2 className="text-xl font-semibold text-gray-900">Edit Page: {pagePath}</h2>
           <div className="flex space-x-2">
             <button
               onClick={() => setPreviewMode(!previewMode)}

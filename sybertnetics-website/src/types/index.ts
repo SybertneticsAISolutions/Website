@@ -15,4 +15,5 @@ export interface Post {
   title: string;
   content: string;
   lastModified: string;
+  type: 'blog' | 'news';
 } 

@@ -226,7 +226,7 @@ export default function RuneDriveCommunity() {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-4 text-purple-300">What We Don't Tolerate</h3>
+                    <h3 className="text-xl font-bold mb-4 text-purple-300">What We Don&apos;t Tolerate</h3>
                     <ul className="text-indigo-200 space-y-3">
                       <li>• Harassment or discrimination</li>
                       <li>• Spam or self-promotion</li>
@@ -244,8 +244,8 @@ export default function RuneDriveCommunity() {
                 Ready to Join the Revolution?
               </h2>
               <p className="text-xl text-indigo-200 mb-8 max-w-2xl mx-auto">
-                Be part of the community that's shaping the future of collaborative storytelling. 
-                Your voice matters, your stories matter, and together we're building something amazing.
+                Be part of the community that&apos;s shaping the future of collaborative storytelling. 
+                Your voice matters, your stories matter, and together we&apos;re building something amazing.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a

@@ -11,7 +11,7 @@ export interface PageContent {
     [key: string]: {
       title?: string;
       content?: string;
-      [key: string]: any;
+      [key: string]: unknown;
     };
   };
 }

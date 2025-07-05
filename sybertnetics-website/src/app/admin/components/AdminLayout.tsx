@@ -1,10 +1,11 @@
 "use client";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Briefcase, Newspaper, PenSquare, LogOut, FileText } from 'lucide-react';
+import { Briefcase, Newspaper, PenSquare, LogOut, FileText, Globe } from 'lucide-react';
 
 const navLinks = [
   { href: '/admin/content', label: 'Content Management', icon: FileText },
+  { href: '/admin/page-content', label: 'Page Content', icon: Globe },
   { href: '/admin/careers', label: 'Manage Careers', icon: Briefcase },
   { href: '/admin/blog', label: 'Manage Blog', icon: PenSquare },
   { href: '/admin/news', label: 'Manage News', icon: Newspaper },
