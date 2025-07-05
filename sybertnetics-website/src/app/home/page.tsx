@@ -214,6 +214,14 @@ export default function HomePage() {
                   LinkedIn
                 </a>
                 <a 
+                  href="https://discord.gg/RQWDbbXSPG"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Discord
+                </a>
+                <a 
                   href="mailto:support@sybertnetics.com"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
