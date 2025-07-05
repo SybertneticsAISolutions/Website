@@ -1,6 +1,7 @@
 [build]
-  publish = "sybertnetics-website/out"
-  command = "cd sybertnetics-website && npm install && npm run build"
+  base = "sybertnetics-website"
+  publish = "out"
+  command = "npm install && npm run build"
 
 # Enable form processing
 [build.processing]
