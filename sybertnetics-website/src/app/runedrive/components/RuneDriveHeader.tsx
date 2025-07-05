@@ -1,54 +1,116 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
 
-const navLinks = [
-  { href: '/runedrive', label: 'Home' },
-  { href: '/runedrive/about', label: 'About' },
-  { href: '/runedrive/universe', label: 'Universe' },
-  { href: '/runedrive/creators', label: 'Creators' },
-  { href: '/runedrive/community', label: 'Community' },
-  { href: '/runedrive/blog', label: 'Blog' },
+const navigation = [
+  { name: 'Home', href: '/runedrive' },
+  { name: 'About', href: '/runedrive/about' },
+  { name: 'Universe', href: '/runedrive/universe' },
+  { name: 'Creators', href: '/runedrive/creators' },
+  { name: 'Community', href: '/runedrive/community' },
+  { name: 'Blog', href: '/runedrive/blog' },
+  { name: 'Demo', href: '/runedrive/demo' },
+  { name: 'Beta', href: '/runedrive/beta' },
 ];
 
 export default function RuneDriveHeader() {
-  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-black/30 backdrop-blur-md border-b border-purple-500/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <Link href="/runedrive" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-              Rune Drive
-            </span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-purple-500/20">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div className="flex lg:flex-1">
+          <Link href="/runedrive" className="-m-1.5 p-1.5">
+            <span className="sr-only">RuneDrive</span>
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-lg mr-3"></div>
+              <span className="text-xl font-bold text-white">RuneDrive</span>
+            </div>
           </Link>
-          
-          <nav className="hidden md:flex space-x-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={
-                  pathname === link.href
-                    ? "text-purple-300 font-medium"
-                    : "text-indigo-200 hover:text-purple-300 transition-colors"
-                }
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
+        </div>
+        <div className="flex lg:hidden">
+          <button
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <span className="sr-only">Open main menu</span>
+            <Menu className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="hidden lg:flex lg:gap-x-12">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-sm font-semibold leading-6 text-gray-300 hover:text-purple-400 transition-colors"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link
             href="/runedrive/beta"
-            className="hidden md:flex bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105"
+            className="text-sm font-semibold leading-6 text-white bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition-colors"
           >
             Join Beta
           </Link>
         </div>
-      </div>
+      </nav>
+      
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden">
+          <div className="fixed inset-0 z-50" />
+          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div className="flex items-center justify-between">
+              <Link href="/runedrive" className="-m-1.5 p-1.5">
+                <span className="sr-only">RuneDrive</span>
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-lg mr-3"></div>
+                  <span className="text-xl font-bold text-white">RuneDrive</span>
+                </div>
+              </Link>
+              <button
+                type="button"
+                className="-m-2.5 rounded-md p-2.5 text-gray-400"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="sr-only">Close menu</span>
+                <X className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="mt-6 flow-root">
+              <div className="-my-6 divide-y divide-gray-500/25">
+                <div className="space-y-2 py-6">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+                <div className="py-6">
+                  <Link
+                    href="/runedrive/beta"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-700 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Join Beta
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 } 

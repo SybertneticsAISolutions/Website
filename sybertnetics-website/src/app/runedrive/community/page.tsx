@@ -1,4 +1,4 @@
-// Community page for Rune Drive
+// Community page for RuneDrive
 // Enhanced with comprehensive community information and engagement features
 
 import RuneDriveHeader from "../components/RuneDriveHeader";
@@ -8,10 +8,9 @@ import Link from "next/link";
 const communityLinks = [
   { 
     name: 'Discord Server', 
-    description: 'Join 500+ members for live discussions, development updates, and community events.', 
+    description: 'Join our community for live discussions, development updates, and community events.', 
     href: 'https://discord.gg/RQWDbbXSPG', 
     icon: MessageSquare,
-    members: '500+',
     status: 'Live'
   },
   { 
@@ -19,7 +18,6 @@ const communityLinks = [
     description: 'Get the latest news, feature deep-dives, and behind-the-scenes insights.', 
     href: '/runedrive/blog', 
     icon: Rss,
-    members: 'Weekly',
     status: 'Active'
   },
   { 
@@ -27,33 +25,8 @@ const communityLinks = [
     description: 'Participate in playtests, workshops, and community-driven storytelling sessions.', 
     href: '#events', 
     icon: Calendar,
-    members: 'Monthly',
-    status: 'Upcoming'
+    status: 'Coming Soon'
   },
-];
-
-const upcomingEvents = [
-  {
-    title: "Community World-Building Workshop",
-    date: "January 15, 2025",
-    time: "7:00 PM EST",
-    description: "Join us for a collaborative session where we'll build a new region of the Abyss together.",
-    type: "Workshop"
-  },
-  {
-    title: "Beta Feature Playtest",
-    date: "January 22, 2025",
-    time: "8:00 PM EST",
-    description: "Test the latest collaborative tools and provide feedback to the development team.",
-    type: "Playtest"
-  },
-  {
-    title: "Creator Spotlight: Stories of the Abyss",
-    date: "January 29, 2025",
-    time: "6:00 PM EST",
-    description: "Meet the creators behind our flagship setting and learn about their creative process.",
-    type: "Showcase"
-  }
 ];
 
 export default function RuneDriveCommunity() {
@@ -74,30 +47,6 @@ export default function RuneDriveCommunity() {
               </p>
             </div>
 
-            {/* Community Stats */}
-            <div className="grid md:grid-cols-4 gap-6 mb-16">
-              <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20 text-center">
-                <Users className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-purple-300 mb-1">500+</div>
-                <div className="text-indigo-200 text-sm">Community Members</div>
-              </div>
-              <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20 text-center">
-                <Heart className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-purple-300 mb-1">50+</div>
-                <div className="text-indigo-200 text-sm">Active Creators</div>
-              </div>
-              <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20 text-center">
-                <BookOpen className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-purple-300 mb-1">25+</div>
-                <div className="text-indigo-200 text-sm">Worlds Created</div>
-              </div>
-              <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20 text-center">
-                <Star className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-purple-300 mb-1">1000+</div>
-                <div className="text-indigo-200 text-sm">Stories Shared</div>
-              </div>
-            </div>
-
             {/* Community Platforms */}
             <div className="mb-20">
               <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
@@ -109,7 +58,6 @@ export default function RuneDriveCommunity() {
                     <div className="flex items-center justify-between mb-4">
                       <link.icon className="w-10 h-10 text-purple-400" />
                       <div className="text-right">
-                        <div className="text-sm text-purple-300 font-semibold">{link.members}</div>
                         <div className="text-xs text-green-400">{link.status}</div>
                       </div>
                     </div>
@@ -134,34 +82,6 @@ export default function RuneDriveCommunity() {
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Link>
                     )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Upcoming Events */}
-            <div className="mb-20" id="events">
-              <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Upcoming Events
-              </h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                {upcomingEvents.map((event, index) => (
-                  <div key={index} className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        event.type === 'Workshop' ? 'bg-blue-600/30 text-blue-300' :
-                        event.type === 'Playtest' ? 'bg-green-600/30 text-green-300' :
-                        'bg-purple-600/30 text-purple-300'
-                      }`}>
-                        {event.type}
-                      </span>
-                      <Calendar className="w-5 h-5 text-indigo-400" />
-                    </div>
-                    <h3 className="text-lg font-bold text-purple-300 mb-2">{event.title}</h3>
-                    <div className="text-sm text-indigo-300 mb-3">
-                      {event.date} • {event.time}
-                    </div>
-                    <p className="text-indigo-200 text-sm leading-relaxed">{event.description}</p>
                   </div>
                 ))}
               </div>
@@ -196,7 +116,7 @@ export default function RuneDriveCommunity() {
                     <h3 className="text-xl font-bold text-purple-300">Direct Influence</h3>
                   </div>
                   <p className="text-indigo-200 mb-4">
-                    Your feedback directly shapes the development of Rune Drive. 
+                    Your feedback directly shapes the development of RuneDrive. 
                     Participate in polls, discussions, and feature requests.
                   </p>
                   <ul className="text-indigo-200 text-sm space-y-2">

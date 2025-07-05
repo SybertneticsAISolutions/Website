@@ -1,7 +1,9 @@
-// Blog page for Rune Drive
-// No fabricated or placeholder blog posts
+// Blog page for RuneDrive
+// Enhanced with development updates and community content
 
 import RuneDriveHeader from "../components/RuneDriveHeader";
+import { Calendar, User, ArrowRight } from 'lucide-react';
+import Link from "next/link";
 
 export default function RuneDriveBlog() {
   return (
@@ -9,20 +11,40 @@ export default function RuneDriveBlog() {
       <RuneDriveHeader />
       <div className="bg-gray-900 text-white min-h-screen">
         <main className="pt-24">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Hero Section */}
-            <div className="text-center mb-16">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Rune Drive Dev Blog
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                RuneDrive Dev Blog
               </h1>
-              <p className="text-xl text-indigo-200 max-w-3xl mx-auto leading-relaxed">
-                Stay up to date with development progress, feature deep-dives, community highlights, 
-                and insights into the future of collaborative storytelling.
+              <p className="text-xl text-indigo-200 max-w-2xl mx-auto">
+                Development updates, feature deep-dives, and insights from the RuneDrive team.
               </p>
             </div>
-            <div className="text-center py-24">
-              <h2 className="text-2xl font-bold text-purple-300 mb-4">No blog posts yet</h2>
-              <p className="text-indigo-200">Check back soon for real development updates and community stories.</p>
+
+            <div className="text-center py-12">
+              <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+                <h2 className="text-2xl font-bold mb-4 text-purple-300">No blog posts yet</h2>
+                <p className="text-indigo-200 mb-6">
+                  We&apos;re working hard on RuneDrive development. Blog posts will appear here as we have updates to share.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link
+                    href="/runedrive/beta"
+                    className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105"
+                  >
+                    Join Beta Waitlist
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Link>
+                  <a
+                    href="https://discord.gg/RQWDbbXSPG"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center border-2 border-indigo-400 text-indigo-200 font-bold py-3 px-6 rounded-lg hover:bg-indigo-400/20 transition-all"
+                  >
+                    Join Discord
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </main>

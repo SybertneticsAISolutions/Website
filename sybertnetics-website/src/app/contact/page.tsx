@@ -85,23 +85,27 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/.netlify/functions/contact', {
+      // Use Netlify's built-in form handling
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('company', formData.company);
+      formDataToSend.append('subject', formData.subject);
+      formDataToSend.append('message', formData.message);
+
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
 
       if (response.ok) {
         showNotification(
           'success',
-          'Thank you for your message! Please check your inbox for a confirmation email. We will reach out to you soon.'
+          'Thank you for your message! We will get back to you as soon as possible.'
         );
         clearForm();
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to send message');
+        throw new Error('Failed to send message');
       }
     } catch (error) {
       console.error('Contact form error:', error);
@@ -151,10 +155,12 @@ export default function ContactPage() {
                 Fill out the form below and we&apos;ll get back to you as soon as possible.
               </p>
 
-                              <form 
-                  className="space-y-6"
-                  onSubmit={handleSubmit}
-                >
+              <form 
+                name="contact"
+                className="space-y-6"
+                onSubmit={handleSubmit}
+              >
+                <input type="hidden" name="form-name" value="contact" />
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>

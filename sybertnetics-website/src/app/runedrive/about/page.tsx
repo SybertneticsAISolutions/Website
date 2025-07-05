@@ -1,8 +1,8 @@
-// About page for Rune Drive
-// Enhanced with comprehensive content about the platform
+// About page for RuneDrive
+// Enhanced with comprehensive information about the platform
 
 import Link from 'next/link';
-import { Target, Eye, Users, Code, Shield, Zap } from "lucide-react";
+import { Target, Eye, Users, Code, Shield, Zap, GitBranch, BookOpen, Sparkles, ArrowRight, Star, Globe } from "lucide-react";
 import RuneDriveHeader from "../components/RuneDriveHeader";
 
 export default function RuneDriveAbout() {
@@ -15,171 +15,175 @@ export default function RuneDriveAbout() {
             {/* Hero Section */}
             <div className="text-center mb-16">
               <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                About Rune Drive
+                About RuneDrive
               </h1>
               <p className="text-xl text-indigo-200 max-w-3xl mx-auto leading-relaxed">
-                We&apos;re building the future of collaborative tabletop RPGs, where every story matters 
-                and every player can shape the world they play in.
+                We&apos;re building the future of collaborative tabletop RPGs, where players and GMs work together 
+                as co-creators, not just participants. RuneDrive provides the tools and framework
+                for building persistent, living worlds that evolve with every session.
               </p>
             </div>
 
-            {/* Mission & Vision */}
-            <div className="grid md:grid-cols-2 gap-12 mb-20">
+            {/* Mission Section */}
+            <div className="mb-20">
               <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
                 <div className="flex items-center mb-6">
-                  <Target className="w-8 h-8 text-purple-400 mr-3" />
-                  <h2 className="text-2xl font-bold text-purple-300">Our Mission</h2>
+                  <Sparkles className="w-8 h-8 text-purple-400 mr-3" />
+                  <h2 className="text-3xl font-bold text-purple-300">Our Mission</h2>
                 </div>
-                <p className="text-indigo-200 leading-relaxed mb-4">
-                  To democratize world-building and make collaborative storytelling accessible to 
-                  every tabletop RPG group, regardless of size or experience level.
+                <p className="text-lg text-indigo-200 leading-relaxed mb-6">
+                  We believe that the best TTRPG experiences happen when everyone at the table feels like they have 
+                  a stake in the world. RuneDrive is designed to break down the barriers between players and GMs, 
+                  creating a truly collaborative storytelling experience where every choice matters and every story 
+                  contributes to a living, breathing universe.
                 </p>
-                <p className="text-indigo-200 leading-relaxed">
-                  We believe that the best stories emerge when players and Game Masters work together 
-                  as co-creators, not just participants. Rune Drive provides the tools and framework 
-                  to make this collaboration seamless and rewarding.
-                </p>
-              </div>
-
-              <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-                <div className="flex items-center mb-6">
-                  <Eye className="w-8 h-8 text-purple-400 mr-3" />
-                  <h2 className="text-2xl font-bold text-purple-300">Our Vision</h2>
-                </div>
-                <p className="text-indigo-200 leading-relaxed mb-4">
-                  A world where every TTRPG campaign contributes to a living, breathing universe 
-                  that grows richer with each session.
-                </p>
-                <p className="text-indigo-200 leading-relaxed">
-                  We envision a future where players can see their choices ripple across multiple 
-                  campaigns, where GMs can build upon each other&apos;s work, and where the line between 
-                  creator and participant becomes beautifully blurred.
+                <p className="text-lg text-indigo-200 leading-relaxed">
+                  Our platform combines the best of digital tools with the creativity and flexibility of tabletop gaming, 
+                  making it easier than ever to build, manage, and evolve complex worlds together.
                 </p>
               </div>
             </div>
 
-            {/* Core Principles */}
+            {/* Core Values */}
             <div className="mb-20">
               <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Core Principles
+                Core Values
               </h2>
               <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="bg-purple-600/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <Users className="w-8 h-8 text-purple-400" />
+                <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+                  <div className="flex items-center mb-4">
+                    <Users className="w-6 h-6 text-purple-400 mr-3" />
+                    <h3 className="text-xl font-bold text-purple-300">Collaboration First</h3>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-purple-300">Collaboration First</h3>
                   <p className="text-indigo-200">
-                    Every feature is designed to enhance collaboration between GMs and players, 
-                    making world-building a shared experience.
+                    Every feature is designed to encourage teamwork and shared ownership of the story. 
+                    We believe that the best worlds are built together.
                   </p>
                 </div>
-                <div className="text-center">
-                  <div className="bg-purple-600/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <Shield className="w-8 h-8 text-purple-400" />
+                <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+                  <div className="flex items-center mb-4">
+                    <GitBranch className="w-6 h-6 text-purple-400 mr-3" />
+                    <h3 className="text-xl font-bold text-purple-300">Flexibility & Freedom</h3>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-purple-300">GM Empowerment</h3>
                   <p className="text-indigo-200">
-                    GMs retain full creative control while gaining powerful tools to manage 
-                    complex, evolving worlds and multiple campaigns.
+                    Use any TTRPG system you want. RuneDrive adapts to your playstyle, not the other way around.
                   </p>
                 </div>
-                <div className="text-center">
-                  <div className="bg-purple-600/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <Code className="w-8 h-8 text-purple-400" />
+                <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+                  <div className="flex items-center mb-4">
+                    <BookOpen className="w-6 h-6 text-purple-400 mr-3" />
+                    <h3 className="text-xl font-bold text-purple-300">Story Preservation</h3>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-purple-300">System Agnostic</h3>
                   <p className="text-indigo-200">
-                    Built to work with any TTRPG system, focusing on world management rather 
-                    than rule enforcement.
+                    Every session, every choice, every character leaves a mark on the world. 
+                    Nothing is forgotten, everything builds toward something greater.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Technical Approach */}
+            {/* The Problem We Solve */}
             <div className="mb-20">
               <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Technical Approach
+                The Problem We Solve
               </h2>
-              <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-xl font-bold mb-4 text-purple-300">Modern Architecture</h3>
-                    <p className="text-indigo-200 mb-4">
-                      Built with cutting-edge web technologies for real-time collaboration, 
-                      ensuring smooth performance even with large groups.
-                    </p>
-                    <ul className="text-indigo-200 space-y-2">
-                      <li>• Real-time synchronization</li>
-                      <li>• Offline capability</li>
-                      <li>• Cross-platform compatibility</li>
-                      <li>• Scalable infrastructure</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-4 text-purple-300">AI-Powered Features</h3>
-                    <p className="text-indigo-200 mb-4">
-                      Intelligent tools that enhance creativity without replacing human imagination.
-                    </p>
-                    <ul className="text-indigo-200 space-y-2">
-                      <li>• Smart content suggestions</li>
-                      <li>• Conflict detection</li>
-                      <li>• Automated consistency checks</li>
-                      <li>• Intelligent search and discovery</li>
-                    </ul>
-                  </div>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-red-900/20 p-8 rounded-xl border border-red-500/20">
+                  <h3 className="text-xl font-bold mb-4 text-red-300">Traditional TTRPG Limitations</h3>
+                  <ul className="text-red-200 space-y-3">
+                    <li>• Worlds reset when campaigns end</li>
+                    <li>• Player choices have limited impact</li>
+                    <li>• Collaboration is difficult to manage</li>
+                    <li>• Lore and continuity are hard to track</li>
+                    <li>• GMs work in isolation</li>
+                  </ul>
+                </div>
+                <div className="bg-green-900/20 p-8 rounded-xl border border-green-500/20">
+                  <h3 className="text-xl font-bold mb-4 text-green-300">RuneDrive Solution</h3>
+                  <ul className="text-green-200 space-y-3">
+                    <li>• Persistent worlds that grow over time</li>
+                    <li>• Every choice shapes the universe</li>
+                    <li>• Built-in collaboration tools</li>
+                    <li>• Comprehensive lore management</li>
+                    <li>• Multi-GM support</li>
+                  </ul>
                 </div>
               </div>
             </div>
 
-            {/* Team & Development */}
+            {/* Technology */}
             <div className="mb-20">
               <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Development & Team
+                Built for the Future
               </h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-                  <h3 className="text-xl font-bold mb-4 text-purple-300">Development Philosophy</h3>
+                  <div className="flex items-center mb-4">
+                    <Zap className="w-6 h-6 text-purple-400 mr-3" />
+                    <h3 className="text-xl font-bold text-purple-300">Real-time Collaboration</h3>
+                  </div>
                   <p className="text-indigo-200 mb-4">
-                    We believe in building in public, with our community guiding every major decision. 
-                    Your feedback shapes the platform&apos;s evolution.
+                    Multiple users can work on the same world simultaneously with live updates, 
+                    conflict resolution, and version control.
                   </p>
-                  <p className="text-indigo-200">
-                    Our development process is iterative and community-driven, ensuring that 
-                    Rune Drive grows into exactly what the TTRPG community needs.
-                  </p>
+                  <ul className="text-indigo-200 text-sm space-y-2">
+                    <li>• Live editing with conflict detection</li>
+                    <li>• Git-like version control for world elements</li>
+                    <li>• Comment and review system</li>
+                    <li>• Real-time notifications</li>
+                  </ul>
                 </div>
                 <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-                  <h3 className="text-xl font-bold mb-4 text-purple-300">Community First</h3>
+                  <div className="flex items-center mb-4">
+                    <Globe className="w-6 h-6 text-purple-400 mr-3" />
+                    <h3 className="text-xl font-bold text-purple-300">Cross-Platform</h3>
+                  </div>
                   <p className="text-indigo-200 mb-4">
-                    Every feature, every decision, every update is informed by our growing 
-                    community of creators and players.
+                    Access your worlds from anywhere. Web-based with mobile apps coming soon.
                   </p>
-                  <p className="text-indigo-200">
-                    Join our Discord to participate in development discussions, beta testing, 
-                    and help shape the future of collaborative TTRPGs.
-                  </p>
+                  <ul className="text-indigo-200 text-sm space-y-2">
+                    <li>• Web-based platform</li>
+                    <li>• Mobile apps in development</li>
+                    <li>• Offline capability</li>
+                    <li>• Cross-device synchronization</li>
+                  </ul>
                 </div>
+              </div>
+            </div>
+
+            {/* Team */}
+            <div className="mb-20">
+              <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                The Team
+              </h2>
+              <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+                <p className="text-lg text-indigo-200 leading-relaxed mb-6">
+                  RuneDrive is developed by a small, passionate team of TTRPG enthusiasts, software engineers, 
+                  and storytellers. We&apos;re building the platform we always wished we had for our own games.
+                </p>
+                <p className="text-lg text-indigo-200 leading-relaxed">
+                  Our development process is community-driven, with regular feedback from beta testers, 
+                  Discord members, and the broader TTRPG community helping to ensure that RuneDrive grows into exactly what the TTRPG community needs.
+                </p>
               </div>
             </div>
 
             {/* Call to Action */}
             <div className="text-center bg-black/20 p-12 rounded-xl border border-purple-500/20">
               <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Ready to Join the Revolution?
+                Ready to Build Something Amazing?
               </h2>
               <p className="text-xl text-indigo-200 mb-8 max-w-2xl mx-auto">
-                Be part of the future of collaborative tabletop RPGs. Join our beta waitlist 
-                and help shape the platform that will change how we tell stories together.
+                Join our community and be part of the future of collaborative storytelling. 
+                Your voice matters in shaping what RuneDrive becomes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/runedrive/beta"
                   className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105"
                 >
-                  <Zap className="w-5 h-5 mr-2" />
                   Join Beta Waitlist
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
                 <a
                   href="https://discord.gg/RQWDbbXSPG"

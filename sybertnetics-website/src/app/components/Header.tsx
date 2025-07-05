@@ -11,7 +11,7 @@ const navLinks = [
   { href: '/solutions', label: 'Solutions' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
-  { href: '/runedrive', label: 'Rune Drive' },
+  { href: '/runedrive', label: 'RuneDrive' },
 ];
 
 const adminLinks = [

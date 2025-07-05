@@ -59,18 +59,18 @@ export default function RuneDriveBeta() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Join the Beta
+                Kickstarter Waitlist
               </h1>
               <p className="text-xl text-indigo-200 max-w-2xl mx-auto">
-                Be among the first to experience the future of collaborative tabletop RPG campaigns. 
-                Sign up for early access and exclusive updates.
+                Get notified when our Kickstarter launches and receive exclusive updates about RuneDrive development. 
+                Beta access will be exclusive to Kickstarter supporters.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 mb-12">
-              {/* Beta Signup Form */}
+              {/* Waitlist Signup Form */}
               <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-                <h2 className="text-2xl font-bold mb-4 text-purple-300">Beta Access</h2>
+                <h2 className="text-2xl font-bold mb-4 text-purple-300">Join the Waitlist</h2>
                 
                 {message && (
                   <div className={`mb-4 p-3 rounded-md ${isSuccess ? 'bg-green-900/50 text-green-200' : 'bg-red-900/50 text-red-200'}`}>
@@ -135,7 +135,7 @@ export default function RuneDriveBeta() {
                     disabled={isSubmitting}
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
                   >
-                    {isSubmitting ? 'Joining...' : 'Join Beta Waitlist'}
+                    {isSubmitting ? 'Joining...' : 'Join Waitlist'}
                   </button>
                 </form>
                 <p className="text-xs text-indigo-300 mt-4">
@@ -166,13 +166,13 @@ export default function RuneDriveBeta() {
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">What to Expect</h3>
+                    <h3 className="text-lg font-semibold mb-2">What You&apos;ll Get</h3>
                     <ul className="text-indigo-200 space-y-2">
-                      <li>• Early access to beta features</li>
-                      <li>• Direct feedback opportunities</li>
+                      <li>• Kickstarter launch notifications</li>
                       <li>• Exclusive development updates</li>
-                      <li>• Community events and playtests</li>
-                      <li>• Lifetime beta tester recognition</li>
+                      <li>• Early access to campaign details</li>
+                      <li>• Community events and announcements</li>
+                      <li>• Direct feedback opportunities</li>
                     </ul>
                   </div>
                 </div>
@@ -181,15 +181,15 @@ export default function RuneDriveBeta() {
 
             {/* FAQ Section */}
             <div className="bg-black/20 p-8 rounded-xl border border-purple-500/20">
-              <h2 className="text-2xl font-bold mb-6 text-purple-300">Beta FAQ</h2>
+              <h2 className="text-2xl font-bold mb-6 text-purple-300">Frequently Asked Questions</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="font-semibold mb-2">When does the beta start?</h3>
-                  <p className="text-indigo-200 text-sm">We&apos;re targeting Q2 2026 for the first beta release. Join the waitlist to be notified!</p>
+                  <p className="text-indigo-200 text-sm">We&apos;re targeting Q2 2026 for the first beta release. Beta access will be exclusive to Kickstarter supporters.</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">Will it be free?</h3>
-                  <p className="text-indigo-200 text-sm">Beta access will be exclusive to early supporters and premium tiers of our Kickstarter backers.</p>
+                  <h3 className="font-semibold mb-2">How do I get beta access?</h3>
+                  <p className="text-indigo-200 text-sm">Beta access will be available exclusively to Kickstarter backers. Join the waitlist to be notified when our Kickstarter launches!</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-2">What platforms?</h3>

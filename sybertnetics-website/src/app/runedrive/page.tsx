@@ -1,4 +1,4 @@
-// Main landing page for Rune Drive
+// Main landing page for RuneDrive
 // Enhanced with better content and visual improvements
 
 import Link from 'next/link';
@@ -48,7 +48,7 @@ export default function RuneDriveLanding() {
               <span className="text-purple-300 font-semibold">Revolutionary TTRPG Platform</span>
             </div>
             <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent text-glow">
-              Rune Drive
+              RuneDrive
             </h1>
             <p className="text-xl md:text-2xl text-indigo-200 max-w-3xl mx-auto mb-8 leading-relaxed">
               The collaborative campaign engine for building persistent, player-driven TTRPG universes. 
@@ -77,7 +77,7 @@ export default function RuneDriveLanding() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Why Rune Drive?
+                Why RuneDrive?
               </h2>
               <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
                 We&apos;re reimagining how tabletop RPGs work in the digital age, bringing together 
@@ -113,7 +113,7 @@ export default function RuneDriveLanding() {
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-purple-300">System Agnostic</h3>
                 <p className="text-indigo-200 leading-relaxed">
-                  Bring your favorite TTRPG system. Rune Drive handles the world 
+                  Bring your favorite TTRPG system. RuneDrive handles the world 
                   management, lore tracking, and collaborative tools while you focus 
                   on the rules and gameplay you love.
                 </p>
@@ -130,7 +130,7 @@ export default function RuneDriveLanding() {
                 How It Works
               </h2>
               <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
-                Rune Drive makes collaborative world-building seamless and engaging
+                RuneDrive makes collaborative world-building seamless and engaging
               </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -140,16 +140,16 @@ export default function RuneDriveLanding() {
                 </div>
                 <h3 className="text-lg font-bold mb-2 text-purple-300">Create Your World</h3>
                 <p className="text-indigo-200 text-sm">
-                  Start with our &quot;Stories of the Abyss&quot; setting or create your own universe from scratch
+                  Create your own world using our templates or your own system
                 </p>
               </div>
               <div className="text-center">
                 <div className="bg-purple-600/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-purple-400">2</span>
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-purple-300">Invite Collaborators</h3>
+                <h3 className="text-lg font-bold mb-2 text-purple-300">Get Approved & Shared</h3>
                 <p className="text-indigo-200 text-sm">
-                  Bring in other GMs and players to contribute to the shared world
+                  Once approved, it will be shared in our universe to other DMs, either self promote or let it be natural
                 </p>
               </div>
               <div className="text-center">
@@ -158,7 +158,7 @@ export default function RuneDriveLanding() {
                 </div>
                 <h3 className="text-lg font-bold mb-2 text-purple-300">Build Together</h3>
                 <p className="text-indigo-200 text-sm">
-                  Use our tools to create locations, NPCs, and storylines that persist across campaigns
+                  Collaborate with other DMs to expand and enhance your world
                 </p>
               </div>
               <div className="text-center">
@@ -224,7 +224,7 @@ export default function RuneDriveLanding() {
               Join Our Community
             </h2>
             <p className="text-xl text-indigo-200 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Connect with other creators, get development updates, and help shape the future of Rune Drive. 
+              Connect with other creators, get development updates, and help shape the future of RuneDrive. 
               Our community is already building amazing worlds together.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
@@ -275,7 +275,7 @@ export default function RuneDriveLanding() {
               </Link>
               <span className="text-indigo-400">•</span>
               <Link href="/runedrive/about" className="text-purple-400 hover:text-purple-300 transition-colors">
-                About Rune Drive
+                About RuneDrive
               </Link>
               <span className="text-indigo-400">•</span>
               <Link href="/runedrive/universe" className="text-purple-400 hover:text-purple-300 transition-colors">

@@ -1,4 +1,4 @@
-// Universe page for Rune Drive
+// Universe page for RuneDrive
 // Factual, platform-focused description. No fabricated lore.
 
 import RuneDriveHeader from "../components/RuneDriveHeader";

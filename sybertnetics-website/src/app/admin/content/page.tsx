@@ -1,18 +1,20 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Edit, FileText, ArrowRight } from 'lucide-react';
 import AdminLayout from '../components/AdminLayout';
 import ContentEditor from '../components/ContentEditor';
 
 const PAGES = [
   { path: 'home', name: 'Home Page' },
   { path: 'about', name: 'About Page' },
-  { path: 'runedrive', name: 'Rune Drive Main Page' },
-  { path: 'runedrive/about', name: 'Rune Drive About Page' },
-  { path: 'runedrive/universe', name: 'Rune Drive Universe Page' },
-  { path: 'runedrive/creators', name: 'Rune Drive Creators Page' },
-  { path: 'runedrive/community', name: 'Rune Drive Community Page' },
-  { path: 'runedrive/blog', name: 'Rune Drive Blog Page' },
-  { path: 'runedrive/demo', name: 'Rune Drive Demo Page' },
+  { path: 'runedrive', name: 'RuneDrive Main Page' },
+  { path: 'runedrive/about', name: 'RuneDrive About Page' },
+  { path: 'runedrive/universe', name: 'RuneDrive Universe Page' },
+  { path: 'runedrive/creators', name: 'RuneDrive Creators Page' },
+  { path: 'runedrive/community', name: 'RuneDrive Community Page' },
+  { path: 'runedrive/blog', name: 'RuneDrive Blog Page' },
+  { path: 'runedrive/demo', name: 'RuneDrive Demo Page' },
   { path: 'solutions', name: 'Solutions Page' },
   { path: 'contact', name: 'Contact Page' },
   { path: 'careers', name: 'Careers Page' },
@@ -21,6 +23,26 @@ const PAGES = [
 export default function ContentManagement() {
   const [selectedPage, setSelectedPage] = useState<string | null>(null);
   const [message, setMessage] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth-check', {
+          method: 'GET',
+          credentials: 'include'
+        });
+        setIsAuthenticated(response.ok);
+      } catch {
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   const handleSave = async (content: string) => {
     if (!selectedPage) return;
@@ -54,6 +76,34 @@ export default function ContentManagement() {
     setSelectedPage(null);
     setMessage('');
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
+          <p className="text-gray-600 mb-4">You must be logged in to access this page.</p>
+          <Link
+            href="/admin/login"
+            className="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+          >
+            Go to Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <AdminLayout title="Content Management">
