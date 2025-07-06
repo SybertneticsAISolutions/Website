@@ -25,7 +25,7 @@ export interface NewsletterSignupData {
   name?: string;
 }
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
@@ -36,7 +36,7 @@ export interface ApiResponse<T = any> {
 async function callFunction<T>(
   functionName: string, 
   method: 'GET' | 'POST' | 'PUT' = 'POST',
-  body?: any,
+  body?: unknown,
   token?: string
 ): Promise<ApiResponse<T>> {
   try {

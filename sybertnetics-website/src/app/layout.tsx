@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sybertnetics - Empower Your Future",
+  title: "Rediscover AI - Sybertnetics",
   description: "Sybertnetics AI Solutions - Cutting-edge AI technology to transform your business and empower your future.",
 };
 

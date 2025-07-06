@@ -24,9 +24,6 @@ export default function ContentManagement() {
   const [selectedPage, setSelectedPage] = useState<string | null>(null);
   const [message, setMessage] = useState('');
   const { user } = useAuth();
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
 
   const handleSave = async (content: string) => {
     if (!selectedPage || !user) return;
@@ -42,7 +39,7 @@ export default function ContentManagement() {
         setMessage(`Error: ${result.error}`);
         setTimeout(() => setMessage(''), 5000);
       }
-    } catch (error) {
+    } catch {
       setMessage('Network error. Please try again.');
       setTimeout(() => setMessage(''), 5000);
     }
