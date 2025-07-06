@@ -25,18 +25,13 @@
   "hosting": [
     {
       "target": "sybertnetics-com",
-      "public": "sybertnetics-website/out",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
+      "source": "sybertnetics-website",
+      "frameworksBackend": {
+        "framework": "nextjs",
+        "backend": {
+          "codebase": "default"
         }
-      ]
+      }
     }
   ]
 }

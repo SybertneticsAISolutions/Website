@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netlify Forms Detection</title>
+</head>
+<body>
+    <!-- Netlify Forms detection for Next.js 14+ -->
+    <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="contact" />
+        <div style="display: none;">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </div>
+        <input type="text" name="name" required />
+        <input type="email" name="email" required />
+        <input type="text" name="company" />
+        <select name="subject" required>
+            <option value="">Select a subject</option>
+            <option value="general">General Inquiry</option>
+            <option value="solutions">AI Solutions</option>
+            <option value="partnership">Partnership Opportunity</option>
+            <option value="investment">Investment Inquiry</option>
+            <option value="careers">Career Opportunities</option>
+            <option value="support">Technical Support</option>
+            <option value="other">Other</option>
+        </select>
+        <textarea name="message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</body>
+</html> 
