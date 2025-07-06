@@ -1,13 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { verifyToken } from '@/app/admin/utils';
+import { getAuth } from 'firebase-admin/auth';
+import { initializeApp, getApps, cert } from 'firebase-admin/app';
+
+// Initialize Firebase Admin if not already initialized
+if (!getApps().length) {
+  initializeApp();
+}
+
+async function verifyAuthToken(request: NextRequest) {
+  const authHeader = request.headers.get('authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+
+  const token = authHeader.split('Bearer ')[1];
+  
+  try {
+    const decodedToken = await getAuth().verifyIdToken(token);
+    return decodedToken;
+  } catch (error) {
+    console.error('Token verification failed:', error);
+    return null;
+  }
+}
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ path: string }> }
 ) {
   try {
+    const user = await verifyAuthToken(request);
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { path: pagePath } = await params;
     const filePath = path.join(process.cwd(), 'src', 'content', 'pages', `${pagePath}.md`);
     
@@ -18,9 +46,9 @@ export async function GET(
       // If file doesn't exist, return empty content
       return NextResponse.json({ content: '' });
     }
-  } catch {
-    console.error('Error reading content');
-    return NextResponse.json({ error: 'Failed to read content' }, { status: 500 });
+  } catch (error) {
+    console.error('Error getting content:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -29,15 +57,19 @@ export async function PUT(
   { params }: { params: Promise<{ path: string }> }
 ) {
   try {
-    // Verify admin authentication
-    const token = request.headers.get('authorization')?.replace('Bearer ', '');
-    if (!token || !(await verifyToken(token))) {
+    const user = await verifyAuthToken(request);
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const body = await request.json();
+    const { content } = body;
+
+    if (!content) {
+      return NextResponse.json({ error: 'Content is required' }, { status: 400 });
+    }
+
     const { path: pagePath } = await params;
-    const { content } = await request.json();
-    
     const filePath = path.join(process.cwd(), 'src', 'content', 'pages', `${pagePath}.md`);
     
     // Ensure directory exists
@@ -47,9 +79,9 @@ export async function PUT(
     // Write content to file
     await fs.writeFile(filePath, content, 'utf-8');
     
-    return NextResponse.json({ success: true });
-  } catch {
-    console.error('Error writing content');
-    return NextResponse.json({ error: 'Failed to save content' }, { status: 500 });
+    return NextResponse.json({ message: 'Content saved successfully' });
+  } catch (error) {
+    console.error('Error saving content:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 

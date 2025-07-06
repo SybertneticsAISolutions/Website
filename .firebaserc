@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "sybertnetics-webpage"
+  },
+  "targets": {
+    "sybertnetics-webpage": {
+      "hosting": {
+        "sybertnetics-com": [
+          "sybertnetics-com"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

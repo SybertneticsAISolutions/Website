@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from "next/link";
 import { Mail, MapPin, Phone, Send, ArrowRight, Loader2, CheckCircle, XCircle } from "lucide-react";
 import Header from '../components/Header';
+import { addContactMessage } from '@/utils/firebaseFunctions';
 
 // Notification component
 interface NotificationProps {
@@ -85,27 +86,16 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      // Use Netlify's built-in form handling
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('company', formData.company);
-      formDataToSend.append('subject', formData.subject);
-      formDataToSend.append('message', formData.message);
+      const result = await addContactMessage(formData);
 
-      const response = await fetch('/', {
-        method: 'POST',
-        body: formDataToSend,
-      });
-
-      if (response.ok) {
+      if (result.success) {
         showNotification(
           'success',
           'Thank you for your message! We will get back to you as soon as possible.'
         );
         clearForm();
       } else {
-        throw new Error('Failed to send message');
+        throw new Error(result.error || 'Failed to send message');
       }
     } catch (error) {
       console.error('Contact form error:', error);

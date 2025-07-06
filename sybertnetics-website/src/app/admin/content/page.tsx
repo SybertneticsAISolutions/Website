@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
 import AdminLayout from '../components/AdminLayout';
 import ContentEditor from '../components/ContentEditor';
+import { savePageContent } from '@/utils/firebaseFunctions';
+import { useAuth } from '@/utils/useAuth';
 
 const PAGES = [
   { path: 'home', name: 'Home Page' },
@@ -22,50 +23,26 @@ const PAGES = [
 export default function ContentManagement() {
   const [selectedPage, setSelectedPage] = useState<string | null>(null);
   const [message, setMessage] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth-check', {
-          method: 'GET',
-          credentials: 'include'
-        });
-        setIsAuthenticated(response.ok);
-      } catch {
-        setIsAuthenticated(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+  const { user } = useAuth();
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const handleSave = async (content: string) => {
-    if (!selectedPage) return;
+    if (!selectedPage || !user) return;
 
     try {
-      const token = localStorage.getItem('adminToken');
-      const response = await fetch(`/api/content/${selectedPage}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ content }),
-      });
+      const token = await user.getIdToken();
+      const result = await savePageContent(selectedPage, content, token);
 
-      if (response.ok) {
+      if (result.success) {
         setMessage('Content saved successfully!');
         setTimeout(() => setMessage(''), 3000);
       } else {
-        const error = await response.json();
-        setMessage(`Error: ${error.error}`);
+        setMessage(`Error: ${result.error}`);
         setTimeout(() => setMessage(''), 5000);
       }
-    } catch {
+    } catch (error) {
       setMessage('Network error. Please try again.');
       setTimeout(() => setMessage(''), 5000);
     }
@@ -75,34 +52,6 @@ export default function ContentManagement() {
     setSelectedPage(null);
     setMessage('');
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-          <p className="text-gray-600 mb-4">You must be logged in to access this page.</p>
-          <Link
-            href="/admin/login"
-            className="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-          >
-            Go to Login
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <AdminLayout title="Content Management">

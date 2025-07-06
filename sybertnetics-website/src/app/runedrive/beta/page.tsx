@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import RuneDriveHeader from "../components/RuneDriveHeader";
+import { addBetaSignup } from "@/utils/firebaseFunctions";
 
 export default function RuneDriveBeta() {
   const [formData, setFormData] = useState({
@@ -18,19 +19,11 @@ export default function RuneDriveBeta() {
     setMessage('');
 
     try {
-      const response = await fetch('/.netlify/functions/beta-signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const result = await addBetaSignup(formData);
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (result.success) {
         setIsSuccess(true);
-        setMessage(result.message);
+        setMessage(result.message || 'Successfully joined the beta waitlist!');
         setFormData({ email: '', name: '', experience: '' });
       } else {
         setIsSuccess(false);

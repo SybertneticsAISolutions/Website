@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { marked } from 'marked';
+import { getPageContent } from '@/utils/firebaseFunctions';
+import { useAuth } from '@/utils/useAuth';
 
 interface ContentEditorProps {
   pagePath: string;
@@ -13,25 +15,35 @@ export default function ContentEditor({ pagePath, onSave, onCancel }: ContentEdi
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
+  const { user } = useAuth();
 
   const loadContent = async () => {
+    if (!user) return;
+    
     try {
-      const response = await fetch(`/api/content/${pagePath}`);
-      if (response.ok) {
-        const data = await response.json();
-        setContent(data.content || '');
+      const token = await user.getIdToken();
+      const result = await getPageContent(pagePath, token);
+      
+      if (result.success) {
+        setContent(result.data || '');
+      } else {
+        console.error('Error loading content:', result.error);
+        setContent('');
       }
     } catch (err) {
       console.error('Error loading content:', err);
+      setContent('');
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    loadContent();
+    if (user) {
+      loadContent();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagePath]);
+  }, [pagePath, user]);
 
   const handleSave = async () => {
     setIsSaving(true);

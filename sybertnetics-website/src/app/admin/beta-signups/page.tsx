@@ -1,68 +1,54 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Download, Mail, Calendar, Users, Loader2, AlertTriangle } from "lucide-react";
 import AdminLayout from "../components/AdminLayout";
+import { getBetaSignups } from "@/utils/firebaseFunctions";
+import { useAuth } from "@/utils/useAuth";
 
 interface BetaSignup {
+  id: string;
   email: string;
   name: string;
+  discord?: string;
   experience: string;
-  timestamp: string;
-  ip: string;
+  interests?: string[];
+  timestamp: { toDate: () => Date } | Date; // Firestore timestamp or Date
 }
 
 export default function BetaSignupsPage() {
   const [signups, setSignups] = useState<BetaSignup[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedSignups, setSelectedSignups] = useState<Set<string>>(new Set());
+  const { user } = useAuth();
 
-  useEffect(() => {
-    loadSignups();
-  }, []);
-
-  const loadSignups = async () => {
+  const loadSignups = useCallback(async () => {
+    if (!user) return;
+    
     try {
-      setIsLoading(true);
-      setError("");
-      const response = await fetch('/.netlify/functions/get-beta-signups');
-      if (!response.ok) {
-        if (response.status === 401) {
-          window.location.href = '/admin/login';
-          return;
-        }
-        throw new Error(`Failed to fetch signups: ${response.statusText}`);
+      setLoading(true);
+      setError(null);
+      
+      const token = await user.getIdToken();
+      const result = await getBetaSignups(token);
+      
+      if (result.success && result.data?.signups) {
+        setSignups(result.data.signups);
+      } else {
+        throw new Error(result.error || 'Failed to fetch signups');
       }
-      const data = await response.json();
-      setSignups(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unknown error occurred.");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
-  };
+  }, [user]);
 
-  const exportToCSV = () => {
-    const headers = ['Email', 'Name', 'Experience', 'Signup Date', 'IP Address'];
-    const csvContent = [
-      headers.join(','),
-      ...signups.map(signup => [
-        signup.email,
-        signup.name || '',
-        signup.experience || '',
-        new Date(signup.timestamp).toLocaleString(),
-        signup.ip
-      ].map(field => `"${field}"`).join(','))
-    ].join('\n');
+  useEffect(() => {
+    loadSignups();
+  }, [loadSignups]);
 
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `beta-signups-${new Date().toISOString().split('T')[0]}.csv`;
-    link.click();
-    window.URL.revokeObjectURL(url);
-  };
+
 
   const exportEmails = () => {
     const emails = signups.map(signup => signup.email).join(', ');
@@ -101,6 +87,50 @@ export default function BetaSignupsPage() {
     'veteran': 'Veteran (5+ years)',
   };
 
+  // Helper function to format timestamp
+  const formatTimestamp = (timestamp: { toDate: () => Date } | Date) => {
+    if (timestamp && typeof timestamp === 'object' && 'toDate' in timestamp) {
+      return timestamp.toDate().toLocaleString();
+    }
+    return new Date(timestamp).toLocaleString();
+  };
+
+  // Helper function to check if signup is recent
+  const isRecent = (timestamp: { toDate: () => Date } | Date, days: number) => {
+    const signupDate = timestamp && typeof timestamp === 'object' && 'toDate' in timestamp ? timestamp.toDate() : new Date(timestamp);
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - days);
+    return signupDate > cutoffDate;
+  };
+
+  // Helper function to check if signup is today
+  const isToday = (timestamp: { toDate: () => Date } | Date) => {
+    const signupDate = timestamp && typeof timestamp === 'object' && 'toDate' in timestamp ? timestamp.toDate() : new Date(timestamp);
+    const today = new Date();
+    return signupDate.toDateString() === today.toDateString();
+  };
+
+
+
+  const handleExport = () => {
+    const csvContent = signups.map((signup: BetaSignup) => {
+      const timestamp = signup.timestamp && typeof signup.timestamp === 'object' && 'toDate' in signup.timestamp 
+        ? signup.timestamp.toDate().toLocaleString() 
+        : new Date(signup.timestamp).toLocaleString();
+      
+      return `${signup.email},${signup.name || ''},${signup.discord || ''},${signup.experience || ''},${(signup.interests || []).join('; ')},${timestamp}`;
+    }).join('\n');
+    
+    const csvHeader = 'Email,Name,Discord,Experience,Interests,Signup Date\n';
+    const blob = new Blob([csvHeader + csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'beta-signups.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <AdminLayout title="Beta Signups">
       {/* Stats Cards */}
@@ -121,12 +151,7 @@ export default function BetaSignupsPage() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">This Week</p>
               <p className="text-2xl font-bold text-gray-900">
-                {signups.filter(s => {
-                  const signupDate = new Date(s.timestamp);
-                  const weekAgo = new Date();
-                  weekAgo.setDate(weekAgo.getDate() - 7);
-                  return signupDate > weekAgo;
-                }).length}
+                {signups.filter(s => isRecent(s.timestamp, 7)).length}
               </p>
             </div>
           </div>
@@ -138,11 +163,7 @@ export default function BetaSignupsPage() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Today</p>
               <p className="text-2xl font-bold text-gray-900">
-                {signups.filter(s => {
-                  const signupDate = new Date(s.timestamp);
-                  const today = new Date();
-                  return signupDate.toDateString() === today.toDateString();
-                }).length}
+                {signups.filter(s => isToday(s.timestamp)).length}
               </p>
             </div>
           </div>
@@ -165,7 +186,7 @@ export default function BetaSignupsPage() {
       <div className="flex justify-between items-center mb-6">
         <div className="flex space-x-4">
           <button
-            onClick={exportToCSV}
+            onClick={handleExport}
             className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700"
           >
             <Download className="w-5 h-5 mr-2" />
@@ -187,7 +208,7 @@ export default function BetaSignupsPage() {
         </button>
       </div>
 
-      {isLoading && (
+      {loading && (
         <div className="flex justify-center items-center p-8">
           <Loader2 className="w-8 h-8 animate-spin text-gray-500" />
           <p className="ml-2 text-gray-500">Loading signups...</p>
@@ -201,7 +222,7 @@ export default function BetaSignupsPage() {
         </div>
       )}
 
-      {!isLoading && !error && (
+      {!loading && !error && (
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
@@ -250,13 +271,7 @@ export default function BetaSignupsPage() {
                       {experienceLabels[signup.experience] || signup.experience || '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(signup.timestamp).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
+                      {formatTimestamp(signup.timestamp)}
                     </td>
                   </tr>
                 ))}

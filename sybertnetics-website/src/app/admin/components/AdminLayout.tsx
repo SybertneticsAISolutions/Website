@@ -1,7 +1,10 @@
 "use client";
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Briefcase, Newspaper, PenSquare, LogOut, FileText, Globe } from 'lucide-react';
+import { Briefcase, Newspaper, PenSquare, LogOut, FileText, Globe, Loader2 } from 'lucide-react';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/utils/firebase';
+import { useAuth } from '@/utils/useAuth';
+import Link from 'next/link';
 
 const navLinks = [
   { href: '/admin/content', label: 'Content Management', icon: FileText },
@@ -13,11 +16,32 @@ const navLinks = [
 
 export default function AdminLayout({ children, title }: { children: React.ReactNode, title: string }) {
   const router = useRouter();
+  const { user, loading } = useAuth();
 
   const handleLogout = async () => {
-    await fetch('/api/logout', { method: 'POST' });
-    router.push('/admin/login');
+    try {
+      await signOut(auth);
+      router.push('/admin/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-emerald-600 mx-auto mb-4" />
+          <p className="text-gray-600">Loading admin panel...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    router.push('/admin/login');
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -40,13 +64,18 @@ export default function AdminLayout({ children, title }: { children: React.React
           ))}
         </nav>
 
-        <button 
-          onClick={handleLogout} 
-          className="flex items-center space-x-3 text-red-600 hover:bg-red-50 p-2 rounded-md"
-        >
-          <LogOut className="w-5 h-5" />
-          <span>Logout</span>
-        </button>
+        <div className="border-t pt-4">
+          <div className="text-sm text-gray-500 mb-2 px-2">
+            Signed in as: {user.email}
+          </div>
+          <button 
+            onClick={handleLogout} 
+            className="flex items-center space-x-3 text-red-600 hover:bg-red-50 p-2 rounded-md w-full"
+          >
+            <LogOut className="w-5 h-5" />
+            <span>Logout</span>
+          </button>
+        </div>
       </aside>
 
       <main className="ml-64 p-8">

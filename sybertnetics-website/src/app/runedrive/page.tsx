@@ -1,9 +1,13 @@
+"use client";
+
 // Main landing page for RuneDrive
 // Enhanced with better content and visual improvements
 
 import Link from 'next/link';
 import { Gamepad2, GitBranch, BookOpen, Users, Sparkles, ArrowRight, Star, Zap } from "lucide-react";
 import RuneDriveHeader from './components/RuneDriveHeader';
+import { useState, useEffect } from 'react';
+import { getDiscordMemberCount } from '@/utils/firebaseFunctions';
 
 // Enhanced starlight background with better performance
 const styles = `
@@ -34,6 +38,32 @@ const styles = `
 `;
 
 export default function RuneDriveLanding() {
+  const [discordMembers, setDiscordMembers] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        // Fetch Discord member count
+        const discordResult = await getDiscordMemberCount();
+        setDiscordMembers(discordResult);
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  // Format numbers with proper fallbacks
+  const formatDiscordMembers = () => {
+    if (isLoading) return "Loading...";
+    if (discordMembers === null) return "Growing";
+    return `${discordMembers}+`;
+  };
+
   return (
     <>
       <style>{styles}</style>
@@ -67,7 +97,7 @@ export default function RuneDriveLanding() {
             </div>
             <div className="flex items-center justify-center text-sm text-indigo-300">
               <Star className="w-4 h-4 mr-2 text-yellow-400" />
-              <span>Join 500+ creators already on the waitlist</span>
+              <span>Join our growing community of creators</span>
             </div>
           </div>
         </section>
@@ -250,11 +280,7 @@ export default function RuneDriveLanding() {
             </div>
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-3xl font-bold text-purple-400 mb-2">500+</div>
-                <div className="text-indigo-200">Beta Waitlist Members</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-purple-400 mb-2">50+</div>
+                <div className="text-3xl font-bold text-purple-400 mb-2">{formatDiscordMembers()}</div>
                 <div className="text-indigo-200">Active Discord Members</div>
               </div>
               <div>

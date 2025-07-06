@@ -1,60 +1,98 @@
 "use client";
-import { useRouter } from 'next/navigation';
+import AdminLayout from './components/AdminLayout';
 import Link from 'next/link';
-import { Briefcase, Newspaper, PenSquare, LogOut } from 'lucide-react';
+import { Briefcase, Newspaper, PenSquare, FileText, Globe, Users, Mail } from 'lucide-react';
 
-// Admin dashboard placeholder
-// TODO: Add content management features and protect this route with JWT authentication
+const adminFeatures = [
+  { 
+    href: '/admin/content', 
+    label: 'Content Management', 
+    icon: FileText,
+    description: 'Manage markdown content for all pages'
+  },
+  { 
+    href: '/admin/page-content', 
+    label: 'Page Content', 
+    icon: Globe,
+    description: 'Edit RuneDrive page content'
+  },
+  { 
+    href: '/admin/careers', 
+    label: 'Manage Careers', 
+    icon: Briefcase,
+    description: 'Add and edit job postings'
+  },
+  { 
+    href: '/admin/blog', 
+    label: 'Manage Blog', 
+    icon: PenSquare,
+    description: 'Create and edit blog posts'
+  },
+  { 
+    href: '/admin/news', 
+    label: 'Manage News', 
+    icon: Newspaper,
+    description: 'Manage news articles'
+  },
+  { 
+    href: '/admin/beta-signups', 
+    label: 'Beta Signups', 
+    icon: Users,
+    description: 'View waitlist registrations'
+  },
+  { 
+    href: '/admin/newsletter', 
+    label: 'Newsletter', 
+    icon: Mail,
+    description: 'Manage newsletter subscriptions'
+  },
+];
 
 export default function AdminDashboard() {
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    // Call the API route to clear the auth cookie
-    await fetch('/api/logout', { method: 'POST' });
-    router.push('/admin/login');
-  };
-
-  const navLinks = [
-    { href: '/admin/careers', label: 'Manage Careers', icon: Briefcase },
-    { href: '/admin/blog', label: 'Manage Blog', icon: PenSquare },
-    { href: '/admin/news', label: 'Manage News', icon: Newspaper },
-  ];
-
   return (
-    <div className="min-h-screen bg-gray-100">
-      <aside className="fixed inset-y-0 left-0 bg-white w-64 p-4 shadow-md">
-        <div className="flex items-center space-x-2 mb-10">
-          <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-lg">S</span>
-          </div>
-          <span className="text-gray-900 font-semibold text-xl">Admin Panel</span>
+    <AdminLayout title="Admin Dashboard">
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome to the Admin Dashboard</h2>
+          <p className="text-gray-600">
+            Manage your website content, view analytics, and control all aspects of your site from this central hub.
+          </p>
         </div>
-        
-        <nav className="space-y-2">
-          {navLinks.map(link => (
-            <Link key={link.href} href={link.href} className="flex items-center space-x-3 text-gray-600 hover:bg-gray-100 p-2 rounded-md">
-              <link.icon className="w-5 h-5" />
-              <span>{link.label}</span>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {adminFeatures.map((feature) => (
+            <Link
+              key={feature.href}
+              href={feature.href}
+              className="block p-6 bg-white border border-gray-200 rounded-lg hover:border-emerald-300 hover:shadow-md transition-all"
+            >
+              <div className="flex items-center mb-4">
+                <feature.icon className="w-8 h-8 text-emerald-600 mr-3" />
+                <h3 className="text-lg font-semibold text-gray-900">{feature.label}</h3>
+              </div>
+              <p className="text-gray-600 text-sm">{feature.description}</p>
             </Link>
           ))}
-        </nav>
+        </div>
 
-        <button 
-          onClick={handleLogout} 
-          className="absolute bottom-4 left-4 right-4 flex items-center space-x-3 text-red-600 hover:bg-red-50 p-2 rounded-md"
-        >
-          <LogOut className="w-5 h-5" />
-          <span>Logout</span>
-        </button>
-      </aside>
-
-      <main className="ml-64 p-8">
-        <h1 className="text-3xl font-bold text-gray-900">Welcome, Admin</h1>
-        <p className="text-gray-600 mt-2">
-          Select a section from the sidebar to manage your website&apos;s content.
-        </p>
-      </main>
-    </div>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-blue-900 mb-2">Quick Stats</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">0</div>
+              <div className="text-sm text-blue-700">Beta Signups</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">0</div>
+              <div className="text-sm text-blue-700">Contact Messages</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">0</div>
+              <div className="text-sm text-blue-700">Newsletter Subscribers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </AdminLayout>
   );
 } 
