@@ -41,6 +41,7 @@ export default function RuneDriveLanding() {
   const [discordMembers, setDiscordMembers] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Force deployment trigger - updated beta date to Q2 2026
   useEffect(() => {
     const fetchStats = async () => {
       try {
