@@ -75,16 +75,16 @@ export default function RuneDriveLanding() {
       <div className="starlight-background text-white font-sans">
         
         {/* Hero Section */}
-        <section className="min-h-screen flex flex-col justify-center items-center text-center p-8">
-          <div className="bg-black/40 backdrop-blur-md rounded-3xl p-12 border border-purple-500/30 cosmic-glow">
-            <div className="flex items-center justify-center mb-6">
-              <Sparkles className="w-8 h-8 text-purple-400 mr-3" />
-              <span className="text-purple-300 font-semibold">Revolutionary TTRPG Platform</span>
+        <section className="min-h-screen flex flex-col justify-center items-center text-center p-4 sm:p-8">
+          <div className="bg-black/40 backdrop-blur-md rounded-3xl p-6 sm:p-8 lg:p-12 border border-purple-500/30 cosmic-glow max-w-5xl w-full">
+            <div className="flex flex-col sm:flex-row items-center justify-center mb-6">
+              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400 mb-2 sm:mb-0 sm:mr-3" />
+              <span className="text-purple-300 font-semibold text-sm sm:text-base text-center">Revolutionary TTRPG Platform</span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent text-glow">
+            <h1 className="text-4xl sm:text-6xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent text-glow">
               RuneDrive
             </h1>
-            <p className="text-xl md:text-2xl text-indigo-200 max-w-3xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl lg:text-2xl text-indigo-200 max-w-3xl mx-auto mb-8 leading-relaxed">
               The collaborative campaign engine for building persistent, player-driven TTRPG universes. 
               Where every story matters and every choice shapes the world.
             </p>

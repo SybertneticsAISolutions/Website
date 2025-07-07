@@ -20,20 +20,20 @@ export default function RuneDriveHeader() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-purple-500/20">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 sm:p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/runedrive" className="-m-1.5 p-1.5">
             <span className="sr-only">RuneDrive</span>
             <div className="flex items-center">
               <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-lg mr-3"></div>
-              <span className="text-xl font-bold text-white">RuneDrive</span>
+              <span className="text-lg sm:text-xl font-bold text-white">RuneDrive</span>
             </div>
           </Link>
         </div>
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400 hover:text-white transition-colors"
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
@@ -64,10 +64,10 @@ export default function RuneDriveHeader() {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden">
-          <div className="fixed inset-0 z-50" />
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-0 z-40 bg-black/50" onClick={() => setMobileMenuOpen(false)} />
+          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
             <div className="flex items-center justify-between">
-              <Link href="/runedrive" className="-m-1.5 p-1.5">
+              <Link href="/runedrive" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
                 <span className="sr-only">RuneDrive</span>
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-lg mr-3"></div>
@@ -76,7 +76,7 @@ export default function RuneDriveHeader() {
               </Link>
               <button
                 type="button"
-                className="-m-2.5 rounded-md p-2.5 text-gray-400"
+                className="-m-2.5 rounded-md p-2.5 text-gray-400 hover:text-white transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="sr-only">Close menu</span>
@@ -90,7 +90,7 @@ export default function RuneDriveHeader() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                      className="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition-colors"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.name}
@@ -100,7 +100,7 @@ export default function RuneDriveHeader() {
                 <div className="py-6">
                   <Link
                     href="/runedrive/beta"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-700 transition-colors"
+                    className="-mx-3 block rounded-lg px-3 py-3 text-center text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-700 transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Join Beta
