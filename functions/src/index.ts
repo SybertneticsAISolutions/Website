@@ -28,7 +28,7 @@ const createTransporter = () => {
     throw new Error("SMTP configuration not found");
   }
 
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: smtpConfig.host,
     port: parseInt(smtpConfig.port),
     secure: false, // true for 465, false for other ports
@@ -97,7 +97,9 @@ setGlobalOptions({
  * @param {object} req - The request object
  * @return {Promise<object|null>} The decoded token or null if invalid
  */
-async function verifyAuthToken(req: {headers: {authorization?: string}}): Promise<object | null> {
+async function verifyAuthToken(
+  req: {headers: {authorization?: string}}
+): Promise<{uid: string} | null> {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return null;
