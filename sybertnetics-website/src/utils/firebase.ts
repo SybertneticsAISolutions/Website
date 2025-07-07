@@ -109,7 +109,12 @@ export const adminLogin = async (email: string, password: string) => {
     
     // If it's not a full email, assume it's a username and append the domain
     if (!email.includes('@')) {
-      loginEmail = `${email.toLowerCase()}@sybertnetics.com`;
+      // Handle the specific case of the admin username
+      if (email.toLowerCase() === 'kaynbpellegrino') {
+        loginEmail = 'kaynenbpellegrino@sybertnetics.com';
+      } else {
+        loginEmail = `${email.toLowerCase()}@sybertnetics.com`;
+      }
     }
     
     const userCredential = await signInWithEmailAndPassword(auth, loginEmail, password);

@@ -43,6 +43,13 @@ export default function AdminLayout({ children, title }: { children: React.React
     return null;
   }
 
+  // Debug: Log user info to console
+  console.log('Admin user authenticated:', {
+    uid: user.uid,
+    email: user.email,
+    emailVerified: user.emailVerified,
+  });
+
   return (
     <div className="min-h-screen bg-gray-100">
       <aside className="fixed inset-y-0 left-0 bg-white w-64 p-4 shadow-md flex flex-col">

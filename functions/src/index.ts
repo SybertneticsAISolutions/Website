@@ -603,20 +603,81 @@ export const createAdminUser = onRequest(async (req, res) => {
   }
 
   try {
-    const adminEmail = config().admin?.email;
-    const adminPassword = config().admin?.password;
+    const email = "kaynbpellegrino@sybertnetics.com";
+    const password = "AdminPass123!";
+    const displayName = "Kaynen B Pellegrino";
 
-    if (!adminEmail || !adminPassword) {
-      res.status(500).json({error: "Admin configuration missing"});
-      return;
+    try {
+      // Try to create new user
+      const userRecord = await auth.createUser({
+        email: email,
+        password: password,
+        displayName: displayName,
+      });
+
+      // Set custom claims for admin role
+      await auth.setCustomUserClaims(userRecord.uid, {
+        admin: true,
+        role: "admin",
+      });
+
+      res.status(200).json({
+        message: "Admin user created successfully",
+        uid: userRecord.uid,
+        email: userRecord.email,
+      });
+    } catch (error: unknown) {
+      const firebaseError = error as {code?: string};
+      if (firebaseError.code === "auth/email-already-exists") {
+        // User exists, update password and claims
+        const userRecord = await auth.getUserByEmail(email);
+
+        await auth.updateUser(userRecord.uid, {
+          password: password,
+        });
+
+        await auth.setCustomUserClaims(userRecord.uid, {
+          admin: true,
+          role: "admin",
+        });
+
+        res.status(200).json({
+          message: "Admin user updated successfully",
+          uid: userRecord.uid,
+          email: userRecord.email,
+        });
+      } else {
+        throw error;
+      }
     }
+  } catch (error: unknown) {
+    logger.error("Error creating/updating admin user:", error);
+    res.status(500).json({error: "Failed to create/update admin user"});
+  }
+});
 
-    // Create user with email (using the username as email)
-    const userRecord = await auth.createUser({
-      email: `${adminEmail}@sybertnetics.com`,
-      password: adminPassword,
-      displayName: adminEmail,
-    });
+// Set Admin Claims Function (run once to set admin permissions)
+export const setAdminClaims = onRequest(async (req, res) => {
+  // Enable CORS
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.status(204).send("");
+    return;
+  }
+
+  if (req.method !== "POST") {
+    res.status(405).json({error: "Method not allowed"});
+    return;
+  }
+
+  try {
+    const email = "kaynenbpellegrino@sybertnetics.com";
+
+    // Get the user by email
+    const userRecord = await auth.getUserByEmail(email);
 
     // Set custom claims for admin role
     await auth.setCustomUserClaims(userRecord.uid, {
@@ -625,20 +686,16 @@ export const createAdminUser = onRequest(async (req, res) => {
     });
 
     res.status(200).json({
-      message: "Admin user created successfully",
+      message: "Admin claims set successfully",
       uid: userRecord.uid,
       email: userRecord.email,
+      claims: {
+        admin: true,
+        role: "admin",
+      },
     });
   } catch (error: unknown) {
-    const firebaseError = error as {code?: string};
-    if (firebaseError.code === "auth/email-already-exists") {
-      res.status(200).json({
-        message: "Admin user already exists",
-        email: `${config().admin?.email}@sybertnetics.com`,
-      });
-    } else {
-      logger.error("Error creating admin user:", error);
-      res.status(500).json({error: "Failed to create admin user"});
-    }
+    logger.error("Error setting admin claims:", error);
+    res.status(500).json({error: "Failed to set admin claims"});
   }
 });
