@@ -9,6 +9,9 @@ yarn-error.log*
 /build/
 /.next/
 
+# Firebase cache
+.firebase/
+
 # OS generated files
 .DS_Store
 .DS_Store?

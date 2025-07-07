@@ -1,3 +1,0 @@
-# Netlify redirects file - takes precedence over netlify.toml
-# Handle trailing slash redirects
-/thank-you  /thank-you/  301 
