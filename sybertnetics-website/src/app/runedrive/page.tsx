@@ -284,7 +284,7 @@ export default function RuneDriveLanding() {
                 <div className="text-indigo-200">Active Discord Members</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-purple-400 mb-2">Q2 2025</div>
+                <div className="text-3xl font-bold text-purple-400 mb-2">Q2 2026</div>
                 <div className="text-indigo-200">Beta Launch Target</div>
               </div>
             </div>
