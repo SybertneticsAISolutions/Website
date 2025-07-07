@@ -24,12 +24,12 @@
   ],
   "hosting": {
     "site": "sybertnetics-webpage",
-    "source": "sybertnetics-website",
-    "frameworksBackend": {
-      "codebase": "default"
+      "source": "sybertnetics-website",
+      "frameworksBackend": {
+          "codebase": "default"
     },
     "predeploy": [
       "cd sybertnetics-website && npm install && npm run build"
     ]
-  }
+      }
 }
