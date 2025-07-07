@@ -8,6 +8,9 @@ import { Gamepad2, GitBranch, BookOpen, Users, Sparkles, ArrowRight, Star, Zap }
 import RuneDriveHeader from './components/RuneDriveHeader';
 import { useState, useEffect } from 'react';
 import { getDiscordMemberCount } from '@/utils/firebaseFunctions';
+import Image from 'next/image';
+
+// Cache busting update - Dec 19 2024 - forcing fresh deployment
 
 // Enhanced starlight background with better performance
 const styles = `
