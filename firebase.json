@@ -22,19 +22,14 @@
       ]
     }
   ],
-  "hosting": [
-    {
-      "target": "sybertnetics-com",
-      "source": "sybertnetics-website",
-      "frameworksBackend": {
-        "framework": "nextjs",
-        "backend": {
-          "codebase": "default"
-        }
-      },
-      "predeploy": [
-        "cd sybertnetics-website && npm install && npm run build"
-      ]
-    }
-  ]
+  "hosting": {
+    "site": "sybertnetics-webpage",
+    "source": "sybertnetics-website",
+    "frameworksBackend": {
+      "codebase": "default"
+    },
+    "predeploy": [
+      "cd sybertnetics-website && npm install && npm run build"
+    ]
+  }
 }
