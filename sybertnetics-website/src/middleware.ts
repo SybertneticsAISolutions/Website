@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
-export async function middleware(request: NextRequest) {
+export async function middleware() {
   // Allow all requests to pass through
   // Authentication is handled client-side by AdminLayout component
   // This ensures Firebase Auth can work properly
