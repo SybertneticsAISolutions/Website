@@ -60,7 +60,27 @@ The GitHub Actions service account needs specific roles for successful deploymen
      --role="roles/runtimeconfig.admin" --condition=None
    ```
 
-3. **Verify Permissions**:
+3. **Grant Service Account User Permission** (for Cloud Functions):
+   ```bash
+   # This allows the GitHub Actions service account to act as the Compute Engine service account
+   gcloud iam service-accounts add-iam-policy-binding \
+     YOUR_PROJECT_NUMBER-compute@developer.gserviceaccount.com \
+     --member="serviceAccount:YOUR_GITHUB_ACTION_SERVICE_ACCOUNT_EMAIL" \
+     --role="roles/iam.serviceAccountUser" \
+     --project=sybertnetics-webpage
+   ```
+
+4. **Enable Required APIs**:
+   ```bash
+   # Enable Cloud Billing API (required for Functions)
+   gcloud services enable cloudbilling.googleapis.com --project=sybertnetics-webpage
+   
+   # Enable additional APIs
+   gcloud services enable cloudresourcemanager.googleapis.com \
+     firebaseextensions.googleapis.com --project=sybertnetics-webpage
+   ```
+
+5. **Verify Permissions**:
    ```bash
    gcloud projects get-iam-policy sybertnetics-webpage \
      --flatten="bindings[].members" \
