@@ -20,6 +20,69 @@ This document outlines the migration from Netlify Functions to Firebase for back
 - **New**: Firebase Authentication
 - **Features**: Email/password login, secure session management
 
+## GitHub Actions CI/CD Setup
+
+### Required IAM Permissions
+
+The GitHub Actions service account needs specific roles for successful deployment:
+
+**Service Account**: `github-action-957289697@sybertnetics-webpage.iam.gserviceaccount.com`
+
+**Required Roles**:
+- `roles/firebase.admin` - Comprehensive Firebase permissions
+- `roles/firebaseextensions.admin` - Firebase Extensions management
+- `roles/runtimeconfig.admin` - Runtime configuration access
+- `roles/firebasehosting.admin` - Hosting deployment
+- `roles/firebaseauth.admin` - Authentication management
+
+### Setting Up Permissions
+
+1. **List Service Accounts** (to find your GitHub Actions service account):
+   ```bash
+   gcloud iam service-accounts list --project=sybertnetics-webpage
+   ```
+
+2. **Add Required Roles**:
+   ```bash
+   # Firebase Admin (comprehensive permissions)
+   gcloud projects add-iam-policy-binding sybertnetics-webpage \
+     --member="serviceAccount:YOUR_GITHUB_ACTION_SERVICE_ACCOUNT_EMAIL" \
+     --role="roles/firebase.admin" --condition=None
+
+   # Firebase Extensions Admin
+   gcloud projects add-iam-policy-binding sybertnetics-webpage \
+     --member="serviceAccount:YOUR_GITHUB_ACTION_SERVICE_ACCOUNT_EMAIL" \
+     --role="roles/firebaseextensions.admin" --condition=None
+
+   # Runtime Config Admin
+   gcloud projects add-iam-policy-binding sybertnetics-webpage \
+     --member="serviceAccount:YOUR_GITHUB_ACTION_SERVICE_ACCOUNT_EMAIL" \
+     --role="roles/runtimeconfig.admin" --condition=None
+   ```
+
+3. **Verify Permissions**:
+   ```bash
+   gcloud projects get-iam-policy sybertnetics-webpage \
+     --flatten="bindings[].members" \
+     --format="table(bindings.role)" \
+     --filter="bindings.members:'YOUR_GITHUB_ACTION_SERVICE_ACCOUNT_EMAIL'"
+   ```
+
+### GitHub Actions Configuration
+
+The workflow files include the `webframeworks` experiment flag:
+
+```yaml
+- uses: FirebaseExtended/action-hosting-deploy@v0
+  with:
+    repoToken: ${{ secrets.GITHUB_TOKEN }}
+    firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SYBERTNETICS_WEBPAGE }}
+    channelId: live
+    projectId: sybertnetics-webpage
+  env:
+    FIREBASE_CLI_EXPERIMENTS: webframeworks
+```
+
 ## Setup Instructions
 
 ### Step 1: Create Firebase Project
