@@ -32,16 +32,22 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
+      console.log('Attempting login with email:', email);
       const result = await adminLogin(email, password);
+      console.log('Login result:', result);
       
       if (result.success) {
+        console.log('Login successful, redirecting to admin dashboard');
         // Login successful, redirect to admin dashboard
         router.push('/admin');
       } else {
-        console.error(result.error || 'Login failed. Please check your credentials.');
+        console.error('Login failed:', result.error || 'Login failed. Please check your credentials.');
+        // Display error to user
+        alert(`Login failed: ${result.error || 'Please check your credentials.'}`);
       }
     } catch (error) {
-      console.error('An unexpected error occurred. Please try again.', error);
+      console.error('An unexpected error occurred:', error);
+      alert(`An unexpected error occurred: ${error}`);
     } finally {
       setLoading(false);
     }

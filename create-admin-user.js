@@ -1,57 +1,56 @@
 const admin = require('firebase-admin');
 
 // Initialize Firebase Admin SDK
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = require('./sybertnetics-webpage-firebase-adminsdk-7kvxz-b9dd92c42d.json');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
+  projectId: 'sybertnetics-webpage'
 });
 
 async function createAdminUser() {
   try {
-    const email = 'kaynbpellegrino@sybertnetics.com';
-    const password = 'KcMsLbMnAs2024!!';
-    
-    // Create the user
     const userRecord = await admin.auth().createUser({
-      email: email,
-      password: password,
-      displayName: 'KaynenBPellegrino',
+      email: 'kaynbpellegrino@sybertnetics.com',
+      password: 'AdminPass123!',
+      displayName: 'Kaynen B Pellegrino'
     });
-
-    // Set custom claims for admin role
-    await admin.auth().setCustomUserClaims(userRecord.uid, {
-      admin: true,
-      role: 'admin',
-    });
-
-    console.log('Admin user created successfully:', {
-      uid: userRecord.uid,
-      email: userRecord.email,
-      displayName: userRecord.displayName
-    });
+    
+    console.log('Successfully created new admin user:', userRecord.uid);
+    console.log('Email:', userRecord.email);
+    console.log('Display Name:', userRecord.displayName);
+    
+    // Optionally set custom claims for admin role
+    await admin.auth().setCustomUserClaims(userRecord.uid, { admin: true });
+    console.log('Admin claims set successfully');
+    
+    process.exit(0);
   } catch (error) {
     if (error.code === 'auth/email-already-exists') {
-      console.log('Admin user already exists');
-      
-      // Get the existing user and update claims
-      const userRecord = await admin.auth().getUserByEmail('kaynbpellegrino@sybertnetics.com');
-      await admin.auth().setCustomUserClaims(userRecord.uid, {
-        admin: true,
-        role: 'admin',
-      });
-      
-      console.log('Admin claims updated for existing user:', userRecord.uid);
+      console.log('User already exists. Updating password...');
+      try {
+        // Get the existing user
+        const userRecord = await admin.auth().getUserByEmail('kaynbpellegrino@sybertnetics.com');
+        
+        // Update the password
+        await admin.auth().updateUser(userRecord.uid, {
+          password: 'AdminPass123!'
+        });
+        
+        // Set admin claims
+        await admin.auth().setCustomUserClaims(userRecord.uid, { admin: true });
+        
+        console.log('Successfully updated admin user:', userRecord.uid);
+        console.log('Email:', userRecord.email);
+        console.log('New password set and admin claims updated');
+      } catch (updateError) {
+        console.error('Error updating existing user:', updateError);
+      }
     } else {
       console.error('Error creating admin user:', error);
     }
+    process.exit(1);
   }
 }
 
-createAdminUser().then(() => {
-  console.log('Script completed');
-  process.exit(0);
-}).catch((error) => {
-  console.error('Script failed:', error);
-  process.exit(1);
-}); 
+createAdminUser(); 
