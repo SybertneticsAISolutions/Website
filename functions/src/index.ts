@@ -27,7 +27,7 @@ const createTransporter = () => {
   if (!smtpConfig) {
     throw new Error("SMTP configuration not found");
   }
-  
+
   return nodemailer.createTransporter({
     host: smtpConfig.host,
     port: parseInt(smtpConfig.port),
@@ -94,10 +94,10 @@ setGlobalOptions({
 
 /**
  * Verifies Firebase Auth token from request headers
- * @param {any} req - The request object
- * @return {Promise<any>} The decoded token or null if invalid
+ * @param {object} req - The request object
+ * @return {Promise<object|null>} The decoded token or null if invalid
  */
-async function verifyAuthToken(req: any): Promise<any> {
+async function verifyAuthToken(req: {headers: {authorization?: string}}): Promise<object | null> {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return null;
@@ -204,7 +204,7 @@ export const contact = onRequest(async (req, res) => {
     try {
       const transporter = createTransporter();
       const smtpConfig = config().smtp;
-      
+
       if (!smtpConfig?.recipient_email) {
         throw new Error("Recipient email not configured");
       }
@@ -218,11 +218,12 @@ export const contact = onRequest(async (req, res) => {
           <h2>New Contact Form Submission</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+          <p><strong>Company:</strong> ${company || "Not provided"}</p>
           <p><strong>Subject:</strong> ${subject}</p>
           <p><strong>Message:</strong></p>
-          <div style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
-            ${message.replace(/\n/g, '<br>')}
+          <div style="background-color: #f5f5f5; padding: 10px; ` +
+            `border-radius: 5px;">
+            ${message.replace(/\n/g, "<br>")}
           </div>
           <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
         `,
@@ -232,16 +233,18 @@ export const contact = onRequest(async (req, res) => {
       const userEmailOptions = {
         from: smtpConfig.user,
         to: email,
-        subject: `Thank you for contacting Sybertnetics AI Solutions`,
+        subject: "Thank you for contacting Sybertnetics AI Solutions",
         html: `
           <h2>Thank you for your message!</h2>
           <p>Dear ${name},</p>
-          <p>We have received your message and will get back to you as soon as possible.</p>
+          <p>We have received your message and will get back to you ` +
+            `as soon as possible.</p>
           <p><strong>Your message:</strong></p>
-          <div style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+          <div style="background-color: #f5f5f5; padding: 10px; ` +
+            `border-radius: 5px;">
             <p><strong>Subject:</strong> ${subject}</p>
             <p><strong>Message:</strong></p>
-            ${message.replace(/\n/g, '<br>')}
+            ${message.replace(/\n/g, "<br>")}
           </div>
           <p>Best regards,<br>
           The Sybertnetics AI Solutions Team</p>
@@ -255,7 +258,6 @@ export const contact = onRequest(async (req, res) => {
       ]);
 
       logger.info(`Contact form emails sent for message ID: ${docRef.id}`);
-
     } catch (emailError) {
       logger.error("Email sending failed:", emailError);
       // Don't fail the request if email fails - message is still stored
@@ -625,8 +627,9 @@ export const createAdminUser = onRequest(async (req, res) => {
       uid: userRecord.uid,
       email: userRecord.email,
     });
-  } catch (error: any) {
-    if (error.code === "auth/email-already-exists") {
+  } catch (error: unknown) {
+    const firebaseError = error as {code?: string};
+    if (firebaseError.code === "auth/email-already-exists") {
       res.status(200).json({
         message: "Admin user already exists",
         email: `${config().admin?.email}@sybertnetics.com`,
