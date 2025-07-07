@@ -23,7 +23,7 @@
     }
   ],
   "hosting": {
-    "site": "sybertnetics-webpage",
+    "site": "sybertnetics-com",
       "source": "sybertnetics-website",
       "frameworksBackend": {
           "codebase": "default"
