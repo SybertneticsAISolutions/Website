@@ -31,7 +31,10 @@
         "backend": {
           "codebase": "default"
         }
-      }
+      },
+      "predeploy": [
+        "cd sybertnetics-website && npm install && npm run build"
+      ]
     }
   ]
 }
