@@ -13,12 +13,31 @@ import * as logger from "firebase-functions/logger";
 import {initializeApp} from "firebase-admin/app";
 import {getFirestore} from "firebase-admin/firestore";
 import {getAuth} from "firebase-admin/auth";
+import * as nodemailer from "nodemailer";
 
 // Initialize Firebase Admin
 initializeApp();
 
 const db = getFirestore();
 const auth = getAuth();
+
+// Email configuration
+const createTransporter = () => {
+  const smtpConfig = config().smtp;
+  if (!smtpConfig) {
+    throw new Error("SMTP configuration not found");
+  }
+  
+  return nodemailer.createTransporter({
+    host: smtpConfig.host,
+    port: parseInt(smtpConfig.port),
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: smtpConfig.user,
+      pass: smtpConfig.pass,
+    },
+  });
+};
 
 // Types
 interface BetaSignup {
@@ -171,6 +190,7 @@ export const contact = onRequest(async (req, res) => {
       return;
     }
 
+    // Store message in database
     const docRef = await db.collection("contact-messages").add({
       name,
       email,
@@ -179,6 +199,67 @@ export const contact = onRequest(async (req, res) => {
       message,
       timestamp: new Date(),
     });
+
+    // Send email notifications
+    try {
+      const transporter = createTransporter();
+      const smtpConfig = config().smtp;
+      
+      if (!smtpConfig?.recipient_email) {
+        throw new Error("Recipient email not configured");
+      }
+
+      // Email to company
+      const companyEmailOptions = {
+        from: smtpConfig.user,
+        to: smtpConfig.recipient_email,
+        subject: `New Contact Form Message: ${subject}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+          <p><strong>Subject:</strong> ${subject}</p>
+          <p><strong>Message:</strong></p>
+          <div style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+            ${message.replace(/\n/g, '<br>')}
+          </div>
+          <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+        `,
+      };
+
+      // Confirmation email to user
+      const userEmailOptions = {
+        from: smtpConfig.user,
+        to: email,
+        subject: `Thank you for contacting Sybertnetics AI Solutions`,
+        html: `
+          <h2>Thank you for your message!</h2>
+          <p>Dear ${name},</p>
+          <p>We have received your message and will get back to you as soon as possible.</p>
+          <p><strong>Your message:</strong></p>
+          <div style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+            <p><strong>Subject:</strong> ${subject}</p>
+            <p><strong>Message:</strong></p>
+            ${message.replace(/\n/g, '<br>')}
+          </div>
+          <p>Best regards,<br>
+          The Sybertnetics AI Solutions Team</p>
+        `,
+      };
+
+      // Send both emails
+      await Promise.all([
+        transporter.sendMail(companyEmailOptions),
+        transporter.sendMail(userEmailOptions),
+      ]);
+
+      logger.info(`Contact form emails sent for message ID: ${docRef.id}`);
+
+    } catch (emailError) {
+      logger.error("Email sending failed:", emailError);
+      // Don't fail the request if email fails - message is still stored
+    }
 
     res.status(200).json({
       message: "Message sent successfully!",
