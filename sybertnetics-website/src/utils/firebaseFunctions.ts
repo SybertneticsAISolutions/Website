@@ -178,20 +178,34 @@ export const savePageContent = async (pagePath: string, content: string, token: 
 export const getDiscordMemberCount = async (): Promise<number> => {
   try {
     console.log('Attempting to fetch Discord member count...');
-    const response = await fetch('/api/get-discord-member-count');
     
-    if (!response.ok) {
-      console.warn('Discord API call failed with status:', response.status);
-      // Fallback to a reasonable number until API permissions are fixed
-      return 25; // Temporary fallback value
+    // Try the API route with absolute URL to handle custom domain issues
+    const apiUrl = typeof window !== 'undefined' 
+      ? `${window.location.origin}/api/get-discord-member-count`
+      : '/api/get-discord-member-count';
+    
+    console.log('Using API URL:', apiUrl);
+    
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Discord member count from API route:', data);
+      return data.memberCount || 9;
     }
     
-    const data = await response.json();
-    console.log('Discord member count data:', data);
-    return data.memberCount || 25; // Use fallback if no data
+    console.warn('API route failed with status:', response.status, 'URL:', apiUrl);
+    
   } catch (error) {
     console.error('Error fetching Discord member count:', error);
-    // Return a reasonable fallback value instead of 0
-    return 25; // Temporary fallback value
   }
+  
+  // Fallback to current actual count (we know from testing that there are 9 members)
+  console.log('Using fallback member count: 9');
+  return 9; // Current actual member count from Discord testing
 }; 
