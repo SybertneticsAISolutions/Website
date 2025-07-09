@@ -25,7 +25,7 @@ export default function ContentEditor({ pagePath, onSave, onCancel }: ContentEdi
       const result = await getPageContent(pagePath, token);
       
       if (result.success) {
-        setContent(result.data || '');
+        setContent(result.data as string);
       } else {
         console.error('Error loading content:', result.error);
         setContent('');

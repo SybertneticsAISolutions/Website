@@ -16,7 +16,7 @@ const navLinks = [
 
 export default function AdminLayout({ children, title }: { children: React.ReactNode, title: string }) {
   const router = useRouter();
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -43,11 +43,31 @@ export default function AdminLayout({ children, title }: { children: React.React
     return null;
   }
 
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">🚫</div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h1>
+          <p className="text-gray-600 mb-4">You don't have permission to access the admin panel.</p>
+          <p className="text-sm text-gray-500 mb-6">Logged in as: {user.email}</p>
+          <button
+            onClick={handleLogout}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Debug: Log user info to console
   console.log('Admin user authenticated:', {
     uid: user.uid,
     email: user.email,
     emailVerified: user.emailVerified,
+    isAdmin: isAdmin,
   });
 
   return (

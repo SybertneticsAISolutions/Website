@@ -27,6 +27,18 @@
     "source": "sybertnetics-website",
     "frameworksBackend": {
       "codebase": "default"
-    }
+    },
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": {
+          "functionId": "ssrsybertneticswebpage",
+          "region": "us-central1"
+        }
+      }
+    ],
+    "predeploy": [
+      "cd sybertnetics-website && npm install && npm run build"
+    ]
   }
-}
+} 

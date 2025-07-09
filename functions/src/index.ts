@@ -118,10 +118,20 @@ async function verifyAuthToken(
 
 // Beta Signup Function
 export const betaSignup = onRequest(async (req, res) => {
-  // Enable CORS
-  res.set("Access-Control-Allow-Origin", "*");
+  // Enable CORS for both domains
+  const allowedOrigins = [
+    "https://sybertnetics.com",
+    "https://sybertnetics-webpage.web.app",
+    "http://localhost:3000",
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin || "")) {
+    res.set("Access-Control-Allow-Origin", origin);
+  }
   res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.set("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     res.status(204).send("");
@@ -163,10 +173,20 @@ export const betaSignup = onRequest(async (req, res) => {
 
 // Contact Form Function
 export const contact = onRequest(async (req, res) => {
-  // Enable CORS
-  res.set("Access-Control-Allow-Origin", "*");
+  // Enable CORS for both domains
+  const allowedOrigins = [
+    "https://sybertnetics.com",
+    "https://sybertnetics-webpage.web.app",
+    "http://localhost:3000",
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin || "")) {
+    res.set("Access-Control-Allow-Origin", origin);
+  }
   res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.set("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     res.status(204).send("");
@@ -277,10 +297,20 @@ export const contact = onRequest(async (req, res) => {
 
 // Get Beta Signups Function (Admin only)
 export const getBetaSignups = onRequest(async (req, res) => {
-  // Enable CORS
-  res.set("Access-Control-Allow-Origin", "*");
+  // Enable CORS for both domains
+  const allowedOrigins = [
+    "https://sybertnetics.com",
+    "https://sybertnetics-webpage.web.app",
+    "http://localhost:3000",
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin || "")) {
+    res.set("Access-Control-Allow-Origin", origin);
+  }
   res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.set("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     res.status(204).send("");
@@ -318,10 +348,20 @@ export const getBetaSignups = onRequest(async (req, res) => {
 
 // Get Contact Messages Function (Admin only)
 export const getContactMessages = onRequest(async (req, res) => {
-  // Enable CORS
-  res.set("Access-Control-Allow-Origin", "*");
+  // Enable CORS for both domains
+  const allowedOrigins = [
+    "https://sybertnetics.com",
+    "https://sybertnetics-webpage.web.app",
+    "http://localhost:3000",
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin || "")) {
+    res.set("Access-Control-Allow-Origin", origin);
+  }
   res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.set("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     res.status(204).send("");

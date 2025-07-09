@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
+    console.log('Discord API route accessed');
+    
     // Discord API endpoint to get guild (server) information
     const guildId = process.env.DISCORD_GUILD_ID;
     const botToken = process.env.DISCORD_BOT_TOKEN;
@@ -18,7 +20,14 @@ export async function GET() {
       console.error('Discord configuration missing:', { guildId: !!guildId, botToken: !!botToken });
       return NextResponse.json(
         { error: 'Discord configuration missing' },
-        { status: 500 }
+        { 
+          status: 500,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -52,12 +61,36 @@ export async function GET() {
       memberCount: guildData.approximate_member_count || 0,
       totalMembers: guildData.member_count || 0,
       onlineMembers: guildData.approximate_presence_count || 0,
+    }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      }
     });
   } catch (error) {
     console.error('Error fetching Discord member count:', error);
     return NextResponse.json(
       { error: 'Failed to fetch Discord member count' },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      }
     );
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
 }

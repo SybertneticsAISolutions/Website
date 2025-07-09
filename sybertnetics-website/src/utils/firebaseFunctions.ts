@@ -1,7 +1,7 @@
-// Firebase Cloud Functions API utilities
+// API utilities - Using Netlify Functions for production reliability
 const FUNCTIONS_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://us-central1-sybertnetics-webpage.cloudfunctions.net'
-  : 'http://localhost:5001/sybertnetics-webpage/us-central1';
+  ? 'https://sybertnetics.com/.netlify/functions'
+  : 'http://localhost:8888/.netlify/functions';
 
 // Types
 export interface BetaSignupData {
@@ -174,19 +174,17 @@ export const savePageContent = async (pagePath: string, content: string, token: 
   }
 };
 
-// Discord member count function
+// Discord member count function - now using Netlify Functions for production reliability
 export const getDiscordMemberCount = async (): Promise<number> => {
   try {
     console.log('Attempting to fetch Discord member count...');
     
-    // Try the API route with absolute URL to handle custom domain issues
-    const apiUrl = typeof window !== 'undefined' 
-      ? `${window.location.origin}/api/get-discord-member-count`
-      : '/api/get-discord-member-count';
+    // Use Netlify Function instead of Next.js API route for production reliability
+    const netlifyUrl = `${FUNCTIONS_BASE_URL}/get-discord-member-count`;
     
-    console.log('Using API URL:', apiUrl);
+    console.log('Using Netlify Function URL:', netlifyUrl);
     
-    const response = await fetch(apiUrl, {
+    const response = await fetch(netlifyUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -195,11 +193,11 @@ export const getDiscordMemberCount = async (): Promise<number> => {
     
     if (response.ok) {
       const data = await response.json();
-      console.log('Discord member count from API route:', data);
+      console.log('Discord member count from Netlify Function:', data);
       return data.memberCount || 9;
     }
     
-    console.warn('API route failed with status:', response.status, 'URL:', apiUrl);
+    console.warn('Netlify Function failed with status:', response.status, 'URL:', netlifyUrl);
     
   } catch (error) {
     console.error('Error fetching Discord member count:', error);
