@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminLogin } from '@/utils/firebase';
-import { auth } from '@/utils/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { useAuth } from '@/utils/useAuth';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLoginContent() {
@@ -13,19 +12,19 @@ export default function AdminLoginContent() {
   const [showPassword, setShowPassword] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const router = useRouter();
+  const { user, isAdmin, loading: authLoading } = useAuth();
 
   useEffect(() => {
-    // Check if user is already authenticated
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is already logged in, redirect to admin dashboard
+    if (!authLoading) {
+      if (user && isAdmin) {
+        // User is an admin, redirect to admin dashboard
         router.push('/admin');
+      } else {
+        // User is not an admin or not logged in, finish checking
+        setIsCheckingAuth(false);
       }
-      setIsCheckingAuth(false);
-    });
-
-    return () => unsubscribe();
-  }, [router]);
+    }
+  }, [user, isAdmin, authLoading, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

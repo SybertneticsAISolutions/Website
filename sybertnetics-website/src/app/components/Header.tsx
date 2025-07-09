@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronDown, Settings, LogOut } from 'lucide-react';
+import { useAuth } from '../../utils/useAuth';
+import { auth } from '../../utils/firebase';
+import { signOut } from 'firebase/auth';
 
 const navLinks = [
   { href: '/', label: 'Landing' },
@@ -25,32 +28,11 @@ const adminLinks = [
 
 export default function Header() {
   const pathname = usePathname();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAdminDropdown, setShowAdminDropdown] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Check if user is authenticated by trying to access admin content
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth-check', {
-          method: 'GET',
-          credentials: 'include'
-        });
-        setIsAuthenticated(response.ok);
-      } catch {
-        setIsAuthenticated(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+  const { user, isAdmin, loading } = useAuth();
 
   const handleLogout = async () => {
-    await fetch('/api/logout', { method: 'POST' });
-    setIsAuthenticated(false);
+    await signOut(auth);
     setShowAdminDropdown(false);
     window.location.href = '/';
   };
@@ -82,7 +64,7 @@ export default function Header() {
             ))}
             
             {/* Admin Dropdown */}
-            {!isLoading && isAuthenticated && (
+            {!loading && isAdmin && (
               <div className="relative">
                 <button
                   onClick={() => setShowAdminDropdown(!showAdminDropdown)}
