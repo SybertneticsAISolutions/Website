@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addBetaSignup } from '@/utils/firebase';
+import { addBetaSignupAdmin } from '@/utils/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await addBetaSignup({
+    const result = await addBetaSignupAdmin({
       email,
       name: name || '',
       discord: discord || '',

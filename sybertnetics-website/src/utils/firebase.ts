@@ -1,9 +1,9 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDocs, query, orderBy } from 'firebase/firestore';
+import { initializeApp, getApps } from 'firebase/app';
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, Timestamp } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
 
-// Your Firebase config
+// Client SDK initialization
 const firebaseConfig = {
   apiKey: "AIzaSyBQBNVFIUX4cv8iYMQ9vrh8dbfyraaqcPI",
   authDomain: "sybertnetics-webpage.firebaseapp.com",
@@ -14,13 +14,14 @@ const firebaseConfig = {
   measurementId: "G-BSRCLV2205"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
+export const db = getFirestore();
+export const auth = getAuth();
 
 // Initialize Analytics only on client side
-export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+export const analytics = typeof window !== 'undefined' ? getAnalytics() : null;
 
 // Types
 export interface BetaSignup {
@@ -30,7 +31,7 @@ export interface BetaSignup {
   discord?: string;
   experience?: string;
   interests?: string[];
-  timestamp: Date;
+  timestamp: Timestamp; // Use Firestore Timestamp for client
 }
 
 export interface ContactMessage {
@@ -40,23 +41,10 @@ export interface ContactMessage {
   company?: string;
   subject: string;
   message: string;
-  timestamp: Date;
+  timestamp: Timestamp; // Use Firestore Timestamp for client
 }
 
-// Beta signup functions
-export const addBetaSignup = async (signupData: Omit<BetaSignup, 'id' | 'timestamp'>) => {
-  try {
-    const docRef = await addDoc(collection(db, 'beta-signups'), {
-      ...signupData,
-      timestamp: new Date()
-    });
-    return { success: true, id: docRef.id };
-  } catch (error) {
-    console.error('Error adding beta signup:', error);
-    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
-  }
-};
-
+// Client-side functions
 export const getBetaSignups = async () => {
   try {
     const q = query(collection(db, 'beta-signups'), orderBy('timestamp', 'desc'));
@@ -68,20 +56,6 @@ export const getBetaSignups = async () => {
     return { success: true, data: signups };
   } catch (error) {
     console.error('Error getting beta signups:', error);
-    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
-  }
-};
-
-// Contact form functions
-export const addContactMessage = async (messageData: Omit<ContactMessage, 'id' | 'timestamp'>) => {
-  try {
-    const docRef = await addDoc(collection(db, 'contact-messages'), {
-      ...messageData,
-      timestamp: new Date()
-    });
-    return { success: true, id: docRef.id };
-  } catch (error) {
-    console.error('Error adding contact message:', error);
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 };

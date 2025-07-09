@@ -98,6 +98,7 @@ export const getBetaSignups = async (token: string): Promise<ApiResponse> => {
 
 // Contact form functions
 export const addContactMessage = async (messageData: ContactMessageData): Promise<ApiResponse> => {
+  console.log('Using correct addContactMessage function (v2)');
   return callApi('contact', 'POST', messageData);
 };
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addContactMessage } from '@/utils/firebase';
+import { addContactMessageAdmin } from '@/utils/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await addContactMessage({
+    const result = await addContactMessageAdmin({
       name,
       email,
       company: company || '',
