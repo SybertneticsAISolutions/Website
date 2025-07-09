@@ -1,8 +1,26 @@
 import { initializeApp, getApps } from 'firebase-admin/app';
-import { getFirestore, FieldValue } from 'firebase-admin/firestore';
+import { getFirestore, FieldValue, Timestamp } from 'firebase-admin/firestore';
 
-// Types from the client-side, assuming they are also used here
-import { BetaSignup, ContactMessage } from './firebase';
+// Types for backend operations. Duplicated to ensure full separation from client code.
+export interface BetaSignup {
+  id?: string;
+  email: string;
+  name?: string;
+  discord?: string;
+  experience?: string;
+  interests?: string[];
+  timestamp: Timestamp; // Using Admin SDK Timestamp
+}
+
+export interface ContactMessage {
+  id?: string;
+  name: string;
+  email: string;
+  company?: string;
+  subject: string;
+  message: string;
+  timestamp: Timestamp; // Using Admin SDK Timestamp
+}
 
 // Admin SDK initialization
 if (!getApps().length) {
