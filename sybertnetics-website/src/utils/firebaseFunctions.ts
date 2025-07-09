@@ -1,7 +1,4 @@
-// API utilities - Using Netlify Functions for production reliability
-const FUNCTIONS_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://sybertnetics.com/.netlify/functions'
-  : 'http://localhost:8888/.netlify/functions';
+// API utilities for interacting with the Next.js backend
 
 // Types
 export interface BetaSignupData {
@@ -32,15 +29,15 @@ export interface ApiResponse<T = unknown> {
   message?: string;
 }
 
-// Helper function to make API calls
-async function callFunction<T>(
-  functionName: string, 
+// Helper function to make API calls to the Next.js backend
+async function callApi<T>(
+  endpoint: string, 
   method: 'GET' | 'POST' | 'PUT' = 'POST',
   body?: unknown,
   token?: string
 ): Promise<ApiResponse<T>> {
   try {
-    const url = `${FUNCTIONS_BASE_URL}/${functionName}`;
+    const url = `/api/${endpoint}`; // Use relative paths for API routes
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -54,6 +51,18 @@ async function callFunction<T>(
       headers,
       body: body ? JSON.stringify(body) : undefined,
     });
+
+    // Check if the response is JSON, otherwise return an error
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const errorText = await response.text();
+      console.error(`Error calling ${endpoint}: Invalid response`, {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText,
+      });
+      throw new Error(`Server returned non-JSON response: ${errorText}`);
+    }
 
     const data = await response.json();
 
@@ -70,140 +79,63 @@ async function callFunction<T>(
       message: data.message
     };
   } catch (error) {
-    console.error(`Error calling ${functionName}:`, error);
+    console.error(`Error calling ${endpoint}:`, error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Network error'
+      error: error instanceof Error ? error.message : 'Network error or invalid JSON response'
     };
   }
 }
 
 // Beta signup functions
 export const addBetaSignup = async (signupData: BetaSignupData): Promise<ApiResponse> => {
-  return callFunction('betaSignup', 'POST', signupData);
+  return callApi('beta-signup', 'POST', signupData);
 };
 
 export const getBetaSignups = async (token: string): Promise<ApiResponse> => {
-  return callFunction('getBetaSignups', 'GET', undefined, token);
+  return callApi('get-beta-signups', 'GET', undefined, token);
 };
 
 // Contact form functions
 export const addContactMessage = async (messageData: ContactMessageData): Promise<ApiResponse> => {
-  return callFunction('contact', 'POST', messageData);
+  return callApi('contact', 'POST', messageData);
 };
 
 export const getContactMessages = async (token: string): Promise<ApiResponse> => {
-  return callFunction('getContactMessages', 'GET', undefined, token);
+  return callApi('get-contact-messages', 'GET', undefined, token);
 };
 
 // Newsletter functions
 export const addNewsletterSignup = async (signupData: NewsletterSignupData): Promise<ApiResponse> => {
-  return callFunction('newsletterSignup', 'POST', signupData);
+  return callApi('newsletter-signup', 'POST', signupData);
 };
 
 export const getNewsletterSubscriptions = async (token: string): Promise<ApiResponse> => {
-  return callFunction('getNewsletterSubscriptions', 'GET', undefined, token);
+  return callApi('get-newsletter-subscriptions', 'GET', undefined, token);
 };
 
 // Content management functions
 export const getPageContent = async (pagePath: string, token: string): Promise<ApiResponse> => {
-  const url = `${FUNCTIONS_BASE_URL}/getContent?path=${encodeURIComponent(pagePath)}`;
-  
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return {
-        success: false,
-        error: data.error || `HTTP ${response.status}: ${response.statusText}`
-      };
-    }
-
-    return {
-      success: true,
-      data: data.content
-    };
-  } catch (error) {
-    console.error('Error getting page content:', error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'Network error'
-    };
-  }
+  return callApi(`content/${pagePath}`, 'GET', undefined, token);
 };
 
 export const savePageContent = async (pagePath: string, content: string, token: string): Promise<ApiResponse> => {
-  const url = `${FUNCTIONS_BASE_URL}/saveContent?path=${encodeURIComponent(pagePath)}`;
-  
-  try {
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify({ content }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return {
-        success: false,
-        error: data.error || `HTTP ${response.status}: ${response.statusText}`
-      };
-    }
-
-    return {
-      success: true,
-      message: data.message
-    };
-  } catch (error) {
-    console.error('Error saving page content:', error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'Network error'
-    };
-  }
+  return callApi(`content/${pagePath}`, 'PUT', { content }, token);
 };
 
-// Discord member count function - now using Netlify Functions for production reliability
+// Discord member count function
 export const getDiscordMemberCount = async (): Promise<number> => {
   try {
-    console.log('Attempting to fetch Discord member count...');
-    
-    // Use Netlify Function instead of Next.js API route for production reliability
-    const netlifyUrl = `${FUNCTIONS_BASE_URL}/get-discord-member-count`;
-    
-    console.log('Using Netlify Function URL:', netlifyUrl);
-    
-    const response = await fetch(netlifyUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch('/api/get-discord-member-count');
     
     if (response.ok) {
       const data = await response.json();
-      console.log('Discord member count from Netlify Function:', data);
       return data.memberCount || 9;
     }
-    
-    console.warn('Netlify Function failed with status:', response.status, 'URL:', netlifyUrl);
-    
   } catch (error) {
     console.error('Error fetching Discord member count:', error);
   }
   
-  // Fallback to current actual count (we know from testing that there are 9 members)
-  console.log('Using fallback member count: 9');
-  return 9; // Current actual member count from Discord testing
+  // Fallback to a known reasonable value
+  return 9;
 }; 
