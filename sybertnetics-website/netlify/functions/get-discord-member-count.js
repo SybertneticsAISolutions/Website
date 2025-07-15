@@ -97,7 +97,8 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         memberCount: guildData.approximate_member_count || 9,
         totalMembers: guildData.member_count || 9,
-        onlineMembers: guildData.approximate_presence_count || 5,
+        // Subtract 2 from onlineMembers to account for bots, but do not go below zero
+        onlineMembers: Math.max((guildData.approximate_presence_count || 5) - 2, 0), // Adjusted for bot accounts
       }),
     };
   } catch (error) {
@@ -110,7 +111,8 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         memberCount: 9,
         totalMembers: 9,
-        onlineMembers: 5,
+        // Also apply the adjustment to the fallback value
+        onlineMembers: Math.max(5 - 2, 0), // Adjusted for bot accounts
       }),
     };
   }

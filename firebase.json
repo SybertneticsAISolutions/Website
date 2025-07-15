@@ -24,11 +24,11 @@
   ],
   "hosting": {
     "site": "sybertnetics-webpage",
-    "source": "sybertnetics-website",
-    "frameworksBackend": {
+      "source": "sybertnetics-website",
+      "frameworksBackend": {
       "codebase": "default",
       "region": "us-central1",
       "invoker": "public"
+      }
     }
-  }
 }

@@ -649,26 +649,26 @@ export const createAdminUser = onRequest(async (req, res) => {
 
     try {
       // Try to create new user
-      const userRecord = await auth.createUser({
+    const userRecord = await auth.createUser({
         email: email,
         password: password,
         displayName: displayName,
-      });
+    });
 
-      // Set custom claims for admin role
-      await auth.setCustomUserClaims(userRecord.uid, {
-        admin: true,
-        role: "admin",
-      });
+    // Set custom claims for admin role
+    await auth.setCustomUserClaims(userRecord.uid, {
+      admin: true,
+      role: "admin",
+    });
 
-      res.status(200).json({
-        message: "Admin user created successfully",
-        uid: userRecord.uid,
-        email: userRecord.email,
-      });
-    } catch (error: unknown) {
-      const firebaseError = error as {code?: string};
-      if (firebaseError.code === "auth/email-already-exists") {
+    res.status(200).json({
+      message: "Admin user created successfully",
+      uid: userRecord.uid,
+      email: userRecord.email,
+    });
+  } catch (error: unknown) {
+    const firebaseError = error as {code?: string};
+    if (firebaseError.code === "auth/email-already-exists") {
         // User exists, update password and claims
         const userRecord = await auth.getUserByEmail(email);
 
@@ -681,19 +681,19 @@ export const createAdminUser = onRequest(async (req, res) => {
           role: "admin",
         });
 
-        res.status(200).json({
+      res.status(200).json({
           message: "Admin user updated successfully",
           uid: userRecord.uid,
           email: userRecord.email,
-        });
-      } else {
+      });
+    } else {
         throw error;
       }
     }
   } catch (error: unknown) {
     logger.error("Error creating/updating admin user:", error);
     res.status(500).json({error: "Failed to create/update admin user"});
-  }
+    }
 });
 
 // Set Admin Claims Function (run once to set admin permissions)

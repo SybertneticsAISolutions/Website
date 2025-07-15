@@ -87,7 +87,7 @@ export const adminLogin = async (email: string, password: string) => {
       if (email.toLowerCase() === 'kaynbpellegrino') {
         loginEmail = 'kaynenbpellegrino@sybertnetics.com';
       } else {
-        loginEmail = `${email.toLowerCase()}@sybertnetics.com`;
+      loginEmail = `${email.toLowerCase()}@sybertnetics.com`;
       }
     }
     
