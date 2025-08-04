@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import RuneDriveHeader from "../components/RuneDriveHeader";
-import { addBetaSignup } from "@/utils/firebaseFunctions";
+import { addBetaSignup } from "@/utils/supabaseFunctions";
 
 export default function RuneDriveBeta() {
   const [formData, setFormData] = useState({

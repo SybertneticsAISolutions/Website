@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from "next/link";
 import { Mail, MapPin, Phone, Send, ArrowRight, Loader2, CheckCircle, XCircle } from "lucide-react";
 import Header from '../components/Header';
-import { addContactMessage } from '@/utils/firebaseFunctions';
+import { addContactMessage } from '@/utils/supabaseFunctions';
 
 // Notification component
 interface NotificationProps {

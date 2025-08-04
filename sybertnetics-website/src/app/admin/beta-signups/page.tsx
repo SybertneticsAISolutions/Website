@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Download, Mail, Calendar, Users, Loader2, AlertTriangle } from "lucide-react";
 import AdminLayout from "../components/AdminLayout";
-import { getBetaSignups } from "@/utils/firebaseFunctions";
+import { getBetaSignups } from "@/utils/supabaseFunctions";
 import { useAuth } from "@/utils/useAuth";
 
 interface BetaSignup {
