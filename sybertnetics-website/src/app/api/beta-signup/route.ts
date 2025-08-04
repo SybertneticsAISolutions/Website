@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addBetaSignupAdmin } from '@/utils/firebase-admin';
+import { betaOperations } from '@/utils/supabase';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,25 +14,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await addBetaSignupAdmin({
+    const result = await betaOperations.submitBetaSignup({
       email,
       name: name || '',
-      discord: discord || '',
-      experience: experience || '',
-      interests: interests || []
+      company: '', // Not in our schema, but we can add it later if needed
+      use_case: `${experience ? `Experience: ${experience}` : ''}${interests ? `\nInterests: ${interests.join(', ')}` : ''}${discord ? `\nDiscord: ${discord}` : ''}`
     });
 
-    if (result.success) {
-      return NextResponse.json(
-        { message: 'Successfully joined the beta waitlist!' },
-        { status: 200 }
-      );
-    } else {
-      return NextResponse.json(
-        { error: result.error || 'Failed to join waitlist' },
-        { status: 500 }
-      );
-    }
+    return NextResponse.json(
+      { message: 'Successfully joined the beta waitlist!', id: result.id },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Beta signup error:', error);
     return NextResponse.json(

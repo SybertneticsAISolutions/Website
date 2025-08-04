@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getBetaSignups } from '@/utils/firebase';
+import { betaOperations } from '@/utils/supabase';
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,19 +12,13 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const result = await getBetaSignups();
+    const signups = await betaOperations.getBetaSignups();
 
-    if (result.success) {
-      return NextResponse.json(
-        { signups: result.data },
-        { status: 200 }
-      );
-    } else {
-      return NextResponse.json(
-        { error: result.error || 'Failed to fetch signups' },
-        { status: 500 }
-      );
-    }
+    return NextResponse.json({
+      success: true,
+      data: { signups },
+      count: signups.length
+    });
   } catch (error) {
     console.error('Get beta signups error:', error);
     return NextResponse.json(

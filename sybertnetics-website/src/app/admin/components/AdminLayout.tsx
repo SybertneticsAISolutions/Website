@@ -1,9 +1,9 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { Briefcase, Newspaper, PenSquare, LogOut, FileText, Globe, Loader2 } from 'lucide-react';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/utils/firebase';
-import { useAuth } from '@/utils/useAuth';
+// import { signOut } from 'firebase/auth';
+// import { auth } from '@/utils/firebase';
+import { useSupabaseAuth } from '@/utils/useSupabaseAuth';
 import Link from 'next/link';
 
 const navLinks = [
@@ -16,11 +16,13 @@ const navLinks = [
 
 export default function AdminLayout({ children, title }: { children: React.ReactNode, title: string }) {
   const router = useRouter();
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading, isAdmin } = useSupabaseAuth();
 
+  const { signOut } = useSupabaseAuth();
+  
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await signOut();
       router.push('/admin/login');
     } catch (error) {
       console.error('Logout error:', error);

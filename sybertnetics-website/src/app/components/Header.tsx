@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ChevronDown, Settings, LogOut } from 'lucide-react';
-import { useAuth } from '../../utils/useAuth';
-import { auth } from '../../utils/firebase';
-import { signOut } from 'firebase/auth';
+import { useSupabaseAuth } from '../../utils/useSupabaseAuth';
+// import { auth } from '../../utils/firebase';
+// import { signOut } from 'firebase/auth';
 
 const navLinks = [
   { href: '/', label: 'Landing' },
@@ -29,10 +29,10 @@ const adminLinks = [
 export default function Header() {
   const pathname = usePathname();
   const [showAdminDropdown, setShowAdminDropdown] = useState(false);
-  const { user, isAdmin, loading } = useAuth();
+  const { user, isAdmin, loading, signOut } = useSupabaseAuth();
 
   const handleLogout = async () => {
-    await signOut(auth);
+    await signOut();
     setShowAdminDropdown(false);
     window.location.href = '/';
   };

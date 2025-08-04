@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addContactMessageAdmin } from '@/utils/firebase-admin';
+import { contactOperations } from '@/utils/supabase';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,25 +21,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await addContactMessageAdmin({
+    const result = await contactOperations.submitContact({
       name,
       email,
       company: company || '',
-      subject,
-      message
+      message: `Subject: ${subject}\n\n${message}` // Combine subject and message
     });
 
-    if (result.success) {
-      return NextResponse.json(
-        { message: 'Message sent successfully!' },
-        { status: 200 }
-      );
-    } else {
-      return NextResponse.json(
-        { error: result.error || 'Failed to send message' },
-        { status: 500 }
-      );
-    }
+    return NextResponse.json(
+      { message: 'Message sent successfully!', id: result.id },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Contact form error:', error);
     return NextResponse.json(

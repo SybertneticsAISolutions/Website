@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { adminLogin } from '@/utils/firebase';
-import { useAuth } from '@/utils/useAuth';
+import { useSupabaseAuth } from '@/utils/useSupabaseAuth';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLoginContent() {
@@ -12,7 +11,7 @@ export default function AdminLoginContent() {
   const [showPassword, setShowPassword] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const router = useRouter();
-  const { user, isAdmin, loading: authLoading } = useAuth();
+  const { user, isAdmin, loading: authLoading, signIn } = useSupabaseAuth();
 
   useEffect(() => {
     if (!authLoading) {
@@ -32,17 +31,16 @@ export default function AdminLoginContent() {
 
     try {
       console.log('Attempting login with email:', email);
-      const result = await adminLogin(email, password);
-      console.log('Login result:', result);
+      const { error } = await signIn(email, password);
       
-      if (result.success) {
+      if (!error) {
         console.log('Login successful, redirecting to admin dashboard');
         // Login successful, redirect to admin dashboard
         router.push('/admin');
       } else {
-        console.error('Login failed:', result.error || 'Login failed. Please check your credentials.');
+        console.error('Login failed:', error.message);
         // Display error to user
-        alert(`Login failed: ${result.error || 'Please check your credentials.'}`);
+        alert(`Login failed: ${error.message}`);
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);
