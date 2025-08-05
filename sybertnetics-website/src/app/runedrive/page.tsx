@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Gamepad2, GitBranch, BookOpen, Users, Sparkles, ArrowRight, Star, Zap } from "lucide-react";
 import RuneDriveHeader from './components/RuneDriveHeader';
 import { useState, useEffect } from 'react';
-// import { getDiscordMemberCount } from '@/utils/firebaseFunctions';
+import { getDiscordMemberCount } from '@/utils/supabaseFunctions';
 import Image from 'next/image';
 
 // Cache busting update - Dec 19 2024 - forcing fresh deployment

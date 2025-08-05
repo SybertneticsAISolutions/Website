@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import AdminLayout from '../components/AdminLayout';
 import ContentEditor from '../components/ContentEditor';
-// import { savePageContent } from '@/utils/firebaseFunctions';
+import { savePageContent } from '@/utils/supabaseFunctions';
 import { useAuth } from '@/utils/useAuth';
 
 const PAGES = [

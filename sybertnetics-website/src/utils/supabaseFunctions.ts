@@ -114,19 +114,19 @@ export const getNewsletterSubscriptions = async (token: string): Promise<ApiResp
   return callApi('get-newsletter-signups-supabase', 'GET', undefined, token);
 };
 
-// Page content functions (these might stay with Firebase for now)
+// Page content functions - using Supabase
 export const getPageContent = async (pagePath: string, token: string): Promise<ApiResponse> => {
-  return callApi('get-page-content', 'GET', undefined, token);
+  return callApi(`get-page-content?pagePath=${encodeURIComponent(pagePath)}`, 'GET', undefined, token);
 };
 
 export const savePageContent = async (pagePath: string, content: string, token: string): Promise<ApiResponse> => {
   return callApi('save-page-content', 'POST', { pagePath, content }, token);
 };
 
-// Discord function (this might stay as is)
+// Discord function - calls the existing Discord API route
 export const getDiscordMemberCount = async (): Promise<number> => {
   try {
-    const response = await fetch('/api/discord-count');
+    const response = await fetch('/api/get-discord-member-count');
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
