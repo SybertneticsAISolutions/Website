@@ -54,7 +54,7 @@ export default function AboutPage() {
                   <div className="text-gray-600">Founded</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-blue-600 mb-2">2</div>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">27+</div>
                   <div className="text-gray-600">Team Members</div>
                 </div>
                 <div>
