@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Rediscover AI - Sybertnetics",
   description: "Sybertnetics AI Solutions - Cutting-edge AI technology to transform your business and empower your future.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 };
 
 export const viewport: Viewport = {
