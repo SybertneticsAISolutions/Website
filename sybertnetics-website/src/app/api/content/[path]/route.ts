@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { getAuth } from 'firebase-admin/auth';
-import { initializeApp, getApps } from 'firebase-admin/app';
+import { createClient } from '@supabase/supabase-js';
 
-// Initialize Firebase Admin if not already initialized
-if (!getApps().length) {
-  initializeApp();
-}
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 async function verifyAuthToken(request: NextRequest) {
   const authHeader = request.headers.get('authorization');
@@ -18,8 +18,19 @@ async function verifyAuthToken(request: NextRequest) {
   const token = authHeader.split('Bearer ')[1];
   
   try {
-    const decodedToken = await getAuth().verifyIdToken(token);
-    return decodedToken;
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+    if (error || !user) {
+      return null;
+    }
+    
+    // Check if user is admin
+    const { data: adminUser } = await supabase
+      .from('admin_users')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+    
+    return adminUser ? user : null;
   } catch (error) {
     console.error('Token verification failed:', error);
     return null;
