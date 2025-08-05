@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowLeft, Terminal, Code, Download, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Code, FileText } from 'lucide-react';
 
 export default function RunaQuickStartPage() {
   return (
@@ -19,217 +19,118 @@ export default function RunaQuickStartPage() {
           
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-              Quick Start Guide
+              RUNA Development Status
             </h1>
             <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
-              Get RUNA up and running in minutes. This guide will walk you through installation 
-              and your first AI-to-AI communication program.
+              RUNA is currently in closed beta testing. The engine is under development and will be available for public release in October 2025.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Prerequisites */}
+      {/* Current Status */}
       <section className="py-12 px-4 sm:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20 mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-purple-300">Prerequisites</h2>
+            <h2 className="text-2xl font-bold mb-4 text-purple-300">Current Status</h2>
             <p className="text-indigo-200 mb-6">
-              Before you begin, make sure you have the following installed:
+              RUNA is in active development with closed beta testing underway.
             </p>
-            <ul className="space-y-3">
-              <li className="flex items-start text-indigo-200">
-                <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
-                <span>A modern operating system (Linux, macOS, or Windows)</span>
-              </li>
-              <li className="flex items-start text-indigo-200">
-                <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
-                <span>At least 100MB of free disk space</span>
-              </li>
-              <li className="flex items-start text-indigo-200">
-                <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
-                <span>Basic understanding of AI systems and protocols</span>
-              </li>
-            </ul>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-center text-indigo-200">
+                <Clock className="w-5 h-5 text-purple-400 mr-3" />
+                <span>Status: Closed Beta Testing</span>
+              </div>
+              <div className="flex items-center text-indigo-200">
+                <Calendar className="w-5 h-5 text-purple-400 mr-3" />
+                <span>Public Release: October 2025</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Installation */}
+      {/* Development Progress */}
       <section className="py-12 px-4 sm:px-8 bg-black/20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-            Installation
+            Development Progress
           </h2>
           
-          <div className="space-y-8">
-            {/* Linux */}
-            <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-              <h3 className="text-xl font-bold mb-4 text-purple-300">Linux</h3>
-              <div className="bg-slate-800 p-4 rounded-lg font-mono text-sm">
-                <div className="text-indigo-300 mb-2"># Download and extract RUNA</div>
-                <div className="text-white">wget https://downloads.sybertnetics.com/runa-1.0.0-linux-x64.tar.gz</div>
-                <div className="text-white">tar -xzf runa-1.0.0-linux-x64.tar.gz</div>
-                <div className="text-white">cd runa-1.0.0</div>
-                <div className="text-indigo-300 mt-4 mb-2"># Install to system path</div>
-                <div className="text-white">sudo ./install.sh</div>
-              </div>
+          <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20 text-center">
+            <h3 className="text-2xl font-bold mb-4 text-purple-300">What's Happening Now</h3>
+            <p className="text-indigo-200 mb-6">
+              The RUNA team is actively working on core engine development and testing.
+            </p>
+            <div className="bg-slate-800 p-6 rounded-lg">
+              <h4 className="text-lg font-semibold text-purple-300 mb-4">Current Development Areas:</h4>
+              <ul className="text-indigo-200 space-y-2 text-left max-w-2xl mx-auto">
+                <li>• Core engine implementation and testing</li>
+                <li>• Language specification refinement</li>
+                <li>• Protocol framework development</li>
+                <li>• Performance optimization</li>
+                <li>• Security validation</li>
+                <li>• Documentation preparation</li>
+              </ul>
             </div>
-
-            {/* macOS */}
-            <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-              <h3 className="text-xl font-bold mb-4 text-purple-300">macOS</h3>
-              <div className="bg-slate-800 p-4 rounded-lg font-mono text-sm">
-                <div className="text-indigo-300 mb-2"># Using Homebrew (recommended)</div>
-                <div className="text-white">brew install sybertnetics/runa/runa</div>
-                <div className="text-indigo-300 mt-4 mb-2"># Or download manually</div>
-                <div className="text-white">curl -O https://downloads.sybertnetics.com/runa-1.0.0-macos-x64.tar.gz</div>
-                <div className="text-white">tar -xzf runa-1.0.0-macos-x64.tar.gz</div>
-                <div className="text-white">sudo ./install.sh</div>
-              </div>
-            </div>
-
-            {/* Windows */}
-            <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-              <h3 className="text-xl font-bold mb-4 text-purple-300">Windows</h3>
-              <div className="bg-slate-800 p-4 rounded-lg font-mono text-sm">
-                <div className="text-indigo-300 mb-2"># Using PowerShell</div>
-                <div className="text-white">Invoke-WebRequest -Uri "https://downloads.sybertnetics.com/runa-1.0.0-windows-x64.zip" -OutFile "runa.zip"</div>
-                <div className="text-white">Expand-Archive -Path "runa.zip" -DestinationPath "runa-1.0.0"</div>
-                <div className="text-white">cd runa-1.0.0</div>
-                <div className="text-white">.\install.ps1</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-8">
-            <Link 
-              href="/runa/download" 
-              className="inline-flex items-center bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-all"
-            >
-              <Download className="mr-2 w-4 h-4" />
-              Download RUNA
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* Verification */}
+      {/* Future Release */}
       <section className="py-12 px-4 sm:px-8">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-            Verify Installation
+            Coming October 2025
           </h2>
           
-          <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-            <p className="text-indigo-200 mb-4">
-              After installation, verify that RUNA is working correctly:
+          <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20 text-center">
+            <h3 className="text-2xl font-bold mb-4 text-purple-300">Public Release</h3>
+            <p className="text-indigo-200 mb-6">
+              RUNA will be publicly available in October 2025 with full documentation, 
+              installation guides, and working examples.
             </p>
-            <div className="bg-slate-800 p-4 rounded-lg font-mono text-sm">
-              <div className="text-indigo-300 mb-2"># Check RUNA version</div>
-              <div className="text-white">runa --version</div>
-              <div className="text-indigo-300 mt-4 mb-2"># Expected output:</div>
-              <div className="text-green-400">RUNA 1.0.0</div>
-              <div className="text-green-400">AI-to-AI Communication Protocol</div>
+            <div className="bg-slate-800 p-6 rounded-lg">
+              <h4 className="text-lg font-semibold text-purple-300 mb-4">What to Expect:</h4>
+              <ul className="text-indigo-200 space-y-2 text-left max-w-2xl mx-auto">
+                <li>• Complete language specification</li>
+                <li>• Installation packages for all platforms</li>
+                <li>• Comprehensive documentation and tutorials</li>
+                <li>• Working examples and use cases</li>
+                <li>• Community support and resources</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* First Program */}
+      {/* Learn More */}
       <section className="py-12 px-4 sm:px-8 bg-black/20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-            Your First RUNA Program
+            Learn More
           </h2>
           
-          <div className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20">
-            <p className="text-indigo-200 mb-6">
-              Let's create a simple RUNA program that demonstrates basic AI-to-AI communication:
-            </p>
-            
-            <div className="bg-slate-800 p-4 rounded-lg font-mono text-sm mb-6">
-              <div className="text-indigo-300 mb-2">// hello.runa</div>
-              <div className="text-white">protocol HelloProtocol {</div>
-              <div className="text-white ml-4">message Greeting {</div>
-              <div className="text-white ml-8">string name;</div>
-              <div className="text-white ml-8">timestamp created;</div>
-              <div className="text-white ml-4">}</div>
-              <div className="text-white ml-4">message Response {</div>
-              <div className="text-white ml-8">string message;</div>
-              <div className="text-white ml-8">bool success;</div>
-              <div className="text-white ml-4">}</div>
-              <div className="text-white">}</div>
-              <div className="text-indigo-300 mt-4 mb-2">// AI Agent A</div>
-              <div className="text-white">agent AgentA {</div>
-              <div className="text-white ml-4">send Greeting {</div>
-              <div className="text-white ml-8">name: "AI_Agent_A";</div>
-              <div className="text-white ml-8">created: now();</div>
-              <div className="text-white ml-4">} to AgentB;</div>
-              <div className="text-white">}</div>
-              <div className="text-indigo-300 mt-4 mb-2">// AI Agent B</div>
-              <div className="text-white">agent AgentB {</div>
-              <div className="text-white ml-4">on Greeting from AgentA {</div>
-              <div className="text-white ml-8">send Response {</div>
-              <div className="text-white ml-12">message: "Hello, " + greeting.name + "!";</div>
-              <div className="text-white ml-12">success: true;</div>
-              <div className="text-white ml-8">} to AgentA;</div>
-              <div className="text-white ml-4">}</div>
-              <div className="text-white">}</div>
-            </div>
-            
-            <div className="bg-slate-800 p-4 rounded-lg font-mono text-sm">
-              <div className="text-indigo-300 mb-2"># Compile and run the program</div>
-              <div className="text-white">runa compile hello.runa</div>
-              <div className="text-white">runa run hello</div>
-              <div className="text-indigo-300 mt-4 mb-2"># Expected output:</div>
-              <div className="text-green-400">[AgentA] Sending greeting to AgentB</div>
-              <div className="text-green-400">[AgentB] Received greeting from AgentA</div>
-              <div className="text-green-400">[AgentB] Sending response to AgentA</div>
-              <div className="text-green-400">[AgentA] Received: "Hello, AI_Agent_A!"</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Next Steps */}
-      <section className="py-12 px-4 sm:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-            Next Steps
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             <Link 
-              href="/runa/docs/tutorial"
+              href="/sybercraft"
               className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20 text-center hover:bg-indigo-900/60 transition-all"
             >
               <Code className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-purple-300">Tutorial</h3>
+              <h3 className="text-lg font-bold mb-2 text-purple-300">SyberCraft Architecture</h3>
               <p className="text-indigo-200 text-sm">
-                Learn more advanced RUNA concepts and patterns
+                Learn about the federated AI architecture that RUNA is designed for
               </p>
             </Link>
             
             <Link 
-              href="/runa/docs/examples"
+              href="/runa/docs"
               className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20 text-center hover:bg-indigo-900/60 transition-all"
             >
-              <Terminal className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-purple-300">Examples</h3>
+              <FileText className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-purple-300">Documentation</h3>
               <p className="text-indigo-200 text-sm">
-                Explore working examples and common use cases
-              </p>
-            </Link>
-            
-            <Link 
-              href="/runa/docs/syntax"
-              className="bg-indigo-900/40 p-6 rounded-xl border border-purple-500/20 text-center hover:bg-indigo-900/60 transition-all"
-            >
-              <Code className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-purple-300">Language Reference</h3>
-              <p className="text-indigo-200 text-sm">
-                Complete syntax and language specification
+                Explore the planned documentation structure and resources
               </p>
             </Link>
           </div>

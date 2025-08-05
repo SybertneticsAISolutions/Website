@@ -7,71 +7,23 @@ import { ArrowLeft, Download, Calendar, Tag, FileText, CheckCircle, AlertCircle 
 export default function RunaDownloadPage() {
   const versions = [
     {
-      version: "1.0.0",
-      date: "2024-01-15",
-      status: "stable",
-      description: "First stable release of RUNA for production use",
+      version: "0.1.0",
+      date: "2025-08-04",
+      status: "closed-beta",
+      description: "Closed beta testing - RUNA engine under development",
       changes: [
-        "Initial stable release",
-        "Complete language specification implementation",
-        "Type system with formal verification",
-        "Binary serialization format",
-        "Protocol compliance checking",
-        "Comprehensive documentation",
-        "Example implementations for common use cases"
+        "Core engine implementation",
+        "Basic language specification",
+        "Initial protocol framework",
+        "Development and testing tools",
+        "Internal documentation"
       ],
       breaking: [],
       downloads: {
-        "Linux x64": "/downloads/runa-1.0.0-linux-x64.tar.gz",
-        "macOS x64": "/downloads/runa-1.0.0-macos-x64.tar.gz",
-        "Windows x64": "/downloads/runa-1.0.0-windows-x64.zip",
-        "Source": "/downloads/runa-1.0.0-source.tar.gz"
-      }
-    },
-    {
-      version: "0.9.0",
-      date: "2023-12-01",
-      status: "beta",
-      description: "Beta release with final API stabilization",
-      changes: [
-        "API stabilization for 1.0 release",
-        "Performance optimizations",
-        "Enhanced error handling",
-        "Improved documentation",
-        "Bug fixes and stability improvements"
-      ],
-      breaking: [
-        "Removed deprecated API endpoints",
-        "Updated serialization format"
-      ],
-      downloads: {
-        "Linux x64": "/downloads/runa-0.9.0-linux-x64.tar.gz",
-        "macOS x64": "/downloads/runa-0.9.0-macos-x64.tar.gz",
-        "Windows x64": "/downloads/runa-0.9.0-windows-x64.zip",
-        "Source": "/downloads/runa-0.9.0-source.tar.gz"
-      }
-    },
-    {
-      version: "0.8.0",
-      date: "2023-10-15",
-      status: "alpha",
-      description: "Alpha release with core language features",
-      changes: [
-        "Core language implementation",
-        "Basic type system",
-        "Initial binary format",
-        "Basic protocol verification",
-        "Development documentation"
-      ],
-      breaking: [
-        "Major API changes from 0.7.x",
-        "New syntax for type declarations"
-      ],
-      downloads: {
-        "Linux x64": "/downloads/runa-0.8.0-linux-x64.tar.gz",
-        "macOS x64": "/downloads/runa-0.8.0-macos-x64.tar.gz",
-        "Windows x64": "/downloads/runa-0.8.0-windows-x64.zip",
-        "Source": "/downloads/runa-0.8.0-source.tar.gz"
+        "Linux x64": "#",
+        "macOS x64": "#", 
+        "Windows x64": "#",
+        "Source": "#"
       }
     }
   ];
@@ -80,6 +32,7 @@ export default function RunaDownloadPage() {
     switch (status) {
       case 'stable': return 'text-green-400 bg-green-400/20';
       case 'beta': return 'text-yellow-400 bg-yellow-400/20';
+      case 'closed-beta': return 'text-orange-400 bg-orange-400/20';
       case 'alpha': return 'text-red-400 bg-red-400/20';
       default: return 'text-gray-400 bg-gray-400/20';
     }
@@ -112,7 +65,7 @@ export default function RunaDownloadPage() {
               Download RUNA
             </h1>
             <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
-              Choose the right version of RUNA for your AI system. We recommend using the latest stable release for production environments.
+              RUNA is currently in closed beta testing. The engine is under development and will be available for public release in October 2025.
             </p>
           </div>
         </div>

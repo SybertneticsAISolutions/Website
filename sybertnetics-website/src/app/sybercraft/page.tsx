@@ -49,7 +49,7 @@ export default function SybercraftPage() {
           <div className="mt-8 flex items-center justify-center space-x-4 text-white/60">
             <span>Version 1.0</span>
             <span>•</span>
-            <span>Last Updated: December 2024</span>
+            <span>Last Updated: August 4, 2025</span>
           </div>
         </div>
 

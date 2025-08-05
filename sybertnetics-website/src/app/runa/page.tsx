@@ -200,10 +200,10 @@ export default function RunaLanguagePage() {
         <div className="max-w-6xl mx-auto">
           <div className="bg-gradient-to-r from-purple-600/20 to-indigo-600/20 p-8 rounded-xl border border-purple-500/20">
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4 text-purple-300">Latest Release: RUNA 1.0.0</h3>
-              <p className="text-indigo-200 mb-6">
-                The first stable release of RUNA is now available for production use in AI systems.
-              </p>
+                          <h3 className="text-2xl font-bold mb-4 text-purple-300">RUNA in Development</h3>
+            <p className="text-indigo-200 mb-6">
+              RUNA is currently in closed beta testing. The engine is under development and will be available for public release in October 2025.
+            </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link 
                   href="/runa/download" 
@@ -211,7 +211,7 @@ export default function RunaLanguagePage() {
                 >
                   <span className="flex items-center">
                     <Download className="mr-2 w-4 h-4" />
-                    Download RUNA 1.0.0
+                    Learn More
                   </span>
                 </Link>
                 <Link 
