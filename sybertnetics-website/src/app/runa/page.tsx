@@ -92,58 +92,118 @@ export default function RunaLanguagePage() {
         </div>
       </section>
 
-      {/* Use Cases Section */}
-      <section className="py-20 px-4 sm:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-              Use Cases
-            </h2>
-            <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
-              RUNA is designed for scenarios where AI systems need to communicate with precision, 
-              reliability, and formal verification.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-              <h3 className="text-xl font-bold mb-4 text-purple-300">Federated AI Systems</h3>
-              <p className="text-indigo-200 mb-4">
-                Enable secure communication between specialized AI agents in distributed architectures.
-              </p>
-              <ul className="text-indigo-200 text-sm space-y-2">
-                <li>• Multi-agent coordination</li>
-                <li>• Distributed consensus</li>
-                <li>• Secure data exchange</li>
-              </ul>
-            </div>
-            
-            <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-              <h3 className="text-xl font-bold mb-4 text-purple-300">AI Governance</h3>
-              <p className="text-indigo-200 mb-4">
-                Provide verifiable communication protocols for AI oversight and control systems.
-              </p>
-              <ul className="text-indigo-200 text-sm space-y-2">
-                <li>• Policy enforcement</li>
-                <li>• Audit trails</li>
-                <li>• Compliance verification</li>
-              </ul>
-            </div>
-            
-            <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
-              <h3 className="text-xl font-bold mb-4 text-purple-300">Research & Development</h3>
-              <p className="text-indigo-200 mb-4">
-                Accelerate AI research by providing standardized communication protocols.
-              </p>
-              <ul className="text-indigo-200 text-sm space-y-2">
-                <li>• Reproducible experiments</li>
-                <li>• Standardized interfaces</li>
-                <li>• Collaborative development</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+             {/* Use Cases Section */}
+       <section className="py-20 px-4 sm:px-8">
+         <div className="max-w-6xl mx-auto">
+           <div className="text-center mb-16">
+             <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+               The Universal Development Language
+             </h2>
+             <p className="text-xl text-indigo-200 max-w-4xl mx-auto">
+               RUNA is built on the highest level of abstraction to replace entire technology stacks. 
+               No need to learn multiple languages when you can write everything in RUNA.
+             </p>
+           </div>
+           
+           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+             <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+               <h3 className="text-xl font-bold mb-4 text-purple-300">Web Development</h3>
+               <p className="text-indigo-200 mb-4">
+                 Full-stack web applications from frontend to backend, databases, and APIs.
+               </p>
+               <ul className="text-indigo-200 text-sm space-y-2">
+                 <li>• Frontend frameworks</li>
+                 <li>• Backend services</li>
+                 <li>• Database systems</li>
+                 <li>• API development</li>
+               </ul>
+             </div>
+             
+             <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+               <h3 className="text-xl font-bold mb-4 text-purple-300">Game Development</h3>
+               <p className="text-indigo-200 mb-4">
+                 Complete game engines, graphics, physics, audio, and networking systems.
+               </p>
+               <ul className="text-indigo-200 text-sm space-y-2">
+                 <li>• Game engines</li>
+                 <li>• Graphics rendering</li>
+                 <li>• Physics simulation</li>
+                 <li>• Multiplayer networking</li>
+               </ul>
+             </div>
+             
+             <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+               <h3 className="text-xl font-bold mb-4 text-purple-300">Audio Synthesis</h3>
+               <p className="text-indigo-200 mb-4">
+                 Advanced audio processing, synthesis, and real-time audio applications.
+               </p>
+               <ul className="text-indigo-200 text-sm space-y-2">
+                 <li>• Digital audio workstations</li>
+                 <li>• Real-time synthesis</li>
+                 <li>• Audio processing</li>
+                 <li>• Music composition</li>
+               </ul>
+             </div>
+             
+             <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+               <h3 className="text-xl font-bold mb-4 text-purple-300">Blockchain & Crypto</h3>
+               <p className="text-indigo-200 mb-4">
+                 Smart contracts, DeFi protocols, and complete blockchain infrastructure.
+               </p>
+               <ul className="text-indigo-200 text-sm space-y-2">
+                 <li>• Smart contracts</li>
+                 <li>• DeFi protocols</li>
+                 <li>• DEX platforms</li>
+                 <li>• Blockchain nodes</li>
+               </ul>
+             </div>
+             
+             <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+               <h3 className="text-xl font-bold mb-4 text-purple-300">AI Development</h3>
+               <p className="text-indigo-200 mb-4">
+                 Complete AI systems, machine learning pipelines, and neural networks.
+               </p>
+               <ul className="text-indigo-200 text-sm space-y-2">
+                 <li>• Neural networks</li>
+                 <li>• ML pipelines</li>
+                 <li>• AI frameworks</li>
+                 <li>• Model training</li>
+               </ul>
+             </div>
+             
+             <div className="bg-indigo-900/40 p-8 rounded-xl border border-purple-500/20">
+               <h3 className="text-xl font-bold mb-4 text-purple-300">Application Development</h3>
+               <p className="text-indigo-200 mb-4">
+                 Desktop, mobile, and cross-platform applications with native performance.
+               </p>
+               <ul className="text-indigo-200 text-sm space-y-2">
+                 <li>• Desktop apps</li>
+                 <li>• Mobile applications</li>
+                 <li>• Cross-platform</li>
+                 <li>• Native performance</li>
+               </ul>
+             </div>
+           </div>
+           
+           <div className="mt-12 text-center">
+             <div className="bg-gradient-to-r from-purple-600/20 to-indigo-600/20 p-8 rounded-xl border border-purple-500/20">
+               <h3 className="text-2xl font-bold mb-4 text-purple-300">One Language, Infinite Possibilities</h3>
+               <p className="text-indigo-200 mb-6 max-w-3xl mx-auto">
+                 RUNA eliminates the need to learn multiple programming languages, frameworks, and tools. 
+                 Write your entire technology stack in one unified language designed for the highest level of abstraction.
+               </p>
+               <div className="flex flex-wrap justify-center gap-4 text-sm text-indigo-300">
+                 <span className="bg-purple-600/20 px-3 py-1 rounded-full">Full-Stack Development</span>
+                 <span className="bg-purple-600/20 px-3 py-1 rounded-full">System Programming</span>
+                 <span className="bg-purple-600/20 px-3 py-1 rounded-full">Embedded Systems</span>
+                 <span className="bg-purple-600/20 px-3 py-1 rounded-full">Cloud Computing</span>
+                 <span className="bg-purple-600/20 px-3 py-1 rounded-full">IoT Applications</span>
+                 <span className="bg-purple-600/20 px-3 py-1 rounded-full">Scientific Computing</span>
+               </div>
+             </div>
+           </div>
+         </div>
+       </section>
 
       {/* Getting Started Section */}
       <section id="getting-started" className="py-20 px-4 sm:px-8 bg-black/20">
