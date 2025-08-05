@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function middleware() {
   // Allow all requests to pass through
   // Authentication is handled client-side by AdminLayout component
-  // This ensures Firebase Auth can work properly
+  // This ensures Supabase Auth can work properly
   return NextResponse.next();
 }
 

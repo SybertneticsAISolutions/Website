@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { marked } from 'marked';
-import { getPageContent } from '@/utils/firebaseFunctions';
+// import { getPageContent } from '@/utils/firebaseFunctions';
 import { useAuth } from '@/utils/useAuth';
 
 interface ContentEditorProps {
