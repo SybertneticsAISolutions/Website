@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -25,7 +26,13 @@ export default function RuneDriveHeader() {
           <Link href="/runedrive" className="-m-1.5 p-1.5">
             <span className="sr-only">RuneDrive</span>
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-lg mr-3"></div>
+              <Image
+                src="/runedrive-logo.png"
+                alt="RuneDrive Logo"
+                width={32}
+                height={32}
+                className="mr-3"
+              />
               <span className="text-lg sm:text-xl font-bold text-white">RuneDrive</span>
             </div>
           </Link>
@@ -70,7 +77,13 @@ export default function RuneDriveHeader() {
               <Link href="/runedrive" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
                 <span className="sr-only">RuneDrive</span>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-lg mr-3"></div>
+                  <Image
+                    src="/runedrive-logo.png"
+                    alt="RuneDrive Logo"
+                    width={32}
+                    height={32}
+                    className="mr-3"
+                  />
                   <span className="text-xl font-bold text-white">RuneDrive</span>
                 </div>
               </Link>

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ChevronDown, Settings, LogOut } from 'lucide-react';
@@ -49,32 +48,10 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center space-x-2">
-            {pathname.startsWith('/runedrive') ? (
-              <Image
-                src="/runedrive-logo.png"
-                alt="RuneDrive Logo"
-                width={32}
-                height={32}
-                className="h-8 w-auto"
-              />
-            ) : pathname.startsWith('/runa') ? (
-              <Image
-                src="/runalogo.png"
-                alt="RUNA Logo"
-                width={32}
-                height={32}
-                className="h-8 w-auto"
-              />
-            ) : (
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">S</span>
-              </div>
-            )}
-            <span className="text-gray-900 font-semibold text-xl">
-              {pathname.startsWith('/runedrive') ? 'RuneDrive' : 
-               pathname.startsWith('/runa') ? 'RUNA' : 
-               'Sybertnetics'}
-            </span>
+            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">S</span>
+            </div>
+            <span className="text-gray-900 font-semibold text-xl">Sybertnetics</span>
           </Link>
           
           <nav className="hidden md:flex space-x-8 items-center">
