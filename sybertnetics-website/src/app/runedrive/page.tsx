@@ -77,13 +77,25 @@ export default function RuneDriveLanding() {
         {/* Hero Section */}
         <section className="min-h-screen flex flex-col justify-center items-center text-center p-4 sm:p-8">
           <div className="bg-black/40 backdrop-blur-md rounded-3xl p-6 sm:p-8 lg:p-12 border border-purple-500/30 cosmic-glow max-w-5xl w-full">
-            <div className="flex flex-col sm:flex-row items-center justify-center mb-6">
-              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400 mb-2 sm:mb-0 sm:mr-3" />
+            <div className="flex flex-col items-center justify-center mb-6">
+              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400 mb-2" />
               <span className="text-purple-300 font-semibold text-sm sm:text-base text-center">Revolutionary TTRPG Platform</span>
             </div>
-            <h1 className="text-4xl sm:text-6xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent text-glow">
-              RuneDrive
-            </h1>
+            
+            {/* RuneDrive Logo */}
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/runedrive-logo.png"
+                alt="RuneDrive Logo"
+                width={400}
+                height={120}
+                className="max-w-full h-auto cosmic-glow"
+                priority
+              />
+            </div>
+            
+            {/* Fallback text title if logo doesn't load */}
+            <h1 className="sr-only">RuneDrive</h1>
             <p className="text-lg sm:text-xl lg:text-2xl text-indigo-200 max-w-3xl mx-auto mb-8 leading-relaxed">
               The collaborative campaign engine for building persistent, player-driven TTRPG universes. 
               Where every story matters and every choice shapes the world.
