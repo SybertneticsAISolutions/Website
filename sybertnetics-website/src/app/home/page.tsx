@@ -141,7 +141,7 @@ export default function HomePage() {
             </div>
             <div className="grid md:grid-cols-4 gap-8 text-center">
               <div>
-                <div className="text-4xl font-bold mb-2">2</div>
+                <div className="text-4xl font-bold mb-2">27+</div>
                 <div className="text-lg opacity-90">Expert Team Members</div>
               </div>
               <div>
