@@ -24,7 +24,7 @@ export default function SybercraftPage() {
             </Link>
             <div className="flex items-center space-x-4">
               <a 
-                href="/docs/sybertnetics/A%20Federated%20Architecture%20for%20Safe%20AI.pdf"
+                href="/docs/Sybertnetics/A%20Federated%20Architecture%20for%20Safe%20AI.pdf"
                 download
                 className="flex items-center space-x-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
               >
@@ -92,7 +92,7 @@ export default function SybercraftPage() {
                 of the SyberCraft architecture.
               </p>
               <a 
-                href="/docs/sybertnetics/A%20Federated%20Architecture%20for%20Safe%20AI.pdf"
+                href="/docs/Sybertnetics/A%20Federated%20Architecture%20for%20Safe%20AI.pdf"
                 download
                 className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
               >
@@ -112,7 +112,7 @@ export default function SybercraftPage() {
                 highlighting key principles, components, and benefits for business and technical audiences.
               </p>
               <a 
-                href="/docs/sybertnetics/SyberCraft%20White%20Paper.pdf"
+                href="/docs/Sybertnetics/SyberCraft%20White%20Paper.pdf"
                 download
                 className="inline-flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
               >
@@ -342,21 +342,21 @@ export default function SybercraftPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <a 
-                href="/docs/sybertnetics/A%20Federated%20Architecture%20for%20Safe%20AI.pdf"
+                href="/docs/Sybertnetics/A%20Federated%20Architecture%20for%20Safe%20AI.pdf"
                 download
                 className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-all transform hover:scale-105"
               >
                 <Download className="w-5 h-5" />
                 <span>Download Full Research Paper</span>
               </a>
-              <a 
-                href="/docs/sybertnetics/SyberCraft%20White%20Paper.pdf"
-                download
-                className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg transition-all transform hover:scale-105"
-              >
-                <FileText className="w-5 h-5" />
-                <span>Download Executive Summary</span>
-              </a>
+                             <a 
+                 href="/docs/Sybertnetics/SyberCraft%20White%20Paper.pdf"
+                 download
+                 className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg transition-all transform hover:scale-105"
+               >
+                 <FileText className="w-5 h-5" />
+                 <span>Download Executive Summary</span>
+               </a>
             </div>
           </div>
         </div>
